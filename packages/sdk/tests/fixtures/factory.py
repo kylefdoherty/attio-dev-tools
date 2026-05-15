@@ -946,6 +946,110 @@ MOCK_GLOBAL_SEARCH_RESULTS: dict[str, Any] = {
 MOCK_DELETE_RESPONSE: dict[str, Any] = {}
 
 # ---------------------------------------------------------------------------
+# Entries (List Entries)
+# ---------------------------------------------------------------------------
+
+MOCK_ENTRY: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc",
+        "list_id": "list_01abc",
+        "entry_id": "entry_01abc",
+    },
+    "parent_record_id": "rec_01abc",
+    "parent_object": "people",
+    "created_at": "2024-03-01T09:00:00.000Z",
+    "entry_values": {
+        "stage": [
+            {
+                "active_from": "2024-03-01T09:00:00.000Z",
+                "active_until": None,
+                "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+                "attribute_type": "status",
+                "status": {"title": "Open"},
+            }
+        ]
+    },
+}
+
+MOCK_ENTRY_2: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc",
+        "list_id": "list_01abc",
+        "entry_id": "entry_02xyz",
+    },
+    "parent_record_id": "rec_02xyz",
+    "parent_object": "people",
+    "created_at": "2024-03-15T10:00:00.000Z",
+    "entry_values": {
+        "stage": [
+            {
+                "active_from": "2024-03-15T10:00:00.000Z",
+                "active_until": None,
+                "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+                "attribute_type": "status",
+                "status": {"title": "Won"},
+            }
+        ]
+    },
+}
+
+MOCK_ENTRIES_LIST: dict[str, Any] = {
+    "data": [MOCK_ENTRY, MOCK_ENTRY_2],
+}
+
+MOCK_ENTRY_SINGLE: dict[str, Any] = {
+    "data": MOCK_ENTRY,
+}
+
+MOCK_ENTRY_CREATED: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc",
+            "list_id": "list_01abc",
+            "entry_id": "entry_03new",
+        },
+        "parent_record_id": "rec_03new",
+        "parent_object": "companies",
+        "created_at": "2024-06-01T12:00:00.000Z",
+        "entry_values": {
+            "stage": [
+                {
+                    "active_from": "2024-06-01T12:00:00.000Z",
+                    "active_until": None,
+                    "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+                    "attribute_type": "status",
+                    "status": {"title": "Open"},
+                }
+            ]
+        },
+    },
+}
+
+MOCK_ENTRY_UPDATED: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc",
+            "list_id": "list_01abc",
+            "entry_id": "entry_01abc",
+        },
+        "parent_record_id": "rec_01abc",
+        "parent_object": "people",
+        "created_at": "2024-03-01T09:00:00.000Z",
+        "entry_values": {
+            "stage": [
+                {
+                    "active_from": "2024-06-01T12:00:00.000Z",
+                    "active_until": None,
+                    "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+                    "attribute_type": "status",
+                    "status": {"title": "Won"},
+                }
+            ]
+        },
+    },
+}
+
+# ---------------------------------------------------------------------------
 # Comments
 # ---------------------------------------------------------------------------
 

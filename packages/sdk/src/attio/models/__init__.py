@@ -11,6 +11,7 @@ from attio.models.attributes import Attribute, AttributeConfig, AttributeId
 from attio.models.call_recordings import CallRecording, CallRecordingId
 from attio.models.comments import Comment, CommentId
 from attio.models.common import ActorReference, AttributeValue
+from attio.models.entries import Entry, EntryId
 from attio.models.files import AttioFile, DownloadUrl, FileId
 from attio.models.lists import AttioList, ListId
 from attio.models.meetings import Meeting, MeetingId, MeetingParticipant
@@ -52,6 +53,8 @@ __all__ = [
     "CommentId",
     "DataWrapper",
     "DownloadUrl",
+    "Entry",
+    "EntryId",
     "FileId",
     "LinkedRecord",
     "ListId",

@@ -19,11 +19,15 @@ from attio.resources.call_recordings import (
     CallRecordingsResource,
 )
 from attio.resources.comments import AsyncCommentsResource, CommentsResource
+from attio.resources.companies import AsyncCompaniesResource, CompaniesResource
+from attio.resources.deals import AsyncDealsResource, DealsResource
+from attio.resources.entries import AsyncEntriesResource, EntriesResource
 from attio.resources.files import AsyncFilesResource, FilesResource
 from attio.resources.lists import AsyncListsResource, ListsResource
 from attio.resources.meetings import AsyncMeetingsResource, MeetingsResource
 from attio.resources.notes import AsyncNotesResource, NotesResource
 from attio.resources.objects import AsyncObjectsResource, ObjectsResource
+from attio.resources.people import AsyncPeopleResource, PeopleResource
 from attio.resources.records import AsyncRecordsResource, RecordsResource
 from attio.resources.select_options import (
     AsyncSelectOptionsResource,
@@ -34,11 +38,16 @@ from attio.resources.statuses import AsyncStatusesResource, StatusesResource
 from attio.resources.tasks import AsyncTasksResource, TasksResource
 from attio.resources.threads import AsyncThreadsResource, ThreadsResource
 from attio.resources.transcripts import AsyncTranscriptsResource, TranscriptsResource
+from attio.resources.users import AsyncUsersResource, UsersResource
 from attio.resources.views import AsyncViewsResource, ViewsResource
 from attio.resources.webhooks import AsyncWebhooksResource, WebhooksResource
 from attio.resources.workspace_members import (
     AsyncWorkspaceMembersResource,
     WorkspaceMembersResource,
+)
+from attio.resources.workspaces_resource import (
+    AsyncWorkspacesResource,
+    WorkspacesResource,
 )
 
 
@@ -129,6 +138,11 @@ class AttioClient:
         return WebhooksResource(self._http)
 
     @cached_property
+    def entries(self) -> EntriesResource:
+        """Access the Entries resource."""
+        return EntriesResource(self._http)
+
+    @cached_property
     def comments(self) -> CommentsResource:
         """Access the Comments resource."""
         return CommentsResource(self._http)
@@ -157,6 +171,33 @@ class AttioClient:
     def transcripts(self) -> TranscriptsResource:
         """Access the Transcripts resource."""
         return TranscriptsResource(self._http)
+
+    # -- Standard object convenience wrappers (delegate to self.records) --
+
+    @cached_property
+    def people(self) -> PeopleResource:
+        """Access the People resource (convenience wrapper around Records)."""
+        return PeopleResource(self.records)
+
+    @cached_property
+    def companies(self) -> CompaniesResource:
+        """Access the Companies resource (convenience wrapper around Records)."""
+        return CompaniesResource(self.records)
+
+    @cached_property
+    def deals(self) -> DealsResource:
+        """Access the Deals resource (convenience wrapper around Records)."""
+        return DealsResource(self.records)
+
+    @cached_property
+    def users(self) -> UsersResource:
+        """Access the Users resource (convenience wrapper around Records)."""
+        return UsersResource(self.records)
+
+    @cached_property
+    def workspaces_(self) -> WorkspacesResource:
+        """Access the Workspaces resource (convenience wrapper around Records)."""
+        return WorkspacesResource(self.records)
 
     def close(self) -> None:
         """Close the underlying HTTP client and release resources."""
@@ -256,6 +297,11 @@ class AsyncAttioClient:
         return AsyncWebhooksResource(self._http)
 
     @cached_property
+    def entries(self) -> AsyncEntriesResource:
+        """Access the Entries resource."""
+        return AsyncEntriesResource(self._http)
+
+    @cached_property
     def comments(self) -> AsyncCommentsResource:
         """Access the Comments resource."""
         return AsyncCommentsResource(self._http)
@@ -284,6 +330,33 @@ class AsyncAttioClient:
     def transcripts(self) -> AsyncTranscriptsResource:
         """Access the Transcripts resource."""
         return AsyncTranscriptsResource(self._http)
+
+    # -- Standard object convenience wrappers (delegate to self.records) --
+
+    @cached_property
+    def people(self) -> AsyncPeopleResource:
+        """Access the People resource (convenience wrapper around Records)."""
+        return AsyncPeopleResource(self.records)
+
+    @cached_property
+    def companies(self) -> AsyncCompaniesResource:
+        """Access the Companies resource (convenience wrapper around Records)."""
+        return AsyncCompaniesResource(self.records)
+
+    @cached_property
+    def deals(self) -> AsyncDealsResource:
+        """Access the Deals resource (convenience wrapper around Records)."""
+        return AsyncDealsResource(self.records)
+
+    @cached_property
+    def users(self) -> AsyncUsersResource:
+        """Access the Users resource (convenience wrapper around Records)."""
+        return AsyncUsersResource(self.records)
+
+    @cached_property
+    def workspaces_(self) -> AsyncWorkspacesResource:
+        """Access the Workspaces resource (convenience wrapper around Records)."""
+        return AsyncWorkspacesResource(self.records)
 
     async def close(self) -> None:
         """Close the underlying async HTTP client and release resources."""
