@@ -45,10 +45,24 @@ def list_notes(
     parent_record_id: Optional[str] = typer.Option(None, "--record", help="Filter by parent record ID."),
     limit: int = typer.Option(25, help="Maximum number of results."),
     offset: int = typer.Option(0, help="Pagination offset."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all results."),
 ) -> None:
     """List notes, optionally filtered by parent object and record."""
     client = get_client(ctx)
     try:
+        if all_results:
+            from attio_cli.commands._record_helpers import collect_offset_pages
+
+            items = collect_offset_pages(lambda off, lim: client.notes.list(
+                parent_object=parent_object,
+                parent_record_id=parent_record_id,
+                limit=lim,
+                offset=off,
+            ))
+            data = [_note_to_dict(n) for n in items]
+            output_list(data, NOTE_COLUMNS, ctx, title="Notes (all)")
+            return
+
         result = client.notes.list(
             parent_object=parent_object,
             parent_record_id=parent_record_id,

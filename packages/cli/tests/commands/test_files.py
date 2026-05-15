@@ -96,6 +96,40 @@ class TestFilesList:
             )
 
 
+class TestFilesListAll:
+    """Test the files list --all command."""
+
+    def test_list_all_cursor(self):
+        """files list --all should paginate through all cursor pages."""
+        mock_file1 = _make_mock_file("file_1", "doc1.pdf")
+        mock_file2 = _make_mock_file("file_2", "doc2.pdf")
+
+        # First page has next_cursor, second page does not
+        mock_response1 = MagicMock()
+        mock_response1.data = [mock_file1]
+        mock_response1.pagination = MagicMock()
+        mock_response1.pagination.next_cursor = "cursor_2"
+
+        mock_response2 = MagicMock()
+        mock_response2.data = [mock_file2]
+        mock_response2.pagination = MagicMock()
+        mock_response2.pagination.next_cursor = None
+
+        with patch("attio_cli.commands.files.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.files.list.side_effect = [mock_response1, mock_response2]
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(
+                app,
+                ["--json", "files", "list", "--object", "people", "--record", "rec_123", "--all"],
+            )
+            assert result.exit_code == 0
+            parsed = json.loads(result.output)
+            assert len(parsed["data"]) == 2
+            assert mock_client.files.list.call_count == 2
+
+
 class TestFilesGet:
     """Test the files get command."""
 

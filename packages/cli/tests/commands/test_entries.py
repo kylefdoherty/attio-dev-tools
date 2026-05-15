@@ -26,6 +26,28 @@ def _make_mock_entry(entry_id="entry_123", parent_record_id="rec_456"):
     return entry
 
 
+class TestEntriesListAll:
+    """Test the entries list --all command."""
+
+    def test_list_all(self):
+        """entries list --all should use query_all."""
+        mock_entry1 = _make_mock_entry(entry_id="entry_1")
+        mock_entry2 = _make_mock_entry(entry_id="entry_2")
+
+        with patch("attio_cli.commands.entries.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.entries.query_all.return_value = [mock_entry1, mock_entry2]
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(
+                app, ["--json", "entries", "list", "--list", "my-list", "--all"]
+            )
+            assert result.exit_code == 0
+            data = json.loads(result.output)
+            assert len(data["data"]) == 2
+            mock_client.entries.query_all.assert_called_once_with("my-list", filter=None)
+
+
 class TestEntriesAppend:
     """Test the entries append command."""
 

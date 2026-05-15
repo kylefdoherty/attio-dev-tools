@@ -39,10 +39,22 @@ def list_recordings(
     meeting_id: str = typer.Option(..., "--meeting", help="Meeting ID (required)."),
     limit: Optional[int] = typer.Option(None, help="Maximum number of results."),
     cursor: Optional[str] = typer.Option(None, help="Pagination cursor."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all results."),
 ) -> None:
     """List call recordings for a meeting."""
     client = get_client(ctx)
     try:
+        if all_results:
+            from attio_cli.commands._record_helpers import collect_cursor_pages
+
+            items = collect_cursor_pages(lambda cur: client.call_recordings.list(
+                meeting_id,
+                cursor=cur,
+            ))
+            data = [_recording_to_dict(r) for r in items]
+            output_list(data, RECORDING_COLUMNS, ctx, title="Call Recordings (all)")
+            return
+
         result = client.call_recordings.list(
             meeting_id,
             limit=limit,

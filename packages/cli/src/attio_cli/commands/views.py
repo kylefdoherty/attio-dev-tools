@@ -40,6 +40,7 @@ def list_views(
     show_archived: bool = typer.Option(False, "--show-archived", help="Include archived views."),
     limit: Optional[int] = typer.Option(None, help="Maximum number of results."),
     cursor: Optional[str] = typer.Option(None, help="Pagination cursor."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all results."),
 ) -> None:
     """List views for an object or list. Exactly one of --object or --list is required."""
     if object and list_slug:
@@ -49,6 +50,15 @@ def list_views(
 
     client = get_client(ctx)
     try:
+        if all_results:
+            if object:
+                iterator = client.views.list_all_for_object(object, show_archived=show_archived)
+            else:
+                iterator = client.views.list_all_for_list(list_slug, show_archived=show_archived)  # type: ignore[arg-type]
+            all_data = [_view_to_dict(v) for v in iterator]
+            output_list(all_data, VIEW_COLUMNS, ctx, title="Views (all)")
+            return
+
         if object:
             result = client.views.list_for_object(
                 object,

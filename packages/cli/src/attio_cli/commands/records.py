@@ -13,6 +13,7 @@ import typer
 from attio_cli._client import get_client
 from attio_cli._errors import handle_api_error
 from attio_cli._output import output_list, output_single, output_success
+from attio_cli._values import expand_values
 from attio_cli.commands._record_helpers import (
     ENTRY_LIST_COLUMNS,
     GENERIC_COLUMNS,
@@ -33,10 +34,18 @@ def list_records(
     filter: Optional[str] = typer.Option(None, "--filter", help="Raw filter JSON."),
     sort: Optional[str] = typer.Option(None, help="Sort by attribute slug."),
     sort_direction: str = typer.Option("asc", help="Sort direction: asc or desc."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all results."),
 ) -> None:
     """List records for a given object with optional filtering and sorting."""
     client = get_client(ctx)
     try:
+        if all_results:
+            filter_obj = parse_json_option(filter) if filter else None
+            iterator = client.records.query_all(object, filter=filter_obj)
+            all_data = [record_to_dict(r) for r in iterator]
+            output_list(all_data, GENERIC_COLUMNS, ctx, title=f"Records ({object}) (all)")
+            return
+
         filter_obj = parse_json_option(filter)
         if filter_obj or sort:
             from attio.models.records import Sort as SortModel
@@ -83,6 +92,7 @@ def create(
         values_obj = parse_json_option(values)
         if not values_obj:
             raise typer.BadParameter("--values must be a non-empty JSON object.")
+        values_obj = expand_values(client, object, values_obj)
         record = client.records.create(object, values=values_obj)
         data = record_to_dict(record)
         output_single(data, ctx, title="Created Record")
@@ -105,6 +115,7 @@ def update(
         values_obj = parse_json_option(values)
         if not values_obj:
             raise typer.BadParameter("--values must be a non-empty JSON object.")
+        values_obj = expand_values(client, object, values_obj)
         record = client.records.update(object, record_id, values=values_obj)
         data = record_to_dict(record)
         output_single(data, ctx, title="Updated Record")
@@ -127,6 +138,7 @@ def upsert(
         values_obj = parse_json_option(values)
         if not values_obj:
             raise typer.BadParameter("--values must be a non-empty JSON object.")
+        values_obj = expand_values(client, object, values_obj)
         record = client.records.upsert(object, matching_attribute=matching_attribute, values=values_obj)
         data = record_to_dict(record)
         output_single(data, ctx, title="Upserted Record")
@@ -197,6 +209,7 @@ def append(
         values_obj = parse_json_option(values)
         if not values_obj:
             raise typer.BadParameter("--values must be a non-empty JSON object.")
+        values_obj = expand_values(client, object, values_obj)
         result = client.records.append(object, record_id, values=values_obj)
         output_single(record_to_dict(result), ctx, title=f"Appended Record {record_id}")
     except SystemExit:

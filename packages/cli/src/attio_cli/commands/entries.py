@@ -11,6 +11,7 @@ import typer
 from attio_cli._client import get_client
 from attio_cli._errors import handle_api_error
 from attio_cli._output import output_list, output_single, output_success
+from attio_cli._values import expand_entry_values
 from attio_cli.commands._record_helpers import VALUE_COLUMNS, parse_json_option
 
 app = typer.Typer(no_args_is_help=True)
@@ -56,10 +57,18 @@ def list_entries(
     limit: int = typer.Option(25, help="Maximum number of results."),
     offset: int = typer.Option(0, help="Pagination offset."),
     filter: Optional[str] = typer.Option(None, "--filter", help="Raw filter JSON."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all results."),
 ) -> None:
     """List entries in a list."""
     client = get_client(ctx)
     try:
+        if all_results:
+            filter_obj = parse_json_option(filter) if filter else None
+            iterator = client.entries.query_all(list_slug, filter=filter_obj)
+            all_data = [_entry_to_dict(e) for e in iterator]
+            output_list(all_data, ENTRY_COLUMNS, ctx, title=f"Entries ({list_slug}) (all)")
+            return
+
         filter_obj = parse_json_option(filter)
         if filter_obj:
             result = client.entries.query(list_slug, filter=filter_obj, limit=limit, offset=offset)
@@ -103,6 +112,8 @@ def create(
     client = get_client(ctx)
     try:
         vals = parse_json_option(entry_values)
+        if vals:
+            vals = expand_entry_values(client, list_slug, vals)
         entry = client.entries.create(
             list_slug,
             parent_record_id=parent_record_id,
@@ -130,6 +141,7 @@ def update(
         vals = parse_json_option(entry_values)
         if not vals:
             raise typer.BadParameter("--values must be a non-empty JSON object.")
+        vals = expand_entry_values(client, list_slug, vals)
         entry = client.entries.update(list_slug, entry_id, entry_values=vals)
         data = _entry_to_dict(entry)
         output_single(data, ctx, title="Updated Entry")
@@ -151,6 +163,8 @@ def upsert(
     client = get_client(ctx)
     try:
         vals = parse_json_option(entry_values)
+        if vals:
+            vals = expand_entry_values(client, list_slug, vals)
         entry = client.entries.upsert(
             list_slug,
             parent_record_id=parent_record_id,
@@ -199,6 +213,7 @@ def append(
         values_obj = parse_json_option(values)
         if not values_obj:
             raise typer.BadParameter("--values must be a non-empty JSON object.")
+        values_obj = expand_entry_values(client, list_slug, values_obj)
         result = client.entries.append(list_slug, entry_id, entry_values=values_obj)
         data = _entry_to_dict(result)
         output_single(data, ctx, title=f"Appended Entry {entry_id}")

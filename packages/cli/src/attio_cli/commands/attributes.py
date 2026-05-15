@@ -63,11 +63,22 @@ def list_attributes(
     ctx: typer.Context,
     object: Optional[str] = typer.Option(None, "--object", help="Object slug or ID."),
     list_: Optional[str] = typer.Option(None, "--list", help="List slug or ID."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all results."),
 ) -> None:
     """List all attributes on an object or list."""
     target, target_id = _resolve_target(object, list_)
     client = get_client(ctx)
     try:
+        if all_results:
+            from attio_cli.commands._record_helpers import collect_offset_pages
+
+            items = collect_offset_pages(lambda off, lim: client.attributes.list(
+                target, target_id, limit=lim, offset=off,
+            ))
+            data = [_attribute_to_dict(a) for a in items]
+            output_list(data, ATTRIBUTE_COLUMNS, ctx, title="Attributes (all)")
+            return
+
         result = client.attributes.list(target, target_id)
         data = [_attribute_to_dict(a) for a in result.data]
         output_list(data, ATTRIBUTE_COLUMNS, ctx, title="Attributes")

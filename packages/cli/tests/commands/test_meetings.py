@@ -111,6 +111,37 @@ class TestMeetingsList:
             assert call_kwargs["participants"] == ["alice@co.com", "bob@co.com"]
 
 
+class TestMeetingsListAll:
+    """Test the meetings list --all command."""
+
+    def test_list_all_cursor(self):
+        """meetings list --all should paginate through all cursor pages."""
+        mock_meeting1 = _make_mock_meeting("mtg_1", "Standup")
+        mock_meeting2 = _make_mock_meeting("mtg_2", "Review")
+
+        # First page has next_cursor, second page does not
+        mock_response1 = MagicMock()
+        mock_response1.data = [mock_meeting1]
+        mock_response1.pagination = MagicMock()
+        mock_response1.pagination.next_cursor = "cursor_2"
+
+        mock_response2 = MagicMock()
+        mock_response2.data = [mock_meeting2]
+        mock_response2.pagination = MagicMock()
+        mock_response2.pagination.next_cursor = None
+
+        with patch("attio_cli.commands.meetings.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.meetings.list.side_effect = [mock_response1, mock_response2]
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(app, ["--json", "meetings", "list", "--all"])
+            assert result.exit_code == 0
+            parsed = json.loads(result.output)
+            assert len(parsed["data"]) == 2
+            assert mock_client.meetings.list.call_count == 2
+
+
 class TestMeetingsGet:
     """Test the meetings get command."""
 

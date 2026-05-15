@@ -37,10 +37,23 @@ def get(
     recording_id: str = typer.Option(..., "--recording", help="Recording ID (required)."),
     limit: Optional[int] = typer.Option(None, help="Maximum number of segments."),
     cursor: Optional[str] = typer.Option(None, help="Pagination cursor."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all segments."),
 ) -> None:
     """Get a transcript for a call recording."""
     client = get_client(ctx)
     try:
+        if all_results:
+            from attio_cli.commands._record_helpers import collect_cursor_pages
+
+            items = collect_cursor_pages(lambda cur: client.transcripts.get(
+                meeting_id,
+                recording_id,
+                cursor=cur,
+            ))
+            data = [_segment_to_dict(s) for s in items]
+            output_list(data, TRANSCRIPT_COLUMNS, ctx, title="Transcript (all)")
+            return
+
         result = client.transcripts.get(
             meeting_id,
             recording_id,

@@ -48,10 +48,26 @@ def list_tasks(
     assignee: Optional[str] = typer.Option(None, help="Filter by assignee ID."),
     limit: int = typer.Option(25, help="Maximum number of results."),
     offset: int = typer.Option(0, help="Pagination offset."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all results."),
 ) -> None:
     """List tasks with optional filters."""
     client = get_client(ctx)
     try:
+        if all_results:
+            from attio_cli.commands._record_helpers import collect_offset_pages
+
+            items = collect_offset_pages(lambda off, lim: client.tasks.list(
+                linked_object=linked_object,
+                linked_record_id=linked_record_id,
+                is_completed=is_completed,
+                assignee=assignee,
+                limit=lim,
+                offset=off,
+            ))
+            data = [_task_to_dict(t) for t in items]
+            output_list(data, TASK_COLUMNS, ctx, title="Tasks (all)")
+            return
+
         result = client.tasks.list(
             linked_object=linked_object,
             linked_record_id=linked_record_id,

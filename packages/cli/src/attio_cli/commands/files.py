@@ -51,10 +51,22 @@ def list_files(
     parent_folder_id: Optional[str] = typer.Option(None, "--parent-folder", help="Parent folder ID."),
     limit: Optional[int] = typer.Option(None, help="Maximum number of results."),
     cursor: Optional[str] = typer.Option(None, help="Pagination cursor."),
+    all_results: bool = typer.Option(False, "--all", help="Fetch all results."),
 ) -> None:
     """List files for a record."""
     client = get_client(ctx)
     try:
+        if all_results:
+            from attio_cli.commands._record_helpers import collect_cursor_pages
+
+            items = collect_cursor_pages(lambda cur: client.files.list(
+                object=object, record_id=record_id, storage_provider=storage_provider,
+                parent_folder_id=parent_folder_id, cursor=cur,
+            ))
+            data = [_file_to_dict(f) for f in items]
+            output_list(data, FILE_COLUMNS, ctx, title="Files (all)")
+            return
+
         result = client.files.list(
             object=object,
             record_id=record_id,

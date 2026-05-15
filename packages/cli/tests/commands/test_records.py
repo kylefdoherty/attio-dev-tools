@@ -77,6 +77,28 @@ class TestRecordsList:
             mock_client.records.query.assert_called_once()
 
 
+class TestRecordsListAll:
+    """Test the records list --all command."""
+
+    def test_list_all_with_object(self):
+        """records list --all --object should use query_all."""
+        mock_record1 = _make_mock_record(record_id="rec_1")
+        mock_record2 = _make_mock_record(record_id="rec_2")
+
+        with patch("attio_cli.commands.records.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.records.query_all.return_value = [mock_record1, mock_record2]
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(
+                app, ["--json", "records", "list", "--object", "custom", "--all"]
+            )
+            assert result.exit_code == 0
+            data = json.loads(result.output)
+            assert len(data["data"]) == 2
+            mock_client.records.query_all.assert_called_once_with("custom", filter=None)
+
+
 class TestRecordsGet:
     """Test the records get command."""
 

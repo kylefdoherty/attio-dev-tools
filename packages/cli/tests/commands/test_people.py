@@ -107,6 +107,44 @@ class TestPeopleList:
             assert parsed["data"] == []
 
 
+class TestPeopleListAll:
+    """Test the people list --all command."""
+
+    def test_list_all_flag(self):
+        """people list --all should use query_all and return all results."""
+        mock_record1 = _make_mock_record(record_id="rec_1")
+        mock_record2 = _make_mock_record(record_id="rec_2")
+
+        with patch("attio_cli.commands.people.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.people.query_all.return_value = [mock_record1, mock_record2]
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(app, ["--json", "people", "list", "--all"])
+            assert result.exit_code == 0
+            data = json.loads(result.output)
+            assert len(data["data"]) == 2
+            mock_client.people.query_all.assert_called_once()
+
+    def test_list_all_with_filter(self):
+        """people list --all --filter should pass filter to query_all."""
+        mock_record = _make_mock_record()
+
+        with patch("attio_cli.commands.people.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.people.query_all.return_value = [mock_record]
+            mock_gc.return_value = mock_client
+
+            filter_json = '{"email_addresses": {"$contains": "@acme.com"}}'
+            result = runner.invoke(
+                app, ["--json", "people", "list", "--all", "--filter", filter_json]
+            )
+            assert result.exit_code == 0
+            mock_client.people.query_all.assert_called_once_with(
+                filter={"email_addresses": {"$contains": "@acme.com"}}
+            )
+
+
 class TestPeopleGet:
     """Test the people get command."""
 

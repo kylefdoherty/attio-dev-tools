@@ -113,6 +113,32 @@ GENERIC_COLUMNS = [
 ]
 
 
+def collect_cursor_pages(fetch_page_fn: Callable[..., Any]) -> list[Any]:
+    """Collect all items from a cursor-paginated endpoint."""
+    all_items: list[Any] = []
+    cursor = None
+    while True:
+        result = fetch_page_fn(cursor)
+        all_items.extend(result.data)
+        if not hasattr(result, 'pagination') or result.pagination is None or result.pagination.next_cursor is None:
+            break
+        cursor = result.pagination.next_cursor
+    return all_items
+
+
+def collect_offset_pages(fetch_page_fn: Callable[..., Any], page_size: int = 500) -> list[Any]:
+    """Collect all items from an offset-paginated endpoint."""
+    all_items: list[Any] = []
+    offset = 0
+    while True:
+        result = fetch_page_fn(offset, page_size)
+        all_items.extend(result.data)
+        if len(result.data) < page_size:
+            break
+        offset += len(result.data)
+    return all_items
+
+
 def parse_json_option(value: str | None) -> dict[str, Any] | None:
     """Parse a JSON string option, returning None if empty."""
     if not value:

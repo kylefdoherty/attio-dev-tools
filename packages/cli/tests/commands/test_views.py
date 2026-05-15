@@ -101,6 +101,45 @@ class TestViewsListForList:
             assert parsed["data"][0]["title"] == "Pipeline View"
 
 
+class TestViewsListAll:
+    """Test the views list --all command."""
+
+    def test_list_all_object(self):
+        """views list --all --object should use list_all_for_object."""
+        mock_view1 = _make_mock_view("view_1", "All People")
+        mock_view2 = _make_mock_view("view_2", "Active Leads")
+
+        with patch("attio_cli.commands.views.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.views.list_all_for_object.return_value = [mock_view1, mock_view2]
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(app, ["--json", "views", "list", "--object", "people", "--all"])
+            assert result.exit_code == 0
+            parsed = json.loads(result.output)
+            assert len(parsed["data"]) == 2
+            mock_client.views.list_all_for_object.assert_called_once_with(
+                "people", show_archived=False
+            )
+
+    def test_list_all_list(self):
+        """views list --all --list should use list_all_for_list."""
+        mock_view = _make_mock_view("view_3", "Pipeline View", object_id=None, list_id="list_deals")
+
+        with patch("attio_cli.commands.views.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.views.list_all_for_list.return_value = [mock_view]
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(app, ["--json", "views", "list", "--list", "deals", "--all"])
+            assert result.exit_code == 0
+            parsed = json.loads(result.output)
+            assert len(parsed["data"]) == 1
+            mock_client.views.list_all_for_list.assert_called_once_with(
+                "deals", show_archived=False
+            )
+
+
 class TestViewsValidation:
     """Test views list validation."""
 
