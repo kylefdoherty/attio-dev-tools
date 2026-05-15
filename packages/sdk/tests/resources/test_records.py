@@ -13,7 +13,6 @@ from attio._exceptions import AttioPermissionError, NotFoundError
 from attio.models._base import ListResponse
 from attio.models.common import AttributeValue
 from attio.models.records import GlobalSearchResult, Record, RecordEntry, Sort
-
 from tests.fixtures.factory import (
     MOCK_ATTRIBUTE_VALUES_LIST,
     MOCK_DELETE_RESPONSE,

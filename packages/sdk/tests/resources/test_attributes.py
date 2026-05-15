@@ -12,13 +12,11 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import AttioPermissionError, NotFoundError
 from attio.models._base import ListResponse
 from attio.models.attributes import Attribute
-
 from tests.fixtures.factory import (
-    MOCK_ATTRIBUTE,
-    MOCK_ATTRIBUTES_LIST,
     MOCK_ATTRIBUTE_CREATED,
     MOCK_ATTRIBUTE_SINGLE,
     MOCK_ATTRIBUTE_UPDATED,
+    MOCK_ATTRIBUTES_LIST,
     MOCK_NOT_FOUND_ERROR,
     MOCK_PERMISSION_ERROR,
 )

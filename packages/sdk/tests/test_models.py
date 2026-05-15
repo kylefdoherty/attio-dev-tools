@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime
 
-from attio.models._base import DataWrapper, ListResponse, Pagination, PaginatedResponse
+from attio.models._base import DataWrapper, ListResponse, PaginatedResponse, Pagination
 from attio.models.common import ActorReference, AttributeValue
 from attio.models.lists import AttioList, ListId
 from attio.models.objects import Object, ObjectId
@@ -175,7 +175,12 @@ class TestCommonModels:
 
 class TestBaseWrapperModels:
     def test_data_wrapper(self) -> None:
-        raw = {"data": {"id": {"workspace_id": "ws_01", "object_id": "obj_01"}, "created_at": "2024-01-15T10:30:00.000Z"}}
+        raw = {
+            "data": {
+                "id": {"workspace_id": "ws_01", "object_id": "obj_01"},
+                "created_at": "2024-01-15T10:30:00.000Z",
+            }
+        }
         wrapper = DataWrapper[Object].model_validate(raw)
         assert isinstance(wrapper.data, Object)
         assert wrapper.data.id.object_id == "obj_01"

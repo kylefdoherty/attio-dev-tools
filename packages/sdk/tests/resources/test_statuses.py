@@ -12,13 +12,12 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import AttioPermissionError, NotFoundError
 from attio.models._base import ListResponse
 from attio.models.select_options import Status
-
 from tests.fixtures.factory import (
     MOCK_NOT_FOUND_ERROR,
     MOCK_PERMISSION_ERROR,
-    MOCK_STATUSES_LIST,
     MOCK_STATUS_CREATED,
     MOCK_STATUS_UPDATED,
+    MOCK_STATUSES_LIST,
 )
 
 BASE_URL = "https://api.attio.com/v2"
@@ -209,7 +208,7 @@ class TestStatusesResourceSync:
     @respx.mock
     def test_celebration_enabled(self) -> None:
         """Verify the celebration_enabled field is properly parsed."""
-        route = respx.get(
+        respx.get(
             f"{BASE_URL}/objects/deals/attributes/stage/statuses"
         ).mock(return_value=httpx.Response(200, json=MOCK_STATUSES_LIST))
         client = _sync_client()

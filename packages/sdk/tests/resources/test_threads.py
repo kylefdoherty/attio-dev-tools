@@ -3,16 +3,14 @@
 from __future__ import annotations
 
 import httpx
-import pytest
 import respx
 
 from attio import AsyncAttioClient, AttioClient
 from attio.models._base import ListResponse
 from attio.models.threads import Thread
-
 from tests.fixtures.factory import (
-    MOCK_THREADS_LIST,
     MOCK_THREAD_SINGLE,
+    MOCK_THREADS_LIST,
 )
 
 BASE_URL = "https://api.attio.com/v2"

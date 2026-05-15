@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Coroutine, Generic, Iterator, TypeVar
+from collections.abc import Callable, Coroutine, Iterator
+from typing import Any, Generic, TypeVar
 
 from attio.models._base import ListResponse, PaginatedResponse
 
@@ -60,9 +61,8 @@ class AsyncCursorIterator(Generic[T]):
             self._cursor = response.pagination.next_cursor
             if self._cursor is None:
                 self._done = True
-            if not self._buffer:
-                if self._done:
-                    raise StopAsyncIteration
+            if not self._buffer and self._done:
+                raise StopAsyncIteration
 
         return self._buffer.pop(0)
 
@@ -123,8 +123,7 @@ class AsyncOffsetIterator(Generic[T]):
                 self._done = True
             else:
                 self._offset += len(response.data)
-            if not self._buffer:
-                if self._done:
-                    raise StopAsyncIteration
+            if not self._buffer and self._done:
+                raise StopAsyncIteration
 
         return self._buffer.pop(0)

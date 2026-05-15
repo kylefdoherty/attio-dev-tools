@@ -10,7 +10,6 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import NotFoundError
 from attio.models._base import PaginatedResponse
 from attio.models.call_recordings import CallRecording
-
 from tests.fixtures.factory import (
     MOCK_CALL_RECORDING_SINGLE,
     MOCK_CALL_RECORDINGS_LIST,

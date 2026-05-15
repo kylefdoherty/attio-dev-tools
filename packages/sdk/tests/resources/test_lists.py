@@ -12,9 +12,7 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import AttioPermissionError, NotFoundError
 from attio.models._base import ListResponse
 from attio.models.lists import AttioList
-
 from tests.fixtures.factory import (
-    MOCK_LIST,
     MOCK_LIST_CREATED,
     MOCK_LIST_SINGLE,
     MOCK_LIST_UPDATED,

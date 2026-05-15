@@ -10,10 +10,8 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import AttioPermissionError, NotFoundError
 from attio.models._base import ListResponse
 from attio.models.objects import Object
-
 from tests.fixtures.factory import (
     MOCK_NOT_FOUND_ERROR,
-    MOCK_OBJECT,
     MOCK_OBJECT_CREATED,
     MOCK_OBJECT_SINGLE,
     MOCK_OBJECT_UPDATED,

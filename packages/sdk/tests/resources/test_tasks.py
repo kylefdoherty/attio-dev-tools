@@ -12,7 +12,6 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import NotFoundError
 from attio.models._base import ListResponse
 from attio.models.tasks import Task
-
 from tests.fixtures.factory import (
     MOCK_NOT_FOUND_ERROR,
     MOCK_TASK,
@@ -265,7 +264,7 @@ class TestTasksResourceAsync:
             return_value=httpx.Response(200, json={"data": [MOCK_TASK]})
         )
         client = _async_client()
-        result = await client.tasks.list(assignee="wm_01abc123def456")
+        await client.tasks.list(assignee="wm_01abc123def456")
 
         assert route.called
         request = route.calls[0].request

@@ -9,13 +9,11 @@ from __future__ import annotations
 import json
 
 import httpx
-import pytest
 import respx
 
 from attio import AsyncAttioClient, AttioClient
 from attio.models._base import ListResponse
 from attio.models.records import Record
-
 from tests.fixtures.factory import (
     MOCK_RECORD_CREATED,
     MOCK_RECORD_SINGLE,

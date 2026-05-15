@@ -8,7 +8,6 @@ import respx
 from attio import AsyncAttioClient, AttioClient
 from attio.models._base import PaginatedResponse
 from attio.models.transcripts import TranscriptSegment
-
 from tests.fixtures.factory import MOCK_TRANSCRIPT_LIST
 
 BASE_URL = "https://api.attio.com/v2"

@@ -12,14 +12,13 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import NotFoundError
 from attio.models._base import ListResponse
 from attio.models.notes import Note
-
 from tests.fixtures.factory import (
+    MOCK_NOT_FOUND_ERROR,
     MOCK_NOTE,
     MOCK_NOTE_CREATED,
     MOCK_NOTE_DELETE,
     MOCK_NOTE_SINGLE,
     MOCK_NOTES_LIST,
-    MOCK_NOT_FOUND_ERROR,
 )
 
 BASE_URL = "https://api.attio.com/v2"

@@ -12,13 +12,12 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import AttioPermissionError, NotFoundError
 from attio.models._base import ListResponse
 from attio.models.select_options import SelectOption
-
 from tests.fixtures.factory import (
     MOCK_NOT_FOUND_ERROR,
     MOCK_PERMISSION_ERROR,
-    MOCK_SELECT_OPTIONS_LIST,
     MOCK_SELECT_OPTION_CREATED,
     MOCK_SELECT_OPTION_UPDATED,
+    MOCK_SELECT_OPTIONS_LIST,
 )
 
 BASE_URL = "https://api.attio.com/v2"

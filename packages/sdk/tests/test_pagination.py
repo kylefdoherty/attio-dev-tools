@@ -2,16 +2,13 @@
 
 from __future__ import annotations
 
-import pytest
-
 from attio._pagination import (
     AsyncCursorIterator,
     AsyncOffsetIterator,
     CursorIterator,
     OffsetIterator,
 )
-from attio.models._base import ListResponse, Pagination, PaginatedResponse
-
+from attio.models._base import ListResponse, PaginatedResponse, Pagination
 
 # ---------------------------------------------------------------------------
 # CursorIterator (sync)

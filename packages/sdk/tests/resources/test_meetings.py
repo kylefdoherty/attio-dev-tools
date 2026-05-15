@@ -10,7 +10,6 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import NotFoundError
 from attio.models._base import PaginatedResponse
 from attio.models.meetings import Meeting
-
 from tests.fixtures.factory import (
     MOCK_MEETING_SINGLE,
     MOCK_MEETINGS_LIST,

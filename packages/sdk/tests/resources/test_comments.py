@@ -10,7 +10,6 @@ import respx
 
 from attio import AsyncAttioClient, AttioClient
 from attio.models.comments import Comment
-
 from tests.fixtures.factory import (
     MOCK_COMMENT_DELETE,
     MOCK_COMMENT_ON_ENTRY,

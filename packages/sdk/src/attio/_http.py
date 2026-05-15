@@ -16,7 +16,6 @@ from attio._config import USER_AGENT, ClientConfig
 from attio._exceptions import (
     AttioConnectionError,
     AttioTimeoutError,
-    RateLimitError,
     _raise_for_status,
 )
 from attio._types import JsonDict

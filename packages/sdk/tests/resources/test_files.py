@@ -11,7 +11,6 @@ import respx
 from attio import AsyncAttioClient, AttioClient
 from attio.models._base import PaginatedResponse
 from attio.models.files import AttioFile, DownloadUrl
-
 from tests.fixtures.factory import (
     MOCK_FILE_DELETE,
     MOCK_FILE_DOWNLOAD,

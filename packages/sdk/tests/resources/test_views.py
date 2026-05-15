@@ -7,12 +7,10 @@ import pytest
 import respx
 
 from attio import AsyncAttioClient, AttioClient
-from attio._exceptions import AttioPermissionError, NotFoundError
+from attio._exceptions import AttioPermissionError
 from attio.models._base import PaginatedResponse
 from attio.models.views import View
-
 from tests.fixtures.factory import (
-    MOCK_NOT_FOUND_ERROR,
     MOCK_PERMISSION_ERROR,
     MOCK_VIEWS_EMPTY,
     MOCK_VIEWS_FOR_LIST,

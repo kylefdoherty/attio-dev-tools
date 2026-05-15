@@ -9,7 +9,6 @@ import respx
 from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import AuthenticationError
 from attio.models.self_info import SelfInfo
-
 from tests.fixtures.factory import MOCK_SELF_INFO
 
 BASE_URL = "https://api.attio.com/v2"

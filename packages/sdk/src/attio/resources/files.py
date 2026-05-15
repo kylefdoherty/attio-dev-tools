@@ -148,12 +148,11 @@ class FilesResource(SyncResource, _FilesMixin):
             record_id=record_id,
             parent_folder_id=parent_folder_id,
         )
-        file_data = file if isinstance(file, bytes) else file
         raw = self._http.request_multipart(
             "POST",
             "/files",
             data=data,
-            files={"file": (filename, file_data)},
+            files={"file": (filename, file)},
         )
         return self._parse_single_response(raw)
 
@@ -230,12 +229,11 @@ class AsyncFilesResource(AsyncResource, _FilesMixin):
             record_id=record_id,
             parent_folder_id=parent_folder_id,
         )
-        file_data = file if isinstance(file, bytes) else file
         raw = await self._http.request_multipart(
             "POST",
             "/files",
             data=data,
-            files={"file": (filename, file_data)},
+            files={"file": (filename, file)},
         )
         return self._parse_single_response(raw)
 

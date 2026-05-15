@@ -12,7 +12,6 @@ from attio import AsyncAttioClient, AttioClient
 from attio._exceptions import NotFoundError
 from attio.models._base import ListResponse
 from attio.models.webhooks import Webhook
-
 from tests.fixtures.factory import (
     MOCK_NOT_FOUND_ERROR,
     MOCK_WEBHOOK_CREATED,
