@@ -778,3 +778,518 @@ MOCK_WEBHOOK_UPDATED: dict[str, Any] = {
 }
 
 MOCK_WEBHOOK_DELETE: dict[str, Any] = {}
+
+# ---------------------------------------------------------------------------
+# Records
+# ---------------------------------------------------------------------------
+
+MOCK_RECORD: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc",
+        "object_id": "obj_01abc",
+        "record_id": "rec_01abc",
+    },
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "web_url": "https://app.attio.com/people/rec_01abc",
+    "values": {
+        "name": [
+            {
+                "active_from": "2024-01-01T00:00:00.000Z",
+                "active_until": None,
+                "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+                "attribute_type": "personal-name",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "full_name": "Jane Doe",
+            }
+        ]
+    },
+}
+
+MOCK_RECORD_2: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc",
+        "object_id": "obj_01abc",
+        "record_id": "rec_02xyz",
+    },
+    "created_at": "2024-02-15T10:00:00.000Z",
+    "web_url": "https://app.attio.com/people/rec_02xyz",
+    "values": {
+        "name": [
+            {
+                "active_from": "2024-02-15T10:00:00.000Z",
+                "active_until": None,
+                "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+                "attribute_type": "personal-name",
+                "first_name": "John",
+                "last_name": "Smith",
+                "full_name": "John Smith",
+            }
+        ]
+    },
+}
+
+MOCK_RECORDS_LIST: dict[str, Any] = {
+    "data": [MOCK_RECORD, MOCK_RECORD_2],
+}
+
+MOCK_RECORD_SINGLE: dict[str, Any] = {
+    "data": MOCK_RECORD,
+}
+
+MOCK_RECORD_CREATED: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc",
+            "object_id": "obj_01abc",
+            "record_id": "rec_03new",
+        },
+        "created_at": "2024-06-01T12:00:00.000Z",
+        "web_url": "https://app.attio.com/people/rec_03new",
+        "values": {
+            "name": [
+                {
+                    "active_from": "2024-06-01T12:00:00.000Z",
+                    "active_until": None,
+                    "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+                    "attribute_type": "personal-name",
+                    "first_name": "Alice",
+                    "last_name": "Wonder",
+                    "full_name": "Alice Wonder",
+                }
+            ]
+        },
+    },
+}
+
+MOCK_RECORD_UPDATED: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc",
+            "object_id": "obj_01abc",
+            "record_id": "rec_01abc",
+        },
+        "created_at": "2024-01-01T00:00:00.000Z",
+        "web_url": "https://app.attio.com/people/rec_01abc",
+        "values": {
+            "name": [
+                {
+                    "active_from": "2024-06-01T12:00:00.000Z",
+                    "active_until": None,
+                    "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+                    "attribute_type": "personal-name",
+                    "first_name": "Jane",
+                    "last_name": "Updated",
+                    "full_name": "Jane Updated",
+                }
+            ]
+        },
+    },
+}
+
+MOCK_RECORD_ENTRY: dict[str, Any] = {
+    "list_id": "list_01abc",
+    "list_api_slug": "sales_pipeline",
+    "entry_id": "entry_01abc",
+    "created_at": "2024-03-01T09:00:00.000Z",
+}
+
+MOCK_RECORD_ENTRY_2: dict[str, Any] = {
+    "list_id": "list_02xyz",
+    "list_api_slug": "hiring_pipeline",
+    "entry_id": "entry_02xyz",
+    "created_at": "2024-04-01T10:00:00.000Z",
+}
+
+MOCK_RECORD_ENTRIES_LIST: dict[str, Any] = {
+    "data": [MOCK_RECORD_ENTRY, MOCK_RECORD_ENTRY_2],
+}
+
+MOCK_ATTRIBUTE_VALUE: dict[str, Any] = {
+    "active_from": "2024-01-01T00:00:00.000Z",
+    "active_until": None,
+    "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+    "attribute_type": "text",
+    "value": "jane@example.com",
+}
+
+MOCK_ATTRIBUTE_VALUES_LIST: dict[str, Any] = {
+    "data": [MOCK_ATTRIBUTE_VALUE],
+}
+
+MOCK_GLOBAL_SEARCH_RESULT: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc",
+        "object_id": "obj_01abc",
+        "record_id": "rec_01abc",
+    },
+    "record_text": "Jane Doe",
+    "record_image": "https://example.com/avatar.png",
+    "object_slug": "people",
+}
+
+MOCK_GLOBAL_SEARCH_RESULT_2: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc",
+        "object_id": "obj_02xyz",
+        "record_id": "rec_04search",
+    },
+    "record_text": "Acme Corp",
+    "record_image": None,
+    "object_slug": "companies",
+}
+
+MOCK_GLOBAL_SEARCH_RESULTS: dict[str, Any] = {
+    "data": [MOCK_GLOBAL_SEARCH_RESULT, MOCK_GLOBAL_SEARCH_RESULT_2],
+}
+
+MOCK_DELETE_RESPONSE: dict[str, Any] = {}
+
+# ---------------------------------------------------------------------------
+# Comments
+# ---------------------------------------------------------------------------
+
+MOCK_COMMENT: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "comment_id": "comment_01abc123def456",
+    },
+    "thread_id": "thread_01abc123def456",
+    "content_plaintext": "This looks great, let's proceed.",
+    "entry": None,
+    "record": {"record_id": "rec_01abc123def456", "object_id": "obj_01abc123def456"},
+    "resolved_at": None,
+    "resolved_by": None,
+    "created_at": "2024-04-01T10:00:00.000Z",
+    "author": {"type": "workspace-member", "id": "wm_01abc123def456"},
+}
+
+MOCK_COMMENT_2: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "comment_id": "comment_02xyz789ghi012",
+    },
+    "thread_id": "thread_01abc123def456",
+    "content_plaintext": "Agreed, moving forward.",
+    "entry": None,
+    "record": {"record_id": "rec_01abc123def456", "object_id": "obj_01abc123def456"},
+    "resolved_at": None,
+    "resolved_by": None,
+    "created_at": "2024-04-01T10:30:00.000Z",
+    "author": {"type": "workspace-member", "id": "wm_02xyz789ghi012"},
+}
+
+MOCK_COMMENT_ON_THREAD: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc123def456",
+            "comment_id": "comment_03new456abc789",
+        },
+        "thread_id": "thread_01abc123def456",
+        "content_plaintext": "Replying to thread.",
+        "entry": None,
+        "record": {"record_id": "rec_01abc123def456", "object_id": "obj_01abc123def456"},
+        "resolved_at": None,
+        "resolved_by": None,
+        "created_at": "2024-06-01T12:00:00.000Z",
+        "author": {"type": "workspace-member", "id": "wm_01abc123def456"},
+    },
+}
+
+MOCK_COMMENT_ON_RECORD: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc123def456",
+            "comment_id": "comment_04rec456abc789",
+        },
+        "thread_id": "thread_02new789def012",
+        "content_plaintext": "New comment on record.",
+        "entry": None,
+        "record": {"record_id": "rec_01abc123def456", "object_id": "obj_01abc123def456"},
+        "resolved_at": None,
+        "resolved_by": None,
+        "created_at": "2024-06-01T12:00:00.000Z",
+        "author": {"type": "workspace-member", "id": "wm_01abc123def456"},
+    },
+}
+
+MOCK_COMMENT_ON_ENTRY: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc123def456",
+            "comment_id": "comment_05ent456abc789",
+        },
+        "thread_id": "thread_03new789ghi012",
+        "content_plaintext": "New comment on entry.",
+        "entry": {"entry_id": "entry_01abc123def456", "list_id": "list_01abc123def456"},
+        "record": None,
+        "resolved_at": None,
+        "resolved_by": None,
+        "created_at": "2024-06-01T12:00:00.000Z",
+        "author": {"type": "workspace-member", "id": "wm_01abc123def456"},
+    },
+}
+
+MOCK_COMMENT_SINGLE: dict[str, Any] = {
+    "data": MOCK_COMMENT,
+}
+
+MOCK_COMMENT_DELETE: dict[str, Any] = {}
+
+# ---------------------------------------------------------------------------
+# Threads
+# ---------------------------------------------------------------------------
+
+MOCK_THREAD: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "thread_id": "thread_01abc123def456",
+    },
+    "comments": [MOCK_COMMENT, MOCK_COMMENT_2],
+    "created_at": "2024-04-01T10:00:00.000Z",
+}
+
+MOCK_THREAD_2: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "thread_id": "thread_02xyz789ghi012",
+    },
+    "comments": [],
+    "created_at": "2024-04-05T14:00:00.000Z",
+}
+
+MOCK_THREADS_LIST: dict[str, Any] = {
+    "data": [MOCK_THREAD, MOCK_THREAD_2],
+}
+
+MOCK_THREAD_SINGLE: dict[str, Any] = {
+    "data": MOCK_THREAD,
+}
+
+# ---------------------------------------------------------------------------
+# Files
+# ---------------------------------------------------------------------------
+
+MOCK_FILE: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "file_id": "file_01abc123def456",
+    },
+    "object_id": "obj_01abc123def456",
+    "object_slug": "people",
+    "record_id": "rec_01abc123def456",
+    "storage_provider": "attio",
+    "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+    "created_at": "2024-03-01T10:00:00.000Z",
+    "file_type": "file",
+    "name": "proposal.pdf",
+    "parent_folder_id": None,
+    "content_type": "application/pdf",
+    "content_size": 102400,
+}
+
+MOCK_FILE_2: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "file_id": "file_02xyz789ghi012",
+    },
+    "object_id": "obj_01abc123def456",
+    "object_slug": "people",
+    "record_id": "rec_01abc123def456",
+    "storage_provider": "attio",
+    "created_by_actor": {"id": "wm_01abc", "type": "workspace-member"},
+    "created_at": "2024-03-05T14:30:00.000Z",
+    "file_type": "folder",
+    "name": "Documents",
+    "parent_folder_id": None,
+    "content_type": None,
+    "content_size": None,
+}
+
+MOCK_FILES_LIST: dict[str, Any] = {
+    "data": [MOCK_FILE, MOCK_FILE_2],
+    "pagination": {"next_cursor": None},
+}
+
+MOCK_FILE_SINGLE: dict[str, Any] = {
+    "data": MOCK_FILE,
+}
+
+MOCK_FILE_FOLDER_CREATED: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc123def456",
+            "file_id": "file_03new456abc789",
+        },
+        "object_id": "obj_01abc123def456",
+        "object_slug": "people",
+        "record_id": "rec_01abc123def456",
+        "storage_provider": "attio",
+        "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+        "created_at": "2024-06-01T12:00:00.000Z",
+        "file_type": "folder",
+        "name": "New Folder",
+        "parent_folder_id": None,
+        "content_type": None,
+        "content_size": None,
+    },
+}
+
+MOCK_FILE_UPLOADED: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc123def456",
+            "file_id": "file_04upload789abc",
+        },
+        "object_id": "obj_01abc123def456",
+        "object_slug": "people",
+        "record_id": "rec_01abc123def456",
+        "storage_provider": "attio",
+        "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+        "created_at": "2024-06-01T12:00:00.000Z",
+        "file_type": "file",
+        "name": "report.csv",
+        "parent_folder_id": None,
+        "content_type": "text/csv",
+        "content_size": 2048,
+    },
+}
+
+MOCK_FILE_DOWNLOAD: dict[str, Any] = {
+    "data": {
+        "url": "https://storage.attio.com/files/file_01abc123def456/download?token=abc123",
+    },
+}
+
+MOCK_FILE_DELETE: dict[str, Any] = {}
+
+# ---------------------------------------------------------------------------
+# Meetings
+# ---------------------------------------------------------------------------
+
+MOCK_MEETING: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "meeting_id": "mtg_01abc123def456",
+    },
+    "title": "Q3 Planning",
+    "description": "Quarterly planning session",
+    "start_time": "2024-04-01T14:00:00.000Z",
+    "end_time": "2024-04-01T15:00:00.000Z",
+    "participants": [
+        {
+            "email_address": "jane@example.com",
+            "name": "Jane Doe",
+            "workspace_member_id": "wm_01abc123def456",
+        },
+        {
+            "email_address": "john@example.com",
+            "name": "John Smith",
+            "workspace_member_id": None,
+        },
+    ],
+    "linked_records": [
+        {"target_object": "companies", "target_record_id": "rec_01abc123def456"}
+    ],
+    "created_at": "2024-03-25T10:00:00.000Z",
+}
+
+MOCK_MEETING_2: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "meeting_id": "mtg_02xyz789ghi012",
+    },
+    "title": "Sales Review",
+    "description": None,
+    "start_time": "2024-04-02T10:00:00.000Z",
+    "end_time": "2024-04-02T10:30:00.000Z",
+    "participants": [
+        {
+            "email_address": "jane@example.com",
+            "name": "Jane Doe",
+            "workspace_member_id": "wm_01abc123def456",
+        },
+    ],
+    "linked_records": [],
+    "created_at": "2024-03-28T08:00:00.000Z",
+}
+
+MOCK_MEETINGS_LIST: dict[str, Any] = {
+    "data": [MOCK_MEETING, MOCK_MEETING_2],
+    "pagination": {"next_cursor": None},
+}
+
+MOCK_MEETING_SINGLE: dict[str, Any] = {
+    "data": MOCK_MEETING,
+}
+
+# ---------------------------------------------------------------------------
+# Call Recordings
+# ---------------------------------------------------------------------------
+
+MOCK_CALL_RECORDING: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "call_recording_id": "cr_01abc123def456",
+    },
+    "meeting_id": "mtg_01abc123def456",
+    "status": "completed",
+    "web_url": "https://app.attio.com/recordings/cr_01abc123def456",
+    "actor": {"id": "actor_01abc", "type": "api-token"},
+    "created_at": "2024-04-01T15:05:00.000Z",
+}
+
+MOCK_CALL_RECORDING_2: dict[str, Any] = {
+    "id": {
+        "workspace_id": "ws_01abc123def456",
+        "call_recording_id": "cr_02xyz789ghi012",
+    },
+    "meeting_id": "mtg_01abc123def456",
+    "status": "processing",
+    "web_url": None,
+    "actor": None,
+    "created_at": "2024-04-01T15:10:00.000Z",
+}
+
+MOCK_CALL_RECORDINGS_LIST: dict[str, Any] = {
+    "data": [MOCK_CALL_RECORDING, MOCK_CALL_RECORDING_2],
+    "pagination": {"next_cursor": None},
+}
+
+MOCK_CALL_RECORDING_SINGLE: dict[str, Any] = {
+    "data": MOCK_CALL_RECORDING,
+}
+
+# ---------------------------------------------------------------------------
+# Transcripts
+# ---------------------------------------------------------------------------
+
+MOCK_TRANSCRIPT_SEGMENT: dict[str, Any] = {
+    "speech": "Let's start with the Q3 roadmap.",
+    "start_time": 0.0,
+    "end_time": 3.5,
+    "speaker": "Jane Doe",
+}
+
+MOCK_TRANSCRIPT_SEGMENT_2: dict[str, Any] = {
+    "speech": "Sure, I have some updates on the pipeline.",
+    "start_time": 3.5,
+    "end_time": 7.2,
+    "speaker": "John Smith",
+}
+
+MOCK_TRANSCRIPT_SEGMENT_3: dict[str, Any] = {
+    "speech": "Great, let's hear it.",
+    "start_time": 7.2,
+    "end_time": 9.0,
+    "speaker": None,
+}
+
+MOCK_TRANSCRIPT_LIST: dict[str, Any] = {
+    "data": [
+        MOCK_TRANSCRIPT_SEGMENT,
+        MOCK_TRANSCRIPT_SEGMENT_2,
+        MOCK_TRANSCRIPT_SEGMENT_3,
+    ],
+    "pagination": {"next_cursor": None},
+}

@@ -20,6 +20,7 @@ from attio.resources.statuses import AsyncStatusesResource, StatusesResource
 from attio.resources.self_resource import AsyncSelfResource, SelfResource
 from attio.resources.tasks import AsyncTasksResource, TasksResource
 from attio.resources.threads import AsyncThreadsResource, ThreadsResource
+from attio.resources.transcripts import AsyncTranscriptsResource, TranscriptsResource
 from attio.resources.views import AsyncViewsResource, ViewsResource
 from attio.resources.webhooks import AsyncWebhooksResource, WebhooksResource
 from attio.resources.workspace_members import (
@@ -29,8 +30,11 @@ from attio.resources.workspace_members import (
 
 __all__ = [
     "AsyncAttributesResource",
+    "AsyncCallRecordingsResource",
     "AsyncCommentsResource",
+    "AsyncFilesResource",
     "AsyncListsResource",
+    "AsyncMeetingsResource",
     "AsyncNotesResource",
     "AsyncObjectsResource",
     "AsyncRecordsResource",
@@ -39,12 +43,16 @@ __all__ = [
     "AsyncStatusesResource",
     "AsyncTasksResource",
     "AsyncThreadsResource",
+    "AsyncTranscriptsResource",
     "AsyncViewsResource",
     "AsyncWebhooksResource",
     "AsyncWorkspaceMembersResource",
     "AttributesResource",
+    "CallRecordingsResource",
     "CommentsResource",
+    "FilesResource",
     "ListsResource",
+    "MeetingsResource",
     "NotesResource",
     "ObjectsResource",
     "RecordsResource",
@@ -53,6 +61,7 @@ __all__ = [
     "StatusesResource",
     "TasksResource",
     "ThreadsResource",
+    "TranscriptsResource",
     "ViewsResource",
     "WebhooksResource",
     "WorkspaceMembersResource",
