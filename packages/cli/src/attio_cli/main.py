@@ -11,17 +11,27 @@ import typer
 
 from attio_cli import __version__
 from attio_cli.commands import (
+    attributes,
     auth,
+    comments,
     companies,
     deals,
     entries,
+    files,
     lists,
+    meetings,
     notes,
     objects,
     people,
     records,
+    recordings,
     search,
+    select_options,
+    statuses,
     tasks,
+    threads,
+    transcripts,
+    views,
     webhooks,
     workspace,
 )
@@ -47,6 +57,16 @@ app.add_typer(tasks.app, name="tasks", help="Manage tasks.")
 app.add_typer(webhooks.app, name="webhooks", help="Manage webhooks.")
 app.add_typer(workspace.app, name="workspace", help="Workspace info and members.")
 app.add_typer(search.app, name="search", help="Search across all objects.")
+app.add_typer(attributes.app, name="attributes", help="Manage object and list attributes.")
+app.add_typer(select_options.app, name="select-options", help="Manage select attribute options.")
+app.add_typer(statuses.app, name="statuses", help="Manage status attribute options.")
+app.add_typer(comments.app, name="comments", help="Manage comments.")
+app.add_typer(threads.app, name="threads", help="Manage comment threads.")
+app.add_typer(files.app, name="files", help="Manage files.")
+app.add_typer(views.app, name="views", help="List saved views.")
+app.add_typer(meetings.app, name="meetings", help="List and view meetings.")
+app.add_typer(recordings.app, name="recordings", help="List and view call recordings.")
+app.add_typer(transcripts.app, name="transcripts", help="View call transcripts.")
 
 
 def _version_callback(value: bool) -> None:
