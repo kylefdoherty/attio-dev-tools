@@ -198,3 +198,139 @@ class TestPeopleSearch:
             parsed = json.loads(result.output)
             assert len(parsed["data"]) == 1
             assert parsed["data"][0]["record_id"] == "rec_123"
+
+
+class TestPeopleAppend:
+    """Test the people append command."""
+
+    def test_append_json_output(self):
+        """people append --json should return the updated record."""
+        mock_record = _make_mock_record(record_id="rec_123")
+
+        with patch("attio_cli.commands.people.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.people.append.return_value = mock_record
+            mock_gc.return_value = mock_client
+
+            values = '{"tags": [{"value": "vip"}]}'
+            result = runner.invoke(
+                app, ["--json", "people", "append", "rec_123", "--values", values]
+            )
+            assert result.exit_code == 0
+            parsed = json.loads(result.output)
+            assert parsed["data"]["record_id"] == "rec_123"
+            mock_client.people.append.assert_called_once_with(
+                "rec_123", values={"tags": [{"value": "vip"}]}
+            )
+
+    def test_append_requires_values(self):
+        """people append without --values should fail."""
+        result = runner.invoke(app, ["--json", "people", "append", "rec_123"])
+        assert result.exit_code != 0
+
+
+class TestPeopleValues:
+    """Test the people values command."""
+
+    def test_values_json_output(self):
+        """people values --json should return attribute values."""
+        mock_value = MagicMock()
+        mock_value.model_dump.return_value = {
+            "attribute_type": "email",
+            "active_from": "2026-01-01T00:00:00Z",
+            "active_until": None,
+            "email_address": "jane@example.com",
+        }
+        mock_response = MagicMock()
+        mock_response.data = [mock_value]
+
+        with patch("attio_cli.commands.people.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.people.get_attribute_values.return_value = mock_response
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(
+                app,
+                ["--json", "people", "values", "rec_123", "--attribute", "email_addresses"],
+            )
+            assert result.exit_code == 0
+            parsed = json.loads(result.output)
+            assert "data" in parsed
+            assert len(parsed["data"]) == 1
+            assert parsed["data"][0]["attribute_type"] == "email"
+            mock_client.people.get_attribute_values.assert_called_once_with(
+                "rec_123", "email_addresses", show_historic=False, limit=25, offset=0
+            )
+
+    def test_values_with_show_historic(self):
+        """people values --show-historic should pass flag to SDK."""
+        mock_response = MagicMock()
+        mock_response.data = []
+
+        with patch("attio_cli.commands.people.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.people.get_attribute_values.return_value = mock_response
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(
+                app,
+                [
+                    "--json", "people", "values", "rec_123",
+                    "--attribute", "email_addresses",
+                    "--show-historic",
+                ],
+            )
+            assert result.exit_code == 0
+            mock_client.people.get_attribute_values.assert_called_once_with(
+                "rec_123", "email_addresses", show_historic=True, limit=25, offset=0
+            )
+
+
+class TestPeopleEntries:
+    """Test the people entries command."""
+
+    def test_entries_json_output(self):
+        """people entries --json should return entry list."""
+        mock_entry = MagicMock()
+        mock_entry.list_id = "list_abc"
+        mock_entry.list_api_slug = "my-list"
+        mock_entry.entry_id = "entry_456"
+        mock_entry.created_at = "2026-01-01T00:00:00Z"
+        mock_response = MagicMock()
+        mock_response.data = [mock_entry]
+
+        with patch("attio_cli.commands.people.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.people.list_entries.return_value = mock_response
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(
+                app, ["--json", "people", "entries", "rec_123"]
+            )
+            assert result.exit_code == 0
+            parsed = json.loads(result.output)
+            assert "data" in parsed
+            assert len(parsed["data"]) == 1
+            assert parsed["data"][0]["entry_id"] == "entry_456"
+            assert parsed["data"][0]["list_slug"] == "my-list"
+            mock_client.people.list_entries.assert_called_once_with(
+                "rec_123", limit=25, offset=0
+            )
+
+    def test_entries_with_limit(self):
+        """people entries --limit should pass limit to SDK."""
+        mock_response = MagicMock()
+        mock_response.data = []
+
+        with patch("attio_cli.commands.people.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.people.list_entries.return_value = mock_response
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(
+                app, ["--json", "people", "entries", "rec_123", "--limit", "5"]
+            )
+            assert result.exit_code == 0
+            mock_client.people.list_entries.assert_called_once_with(
+                "rec_123", limit=5, offset=0
+            )

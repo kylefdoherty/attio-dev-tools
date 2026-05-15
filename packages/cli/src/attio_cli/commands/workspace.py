@@ -77,3 +77,20 @@ def members(ctx: typer.Context) -> None:
         raise
     except Exception as e:
         handle_api_error(e, ctx)
+
+
+@app.command()
+def member(
+    ctx: typer.Context,
+    member_id: str = typer.Argument(help="Workspace member ID."),
+) -> None:
+    """Get a workspace member by ID."""
+    client = get_client(ctx)
+    try:
+        result = client.workspace_members.get(member_id)
+        data = _member_to_dict(result)
+        output_single(data, ctx, title=f"Workspace Member {member_id}")
+    except SystemExit:
+        raise
+    except Exception as e:
+        handle_api_error(e, ctx)

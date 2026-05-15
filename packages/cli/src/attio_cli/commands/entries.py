@@ -1,4 +1,4 @@
-"""Entries commands: list, get, create, update, upsert, delete."""
+"""Entries commands: list, get, create, update, upsert, delete, append, values."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ import typer
 from attio_cli._client import get_client
 from attio_cli._errors import handle_api_error
 from attio_cli._output import output_list, output_single, output_success
-from attio_cli.commands._record_helpers import parse_json_option
+from attio_cli.commands._record_helpers import VALUE_COLUMNS, parse_json_option
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -180,6 +180,56 @@ def delete(
     try:
         client.entries.delete(list_slug, entry_id)
         output_success(f"Deleted entry {entry_id} from {list_slug}", ctx)
+    except SystemExit:
+        raise
+    except Exception as e:
+        handle_api_error(e, ctx)
+
+
+@app.command()
+def append(
+    ctx: typer.Context,
+    entry_id: str = typer.Argument(help="Entry ID."),
+    list_slug: str = typer.Option(..., "--list", help="List slug."),
+    values: str = typer.Option(..., "--values", help="JSON entry values to append."),
+) -> None:
+    """Append values to a list entry (adds to multiselect fields without overwriting)."""
+    client = get_client(ctx)
+    try:
+        values_obj = parse_json_option(values)
+        if not values_obj:
+            raise typer.BadParameter("--values must be a non-empty JSON object.")
+        result = client.entries.append(list_slug, entry_id, entry_values=values_obj)
+        data = _entry_to_dict(result)
+        output_single(data, ctx, title=f"Appended Entry {entry_id}")
+    except SystemExit:
+        raise
+    except Exception as e:
+        handle_api_error(e, ctx)
+
+
+@app.command("values")
+def get_values(
+    ctx: typer.Context,
+    entry_id: str = typer.Argument(help="Entry ID."),
+    list_slug: str = typer.Option(..., "--list", help="List slug or ID."),
+    attribute: str = typer.Option(..., "--attribute", help="Attribute slug or ID."),
+    show_historic: bool = typer.Option(False, "--show-historic", help="Include historical values."),
+    limit: int = typer.Option(25, "--limit", help="Maximum number of results."),
+    offset: int = typer.Option(0, "--offset", help="Pagination offset."),
+) -> None:
+    """Get attribute values for a list entry."""
+    client = get_client(ctx)
+    try:
+        result = client.entries.get_attribute_values(
+            list_slug, entry_id, attribute, show_historic=show_historic, limit=limit, offset=offset
+        )
+        output_list(
+            [v.model_dump(mode="json") for v in result.data],
+            VALUE_COLUMNS,
+            ctx,
+            title=f"Values: {attribute}",
+        )
     except SystemExit:
         raise
     except Exception as e:

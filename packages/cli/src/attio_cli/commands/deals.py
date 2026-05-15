@@ -1,4 +1,4 @@
-"""Deals commands: list, get, create, update, upsert, delete, search, move."""
+"""Deals commands: list, get, create, update, upsert, delete, search, move, append, values, entries."""
 
 from __future__ import annotations
 
@@ -12,6 +12,8 @@ from attio_cli._errors import handle_api_error
 from attio_cli._output import output_list, output_single, output_success
 from attio_cli.commands._record_helpers import (
     DEALS_COLUMNS,
+    ENTRY_LIST_COLUMNS,
+    VALUE_COLUMNS,
     parse_json_option,
     record_to_dict,
 )
@@ -190,6 +192,80 @@ def move(
         )
         data = record_to_dict(record)
         output_single(data, ctx, title=f"Moved Deal {record_id}")
+    except SystemExit:
+        raise
+    except Exception as e:
+        handle_api_error(e, ctx)
+
+
+@app.command()
+def append(
+    ctx: typer.Context,
+    record_id: str = typer.Argument(help="Record ID to append values to."),
+    values: str = typer.Option(..., "--values", help="JSON values to append."),
+) -> None:
+    """Append values to a record (adds to multiselect fields without overwriting)."""
+    client = get_client(ctx)
+    try:
+        values_obj = parse_json_option(values)
+        if not values_obj:
+            raise typer.BadParameter("--values must be a non-empty JSON object.")
+        result = client.deals.append(record_id, values=values_obj)
+        output_single(record_to_dict(result), ctx, title=f"Appended Deal {record_id}")
+    except SystemExit:
+        raise
+    except Exception as e:
+        handle_api_error(e, ctx)
+
+
+@app.command("values")
+def get_values(
+    ctx: typer.Context,
+    record_id: str = typer.Argument(help="Record ID."),
+    attribute: str = typer.Option(..., "--attribute", help="Attribute slug or ID."),
+    show_historic: bool = typer.Option(False, "--show-historic", help="Include historical values."),
+    limit: int = typer.Option(25, "--limit", help="Maximum number of results."),
+    offset: int = typer.Option(0, "--offset", help="Pagination offset."),
+) -> None:
+    """Get attribute values for a record."""
+    client = get_client(ctx)
+    try:
+        result = client.deals.get_attribute_values(
+            record_id, attribute, show_historic=show_historic, limit=limit, offset=offset
+        )
+        output_list(
+            [v.model_dump(mode="json") for v in result.data],
+            VALUE_COLUMNS,
+            ctx,
+            title=f"Values: {attribute}",
+        )
+    except SystemExit:
+        raise
+    except Exception as e:
+        handle_api_error(e, ctx)
+
+
+@app.command("entries")
+def list_entries(
+    ctx: typer.Context,
+    record_id: str = typer.Argument(help="Record ID."),
+    limit: int = typer.Option(25, "--limit", help="Maximum number of results."),
+    offset: int = typer.Option(0, "--offset", help="Pagination offset."),
+) -> None:
+    """List entries (list memberships) for a record."""
+    client = get_client(ctx)
+    try:
+        result = client.deals.list_entries(record_id, limit=limit, offset=offset)
+        entry_dicts = [
+            {
+                "list_id": e.list_id,
+                "list_slug": e.list_api_slug,
+                "entry_id": e.entry_id,
+                "created_at": str(e.created_at),
+            }
+            for e in result.data
+        ]
+        output_list(entry_dicts, ENTRY_LIST_COLUMNS, ctx, title="Record Entries")
     except SystemExit:
         raise
     except Exception as e:
