@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "attio-cli"
+version = "0.1.0"
+description = "The Attio CRM command-line interface"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+    "attio>=0.1.0",
+    "typer[all]>=0.15",
+    "rich>=13.0",
+]
+
+[project.scripts]
+attio = "attio_cli.main:app"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/attio_cli"]

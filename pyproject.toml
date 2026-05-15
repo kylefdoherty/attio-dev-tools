@@ -9,7 +9,7 @@ description = "Attio Python SDK monorepo"
 requires-python = ">=3.10"
 
 [tool.hatch.workspace]
-members = ["packages/sdk"]
+members = ["packages/sdk", "packages/cli"]
 
 [tool.ruff]
 line-length = 120
@@ -20,7 +20,7 @@ select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
 ignore = ["UP007"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["attio"]
+known-first-party = ["attio", "attio_cli"]
 
 [tool.mypy]
 python_version = "3.10"
