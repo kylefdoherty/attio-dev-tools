@@ -317,8 +317,10 @@ values = {
 
 Why arrays? Two reasons:
 
-1. **Multi-value support.** A person can have multiple email addresses. The array structure handles this naturally.
-2. **History tracking.** Each value has `active_from` and `active_until` timestamps. When a value changes, the old value gets an `active_until` and a new value is added.
+1. **Multi-value support.** Some attributes naturally have multiple values -- a person can have 3 email addresses, a company can have multiple domains. Rather than having some attributes return a single value and others return arrays, Attio made everything an array for consistency. You never have to guess whether a field is single or multi-value.
+2. **History tracking.** Every value in the array carries `active_from` and `active_until` timestamps. When you change someone's job title from "Engineer" to "CTO", Attio doesn't delete the old value -- it sets `active_until` on "Engineer" and creates a new "CTO" entry with `active_from` set to now. The API returns only currently-active values by default, but you can query the full history. Even a field like "Job Title" that seems like a single value is actually a timeline of every value it has ever had.
+
+This is the #1 source of bugs when starting with the Attio API -- forgetting to wrap values in `[]`.
 
 When reading values back:
 
