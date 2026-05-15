@@ -11,6 +11,7 @@ import typer
 
 from attio_cli import __version__
 from attio_cli.commands import (
+    api,
     attributes,
     auth,
     comments,
@@ -42,6 +43,9 @@ app = typer.Typer(
     rich_markup_mode="rich",
     no_args_is_help=True,
 )
+
+# Register standalone commands
+app.command(name="api", help="Make raw API requests with authentication.")(api.api_command)
 
 # Register command groups
 app.add_typer(auth.app, name="auth", help="Authenticate with the Attio API.")
