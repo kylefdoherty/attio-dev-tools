@@ -120,16 +120,12 @@ GENERIC_COLUMNS = [
     {"header": "URL", "accessor": lambda r: r.get("web_url", "")},
 ]
 
-# Mapping from standard object slugs to their pre-built column definitions.
 _STANDARD_OBJECT_COLUMNS: dict[str, list[dict[str, Any]]] = {
     "people": PEOPLE_COLUMNS,
     "companies": COMPANIES_COLUMNS,
     "deals": DEALS_COLUMNS,
 }
 
-# Attribute types that render well as table columns. Types like
-# record-reference or interaction produce opaque IDs that aren't useful
-# in a compact table view.
 _DISPLAYABLE_ATTR_TYPES: set[str] = {
     "text",
     "number",
@@ -147,29 +143,18 @@ _DISPLAYABLE_ATTR_TYPES: set[str] = {
     "location",
 }
 
-# Maximum number of attribute columns to include in dynamic tables (beyond ID
-# and Created, which are always shown).
 _MAX_DYNAMIC_COLUMNS = 6
 
-# Per-session cache: object_slug -> list[column_def].  Avoids re-fetching
-# attribute metadata for the same object within a single CLI invocation.
 _attribute_column_cache: dict[str, list[dict[str, Any]]] = {}
 
 
 def _make_accessor(slug: str) -> Callable[[dict[str, Any]], str]:
-    """Build an accessor lambda that reads *slug* from the flattened dict."""
     def _accessor(r: dict[str, Any], _slug: str = slug) -> str:
         return str(r.get(_slug, ""))
     return _accessor
 
 
 def _build_columns_from_attributes(attributes: list[Any]) -> list[dict[str, Any]]:
-    """Convert a list of Attribute models into column definitions.
-
-    Filters to displayable types, excludes archived attributes, and caps at
-    ``_MAX_DYNAMIC_COLUMNS`` attribute columns.  ID and Created are always
-    prepended.
-    """
     cols: list[dict[str, Any]] = [
         {"header": "ID", "accessor": lambda r: r.get("record_id", ""), "no_wrap": True},
     ]
@@ -202,29 +187,15 @@ def get_columns_for_object(
     object_slug: str,
     client: Any | None = None,
 ) -> list[dict[str, Any]]:
-    """Return display columns for *object_slug*.
-
-    For standard objects (people, companies, deals) this returns the
-    pre-built column definitions -- output is identical to the hardcoded
-    versions.  For custom or unknown objects it fetches attribute metadata
-    from the API and builds columns dynamically, falling back to
-    ``GENERIC_COLUMNS`` if the fetch fails or no client is provided.
-
-    Results are cached per object slug for the lifetime of the process.
-    """
-    # Fast path: standard objects
     if object_slug in _STANDARD_OBJECT_COLUMNS:
         return _STANDARD_OBJECT_COLUMNS[object_slug]
 
-    # Check cache
     if object_slug in _attribute_column_cache:
         return _attribute_column_cache[object_slug]
 
-    # No client -> fall back to generic
     if client is None:
         return GENERIC_COLUMNS
 
-    # Fetch attribute metadata
     try:
         result = client.attributes.list("objects", object_slug)
         attributes = result.data
@@ -234,15 +205,10 @@ def get_columns_for_object(
         _attribute_column_cache[object_slug] = columns
         return columns
     except Exception:
-        # Network or permission error -- degrade gracefully
-        _stderr.print(
-            "[dim]Could not fetch attribute metadata; using generic columns.[/dim]"
-        )
         return GENERIC_COLUMNS
 
 
 def clear_attribute_cache() -> None:
-    """Clear the cached attribute columns.  Useful for testing."""
     _attribute_column_cache.clear()
 
 

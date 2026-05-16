@@ -370,3 +370,32 @@ class TestRecordsListDynamicColumns:
             parsed = json.loads(result.output)
             assert len(parsed["data"]) == 1
             mock_client.attributes.list.assert_called_once_with("objects", "custom_tasks")
+
+    def test_json_output_unchanged_for_standard_objects(self):
+        """JSON output for standard objects (people) should not change."""
+        mock_response = MagicMock()
+        mock_record = MagicMock()
+        mock_record.id = MagicMock()
+        mock_record.id.record_id = "rec_p123"
+        mock_record.id.object_id = "obj_people"
+        mock_record.created_at = "2026-01-01T00:00:00Z"
+        mock_record.web_url = "https://app.attio.com/record/rec_p123"
+        mock_record.values = {
+            "name": [MagicMock(**{
+                "model_dump.return_value": {"first_name": "Jane", "last_name": "Doe"},
+            })],
+        }
+        mock_response.data = [mock_record]
+
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
+            mock_client = MagicMock()
+            mock_client.records.list.return_value = mock_response
+            mock_gc.return_value = mock_client
+
+            result = runner.invoke(
+                app, ["--json", "records", "list", "--object", "people"]
+            )
+            assert result.exit_code == 0
+            parsed = json.loads(result.output)
+            assert parsed["data"][0]["record_id"] == "rec_p123"
+            assert parsed["data"][0]["name"] == "Jane Doe"
