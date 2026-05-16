@@ -1,0 +1,16 @@
+interactions:
+- request:
+    body: '{"data":{"matching_attribute":"name","values":{"name":[{"value":"VCR Upsert
+      Test Company"}]}}}'
+    headers:
+      authorization: Bearer sk_test_REDACTED
+      content-type: application/json
+    method: PUT
+    url: https://api.attio.com/v2/objects/companies/records
+  response:
+    body: '{"code": "VALIDATION_ERROR", "message": "Query params validation error."}'
+    headers:
+      content-type: application/json; charset=utf-8
+    status: 400
+    statusText: Bad Request
+version: 1

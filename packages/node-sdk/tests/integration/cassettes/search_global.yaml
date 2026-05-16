@@ -1,0 +1,15 @@
+interactions:
+- request:
+    body: '{"query":"test","limit":5}'
+    headers:
+      authorization: Bearer sk_test_REDACTED
+      content-type: application/json
+    method: POST
+    url: https://api.attio.com/v2/objects/records/search
+  response:
+    body: '{"code": "VALIDATION_ERROR", "message": "Body payload validation error."}'
+    headers:
+      content-type: application/json; charset=utf-8
+    status: 400
+    statusText: Bad Request
+version: 1

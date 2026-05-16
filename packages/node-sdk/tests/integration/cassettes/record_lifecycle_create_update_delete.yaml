@@ -1,0 +1,70 @@
+interactions:
+- request:
+    body: '{"data":{"values":{"name":[{"value":"VCR Test Company"}]}}}'
+    headers:
+      authorization: Bearer sk_test_REDACTED
+      content-type: application/json
+    method: POST
+    url: https://api.attio.com/v2/objects/companies/records
+  response:
+    body: '{"data": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+      "created_at": "2026-05-16T00:00:00.000000000Z", "web_url": "https://app.attio.com/companies/vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "values": {"name": [{"active_from": "2026-05-16T00:00:00.000000000Z", "active_until":
+      null, "created_by_actor": {"type": "api-token", "id": "tok_01"}, "attribute_type":
+      "text", "first_name": null, "last_name": null, "full_name": null, "value": "VCR
+      Test Company"}]}}}'
+    headers:
+      content-type: application/json; charset=utf-8
+    status: 200
+    statusText: OK
+- request:
+    body: '{"data":{"values":{"name":[{"value":"VCR Test Company (Updated)"}]}}}'
+    headers:
+      authorization: Bearer sk_test_REDACTED
+      content-type: application/json
+    method: PUT
+    url: https://api.attio.com/v2/objects/companies/records/vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  response:
+    body: '{"data": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+      "created_at": "2026-05-16T00:00:00.000000000Z", "web_url": "https://app.attio.com/companies/vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "values": {"name": [{"active_from": "2026-05-16T00:00:00.000000000Z", "active_until":
+      null, "created_by_actor": {"type": "api-token", "id": "tok_01"}, "attribute_type":
+      "text", "first_name": null, "last_name": null, "full_name": null, "value": "VCR
+      Test Company (Updated)"}]}}}'
+    headers:
+      content-type: application/json; charset=utf-8
+    status: 200
+    statusText: OK
+- request:
+    body: ''
+    headers:
+      authorization: Bearer sk_test_REDACTED
+    method: GET
+    url: https://api.attio.com/v2/objects/companies/records/vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  response:
+    body: '{"data": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+      "created_at": "2026-05-16T00:00:00.000000000Z", "web_url": "https://app.attio.com/companies/vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "values": {"name": [{"active_from": "2026-05-16T00:00:00.000000000Z", "active_until":
+      null, "created_by_actor": {"type": "api-token", "id": "tok_01"}, "attribute_type":
+      "text", "first_name": null, "last_name": null, "full_name": null, "value": "VCR
+      Test Company (Updated)"}]}}}'
+    headers:
+      content-type: application/json; charset=utf-8
+    status: 200
+    statusText: OK
+- request:
+    body: ''
+    headers:
+      authorization: Bearer sk_test_REDACTED
+    method: DELETE
+    url: https://api.attio.com/v2/objects/companies/records/vcr-test-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  response:
+    body: '{}'
+    headers:
+      content-type: application/json; charset=utf-8
+    status: 200
+    statusText: OK
+version: 1

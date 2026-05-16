@@ -1,0 +1,660 @@
+interactions:
+- request:
+    body: '{"limit":5}'
+    headers:
+      accept: '*/*'
+      accept-encoding: gzip, deflate
+      connection: keep-alive
+      content-length: '11'
+      content-type: application/json
+      host: api.attio.com
+      user-agent: attio-python/0.1.0
+    method: POST
+    url: https://api.attio.com/v2/objects/companies/records/query
+  response:
+    body: '{"data": [{"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "498f9009-e208-4386-90ce-f4c272b13a74"},
+      "created_at": "2026-05-09T21:43:08.480000000Z", "web_url": "https://app.attio.com/doherty-consulting/company/498f9009-e208-4386-90ce-f4c272b13a74",
+      "values": {"record_id": [{"active_from": "2026-05-09T21:43:08.480000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "498f9009-e208-4386-90ce-f4c272b13a74", "attribute_type": "text"}],
+      "domains": [{"active_from": "2026-05-09T21:43:08.480000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "domain": "popl.co", "root_domain": "popl.co", "attribute_type": "domain"}],
+      "name": [{"active_from": "2026-05-09T21:43:08.480000000Z", "active_until": null,
+      "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "Popl", "attribute_type": "text"}], "description": [{"active_from":
+      "2026-05-09T21:43:08.732000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "Popl is the top digital business card
+      platform for teams and individuals, enabling easy contact sharing and lead generation
+      globally.", "attribute_type": "text"}], "team": [], "categories": [{"active_from":
+      "2026-05-09T21:43:08.733000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "d4289cb1-4811-4b11-a28b-3ad2880d50b7"}, "title": "B2C", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "4adb623b-a001-4b1b-b1b1-f54e29be6f54"}, "title": "Information
+      Technology & Services", "is_archived": false}, "attribute_type": "select"},
+      {"active_from": "2026-05-09T21:43:08.733000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "4c2f33c0-e8e9-41f1-ab36-9ba6354117fd"}, "title": "Technology",
+      "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "9776b17e-d911-4397-9ac0-018f94d40572"}, "title": "E-commerce",
+      "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "cb8ff1f3-a968-4925-9d0f-8886dfc485de"}, "title": "B2B", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "268994e1-4787-4c78-8d54-9e912d00b979"}, "title": "Mobile", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "a913f7aa-9a18-48dc-ae0a-317125451ac8"}, "title": "SAAS", "is_archived":
+      false}, "attribute_type": "select"}], "primary_location": [{"active_from": "2026-05-09T21:43:08.732000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "line_1":
+      "11740 Wilshire Boulevard", "line_2": null, "line_3": null, "line_4": null,
+      "locality": "Los Angeles", "region": "California", "postcode": "90025", "country_code":
+      "US", "latitude": "34.0483313", "longitude": "-118.4610985", "attribute_type":
+      "location"}], "logo_url": [{"active_from": "2026-05-09T21:43:08.732000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "https://brandbadge.clearbit.com/5456b228-6274-4d4c-b234-911ff2ecef71", "attribute_type":
+      "text"}], "angellist": [], "facebook": [], "instagram": [], "linkedin": [{"active_from":
+      "2026-05-09T21:43:08.732000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "https://linkedin.com/company/poplco",
+      "attribute_type": "text"}], "twitter": [{"active_from": "2026-05-09T21:43:08.732000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "https://x.com/poplco", "attribute_type": "text"}], "twitter_follower_count":
+      [{"active_from": "2026-05-09T21:43:08.733000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": 1033, "attribute_type": "number"}],
+      "estimated_arr_usd": [{"active_from": "2026-05-09T21:43:08.733000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "option": {"id": {"workspace_id":
+      "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+      "attribute_id": "1af6617a-01b7-4132-b380-72e6f15ec826", "option_id": "74b1f86f-8541-40a1-8550-4a0f8a52bf46"},
+      "title": "$1M-$10M", "is_archived": false}, "attribute_type": "select"}], "funding_raised_usd":
+      [], "foundation_date": [{"active_from": "2026-05-09T21:43:08.733000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "2020-01-01",
+      "attribute_type": "date"}], "employee_range": [{"active_from": "2026-05-09T21:43:08.733000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "11b72cf6-0d4f-4181-aeb1-d689bac7e31b",
+      "option_id": "ae8c339f-d387-46f4-9795-88754d301fbd"}, "title": "11-50", "is_archived":
+      false}, "attribute_type": "select"}], "first_calendar_interaction": [], "last_calendar_interaction":
+      [], "next_calendar_interaction": [], "first_email_interaction": [], "last_email_interaction":
+      [], "first_interaction": [], "last_interaction": [], "next_interaction": [],
+      "strongest_connection_strength_legacy": [], "strongest_connection_strength":
+      [], "strongest_connection_user": [], "associated_deals": [], "created_at": [{"active_from":
+      "2026-05-09T21:43:08.480000000Z", "active_until": null, "created_by_actor":
+      {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "2026-05-09T21:42:57.234000000Z", "attribute_type": "timestamp"}],
+      "created_by": [{"active_from": "2026-05-09T21:43:08.480000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "referenced_actor_type": "workspace-member", "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1",
+      "attribute_type": "actor-reference"}], "industry": [], "company_size": [], "icp_tier":
+      [], "attr_123": [], "account_status": [], "renewal_date": [], "nps_score": [],
+      "tech_stack": [], "csm_name": [], "onboarding_status": [], "annual_contract_value":
+      [], "subscription_status": [], "billing_coupon_name": [], "arr_contribution_usd":
+      [], "company_research": [{"active_from": "2026-05-09T21:45:52.955000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "## Popl\n\nDomain:
+      popl.co\nAs of: 2026-05-09\n\n## Key Facts\n\n- **Headcount:** ~11\u201350 (CRM
+      estimate; exact figure not publicly confirmed)\n- **Funding:** ~$2.3\u20132.8M
+      total raised (Tracxn reports $2.32M; Pitchbook reports $2.83M)\n- **Stage:**
+      Seed \u2014 latest round Apr 2026; backed by Y Combinator, Cathexis Ventures,
+      Urban Innovation Fund, Goat Capital\n- **GTM motion:** Hybrid PLG + sales-led;
+      Popl coined their own \"In-Person GTM\" (IPM) motion centered on event lead
+      capture and real-world networking\n- **Sales team:** VP of Sales identified
+      (Dieter Heren III, promoted from Dir. of RevOps in Apr 2025); team size not
+      publicly confirmed\n- **MRR:** $1M+ MRR reported (implies ~$12M+ ARR run rate),
+      though estimated ARR range is $1M\u2013$10M\n- **Product:** Digital business
+      card and in-person GTM platform for teams \u2014 event lead capture, contact
+      sharing, and data enrichment\n\n## Structural Headline\n\nNo CRO, CMO, or CEO
+      publicly listed. The only named GTM executive found is VP of Sales (Dieter Heren
+      III), who was Director of RevOps as recently as April 2025 \u2014 suggesting
+      a lean, RevOps-heavy sales org with no dedicated marketing leadership visible
+      externally.\n\nSource: LinkedIn (Dieter Heren III profile)", "attribute_type":
+      "text"}], "company_research_2": [{"active_from": "2026-05-09T21:50:20.409000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "## Popl\n\n**Domain:** popl.co\n**As of:** 2026-05-09\n\n---\n\n### Key Facts\n\n-
+      **Headcount:** ~93\u2013125 (Latka reports 93 in 2024; RocketReach shows 125;
+      LinkedIn says 51\u2013200)\n- **Funding:** $2.32M total raised (Seed + YC W21)\n-
+      **Stage:** Seed \u2014 YC W21 batch; last round Apr 2021 ($2.2M Seed led by
+      Cathexis Ventures, Urban Innovation Fund, Goat Capital)\n- **GTM motion:** Hybrid
+      \u2014 PLG-rooted (self-serve NFC card + app) with a growing outbound sales
+      layer (SDRs, AEs, field marketing)\n- **Sales/GTM team:** 21 open roles listed;
+      active SDR, AE, and field marketing hiring signals a scaling GTM org\n- **Open
+      GTM reqs:** ~15 of 21 open roles are GTM-facing (SDR, Field Marketing Rep, Experiential
+      Marketing Coordinator, Director of Customer Success)\n- **Product:** AI-powered
+      digital business card + event lead capture platform for teams and individuals
+      \u2014 connects NFC cards/QR codes to a digital profile and CRM-style contact
+      capture\n- **Revenue:** ~$12.2M (reported by Latka for 2024) \u2014 well above
+      the CRM-estimated $1M\u2013$10M ARR range\n\n---\n\n### Structural Headline\n\nCRO
+      seat exists (Dieter Heren) alongside a VP of Marketing (Bryce Alsten) and VP
+      of Operations (Natalie Miller) \u2014 the GTM leadership layer is in place,
+      but no CFO or dedicated RevOps leader is visible. The CRO is the likely buyer
+      or economic gatekeeper.\n\n*Source: RocketReach management page, TheOrg*\n\n---\n\n###
+      Recent News\n\n- **No significant funding news found in the last 6 months**
+      \u2014 last round was Apr 2021\n- **Active GTM hiring push underway** \u2014
+      21 open roles including SDR, Field Marketing Rep, Experiential Marketing Coordinator,
+      and Director of Customer Success (as of May 2026; source: LinkedIn, YC Work
+      at a Startup)\n- **Product evolution:** Launched", "attribute_type": "text"}]}},
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "4a95f207-49b1-45f2-b2fb-c75490f97f8b"},
+      "created_at": "2026-05-09T21:44:30.793000000Z", "web_url": "https://app.attio.com/doherty-consulting/company/4a95f207-49b1-45f2-b2fb-c75490f97f8b",
+      "values": {"record_id": [{"active_from": "2026-05-09T21:44:30.793000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "4a95f207-49b1-45f2-b2fb-c75490f97f8b", "attribute_type": "text"}],
+      "domains": [{"active_from": "2026-05-09T21:44:30.793000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "domain": "hireroger.com", "root_domain": "hireroger.com", "attribute_type":
+      "domain"}], "name": [{"active_from": "2026-05-09T21:44:30.793000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "Hireroger", "attribute_type": "text"}], "description": [{"active_from":
+      "2026-05-09T21:44:31.086000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "Roger AI specializes in AI-powered
+      sales automation, providing a comprehensive solution that identifies prospects,
+      crafts personalized emails, and schedules meetings, thereby significantly reducing
+      the time and costs associated with traditional sales d...", "attribute_type":
+      "text"}], "team": [], "categories": [{"active_from": "2026-05-09T21:44:31.088000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "d4289cb1-4811-4b11-a28b-3ad2880d50b7"}, "title": "B2C", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:44:31.088000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "4adb623b-a001-4b1b-b1b1-f54e29be6f54"}, "title": "Information
+      Technology & Services", "is_archived": false}, "attribute_type": "select"},
+      {"active_from": "2026-05-09T21:44:31.088000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "cb8ff1f3-a968-4925-9d0f-8886dfc485de"}, "title": "B2B", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:44:31.088000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "a913f7aa-9a18-48dc-ae0a-317125451ac8"}, "title": "SAAS", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:44:31.088000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "4c2f33c0-e8e9-41f1-ab36-9ba6354117fd"}, "title": "Technology",
+      "is_archived": false}, "attribute_type": "select"}], "primary_location": [],
+      "logo_url": [{"active_from": "2026-05-09T21:44:31.087000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "https://brandbadge.clearbit.com/826964ad-7df0-4765-be8e-c12bf2459149",
+      "attribute_type": "text"}], "angellist": [], "facebook": [], "instagram": [],
+      "linkedin": [], "twitter": [{"active_from": "2026-05-09T21:44:31.087000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "https://twitter.com/RogerAI", "attribute_type": "text"}], "twitter_follower_count":
+      [], "estimated_arr_usd": [], "funding_raised_usd": [], "foundation_date": [],
+      "employee_range": [], "first_calendar_interaction": [], "last_calendar_interaction":
+      [], "next_calendar_interaction": [], "first_email_interaction": [], "last_email_interaction":
+      [], "first_interaction": [], "last_interaction": [], "next_interaction": [],
+      "strongest_connection_strength_legacy": [], "strongest_connection_strength":
+      [], "strongest_connection_user": [], "associated_deals": [], "created_at": [{"active_from":
+      "2026-05-09T21:44:30.793000000Z", "active_until": null, "created_by_actor":
+      {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "2026-05-09T21:44:18.196000000Z", "attribute_type": "timestamp"}],
+      "created_by": [{"active_from": "2026-05-09T21:44:30.793000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "referenced_actor_type": "workspace-member", "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1",
+      "attribute_type": "actor-reference"}], "industry": [], "company_size": [], "icp_tier":
+      [], "attr_123": [], "account_status": [], "renewal_date": [], "nps_score": [],
+      "tech_stack": [], "csm_name": [], "onboarding_status": [], "annual_contract_value":
+      [], "subscription_status": [], "billing_coupon_name": [], "arr_contribution_usd":
+      [], "company_research": [{"active_from": "2026-05-09T21:46:06.912000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "## Hireroger
+      (Roger AI)\n\n**Domain:** hireroger.com\n**As of:** 2026-05-09\n\n---\n\n###
+      Key Facts\n\n- **Headcount:** ~23 (LinkedIn, May 2026)\n- **Funding:** $120K
+      reported by PitchBook; conflicting \u2014 Tracxn states no funding raised; note
+      a separate *Roger.ai* (accounting automation) raised $7.35M Series A in 2019
+      and should not be conflated\n- **Stage:** YC S24 batch (Y Combinator Summer
+      2024)\n- **GTM motion:** Sales-led / outbound-first \u2014 product is an AI
+      SDR, pitched as replacing human SDRs; no self-serve signals found\n- **Sales
+      team:** Cannot confirm size; company is ~23 people total\n- **Open GTM reqs:**
+      At least 1 \u2014 Head of Sales posted on YC jobs board\n- **Product:** AI-powered
+      SDR that automates end-to-end outbound sales \u2014 prospect identification,
+      personalized email, follow-up, and meeting scheduling \u2014 for small to mid-sized
+      teams\n\n---\n\n### Structural Headline\n\nRoger is actively recruiting its
+      first Head of Sales, suggesting the company currently has no dedicated sales
+      leadership and may be founder-led on GTM. This is a high-signal buying moment
+      \u2014 they are building out their sales org and likely evaluating CRM/RevOps
+      tooling.\n\n**Source:** YC company jobs board (ycombinator.com/companies/roger-2/jobs)",
+      "attribute_type": "text"}], "company_research_2": [{"active_from": "2026-05-09T22:08:22.820000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "## Roger AI (Hireroger)\n\nDomain: hireroger.com\nAs of: 2026-05-09\n\n###
+      Key Facts\n\n- **Headcount:** ~4 (PitchBook); Crunchbase shows 11\u201350 \u2014
+      likely reflects early-stage, treat as <10 actual headcount\n- **Funding:** ~$120K
+      raised (PitchBook); YC-backed\n- **Stage:** Pre-seed / YC (founded 2024)\n-
+      **GTM motion:** Founder-led; actively transitioning to sales-led (hiring first
+      Head of Sales)\n- **Sales team:** No dedicated sales hire yet \u2014 founder
+      is running sales\n- **Open GTM reqs:** Head of Sales (posted on YC jobs board
+      \u2014 high-signal buying moment)\n- **Product:** AI-powered SDR that automates
+      outbound end-to-end \u2014 lead sourcing, personalized outreach, follow-ups,
+      and meeting booking \u2014 for small to mid-sized teams\n- **Traction:** Not
+      publicly disclosed\n\n### Structural Headline\n\nFounder-led sales with no dedicated
+      sales hire. Founder Rithwik Pattikonda is the sole person running GTM. The company
+      just posted a Head of Sales role on the YC jobs board, signaling the first real
+      GTM buildout is underway.\n\nSource: YC company page (ycombinator.com/companies/roger-2/jobs)\n\n###
+      Recent News\n\n- **2024:** Founded and backed by Y Combinator\n- **Early 2026
+      (est.):** Head of Sales role posted on YC jobs board \u2014 first dedicated
+      GTM hire, high-signal indicator of CRM/tooling evaluation\n\n\u26a0\ufe0f **Conflation
+      risk:** A different company named \"Roger\" (an accounting automation tool)
+      raised a $7.35M Series A in May 2019 \u2014 that is NOT this company. This Roger
+      AI (hireroger.com) is a separate, early-stage YC-backed startup founded in 2024.",
+      "attribute_type": "text"}]}}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "5053ac87-8ff9-4edc-aa00-dd41a385f314"},
+      "created_at": "2026-05-10T00:18:51.989000000Z", "web_url": "https://app.attio.com/doherty-consulting/company/5053ac87-8ff9-4edc-aa00-dd41a385f314",
+      "values": {"record_id": [{"active_from": "2026-05-10T00:18:51.989000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "5053ac87-8ff9-4edc-aa00-dd41a385f314", "attribute_type": "text"}],
+      "domains": [{"active_from": "2026-05-10T00:18:51.989000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "domain": "motherduck.com", "root_domain": "motherduck.com", "attribute_type":
+      "domain"}], "name": [{"active_from": "2026-05-10T00:18:51.989000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "Motherduck", "attribute_type": "text"}], "description": [{"active_from":
+      "2026-05-10T00:18:52.258000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "MotherDuck provides a cloud-based
+      data warehouse solution that leverages DuckDB to facilitate efficient analytics
+      and business intelligence, enabling users to transform raw data into actionable
+      insights while supporting various data formats and scalabl...", "attribute_type":
+      "text"}], "team": [], "categories": [{"active_from": "2026-05-10T00:18:52.259000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "9776b17e-d911-4397-9ac0-018f94d40572"}, "title": "E-commerce",
+      "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-10T00:18:52.259000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "d4289cb1-4811-4b11-a28b-3ad2880d50b7"}, "title": "B2C", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-10T00:18:52.259000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "4adb623b-a001-4b1b-b1b1-f54e29be6f54"}, "title": "Information
+      Technology & Services", "is_archived": false}, "attribute_type": "select"},
+      {"active_from": "2026-05-10T00:18:52.259000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "cb8ff1f3-a968-4925-9d0f-8886dfc485de"}, "title": "B2B", "is_archived":
+      false}, "attribute_type": "select"}], "primary_location": [{"active_from": "2026-05-10T00:18:52.259000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "line_1":
+      "113 Cherry Street", "line_2": null, "line_3": null, "line_4": null, "locality":
+      "Seattle", "region": "Washington", "postcode": "98104", "country_code": "US",
+      "latitude": "47.6027125", "longitude": "-122.3335144", "attribute_type": "location"}],
+      "logo_url": [{"active_from": "2026-05-10T00:18:52.258000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "https://brandbadge.clearbit.com/094a953b-6180-43df-b6e1-bc4e7a927abb",
+      "attribute_type": "text"}], "angellist": [], "facebook": [], "instagram": [],
+      "linkedin": [{"active_from": "2026-05-10T00:18:52.259000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "https://linkedin.com/company/motherduck",
+      "attribute_type": "text"}], "twitter": [{"active_from": "2026-05-10T00:18:52.259000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "https://x.com/motherduck", "attribute_type": "text"}], "twitter_follower_count":
+      [{"active_from": "2026-05-10T00:18:52.259000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": 2367, "attribute_type": "number"}],
+      "estimated_arr_usd": [{"active_from": "2026-05-10T00:18:52.259000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "option": {"id": {"workspace_id":
+      "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+      "attribute_id": "1af6617a-01b7-4132-b380-72e6f15ec826", "option_id": "74b1f86f-8541-40a1-8550-4a0f8a52bf46"},
+      "title": "$1M-$10M", "is_archived": false}, "attribute_type": "select"}], "funding_raised_usd":
+      [{"active_from": "2026-05-10T00:18:52.259000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "currency_code": "USD", "currency_value": 47500000,
+      "attribute_type": "currency"}], "foundation_date": [{"active_from": "2026-05-10T00:18:52.259000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "2022-01-01", "attribute_type": "date"}], "employee_range": [{"active_from":
+      "2026-05-10T00:18:52.259000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "11b72cf6-0d4f-4181-aeb1-d689bac7e31b",
+      "option_id": "ae8c339f-d387-46f4-9795-88754d301fbd"}, "title": "11-50", "is_archived":
+      false}, "attribute_type": "select"}], "first_calendar_interaction": [], "last_calendar_interaction":
+      [], "next_calendar_interaction": [], "first_email_interaction": [], "last_email_interaction":
+      [], "first_interaction": [], "last_interaction": [], "next_interaction": [],
+      "strongest_connection_strength_legacy": [], "strongest_connection_strength":
+      [], "strongest_connection_user": [], "associated_deals": [], "created_at": [{"active_from":
+      "2026-05-10T00:18:51.989000000Z", "active_until": null, "created_by_actor":
+      {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "2026-05-10T00:18:37.985000000Z", "attribute_type": "timestamp"}],
+      "created_by": [{"active_from": "2026-05-10T00:18:51.989000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "referenced_actor_type": "workspace-member", "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1",
+      "attribute_type": "actor-reference"}], "industry": [], "company_size": [], "icp_tier":
+      [], "attr_123": [], "account_status": [], "renewal_date": [], "nps_score": [],
+      "tech_stack": [], "csm_name": [], "onboarding_status": [], "annual_contract_value":
+      [], "subscription_status": [], "billing_coupon_name": [], "arr_contribution_usd":
+      [], "company_research": [{"active_from": "2026-05-10T00:21:56.508000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "## MotherDuck\n\n**Domain:**
+      motherduck.com\n**As of:** 2026-05-10\n\n---\n\n### Key Facts\n\n- **Headcount:**
+      ~114 (PitchBook, as of May 2025; CRM record shows 11\u201350, likely outdated)\n-
+      **Funding:** ~$133M total raised\n- **Stage:** Series B+ (Series B: $52.5M,
+      May 2025; preceded by $33M Series B+ extension \u2014 sources vary slightly
+      on exact tranching)\n- **GTM motion:** PLG + sales-assist hybrid. Started pure
+      PLG, added a sales layer to drive expansion and enterprise deals\n- **Open GTM
+      reqs:** Multiple open AE roles (NYC, Seattle, SF), 1 BDR, plus Customer Engineer
+      and Implementation Engineer in Customer Success \u2014 5+ GTM postings active
+      on Ashby\n- **Product:** Serverless cloud analytics platform built on DuckDB,
+      letting users run SQL queries across local and cloud data in a hybrid execution
+      model \u2014 connects to Tableau, PowerBI, Hex, and AI agents\n- **ARR:** Estimated
+      $1M\u2013$10M (CRM estimate; not publicly confirmed)\n\n---\n\n### Structural
+      Headline\n\nNo CRO or CMO found in any public source. CEO Jordan Tigani (ex-Google
+      BigQuery founding engineer) appears to be driving GTM strategy directly. The
+      company is actively hiring AEs across three cities simultaneously, suggesting
+      it is in the early stages of building out a formal sales function for the first
+      time.\n\n*Source: jobs.ashbyhq.com/MotherDuck; hybridgtm.com interview with
+      Jordan Tigani*", "attribute_type": "text"}], "company_research_2": [{"active_from":
+      "2026-05-10T00:22:02.337000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "## MotherDuck\n\nDomain: motherduck.com\nAs
+      of: 2026-05-10\n\n### Key Facts\n\n- **Headcount:** ~83\u2013133 (Built In lists
+      83; LinkedIn/StartupHub show ~133 \u2014 sources diverge, likely 83\u2013133)\n-
+      **Funding:** $133M total raised\n- **Stage:** Series B+ (May 2025, $33M round
+      per Sacra); prior Series B was $52.5M led by Felicis (Sep 2023, $400M post-money
+      valuation)\n- **GTM motion:** Hybrid PLG + sales-led; self-serve community motion
+      with a small dedicated sales team building out\n- **Sales team:** Small \u2014
+      a \"Founding AE & Head of Sales\" is the named sales lead; RevOps function does
+      not yet exist (first RevOps hire is currently open)\n- **Open GTM reqs:** Revenue
+      Operations Lead (first-ever RevOps hire) \u2014 signals early GTM systems build-out\n-
+      **Product:** Serverless cloud data warehouse built on DuckDB; enables fast,
+      collaborative SQL analytics across local and cloud execution\n- **Traction:**
+      DuckDB adoption described as \"soaring\"; growing self-serve user community
+      \u2014 no specific customer/developer count publicly disclosed\n\n### Structural
+      Headline\n\nNo CRO, CMO, or VP Sales exists. The company lists a \"Founding
+      AE & Head of Sales\" as the senior-most GTM title, and is currently hiring its
+      **first-ever RevOps hire** \u2014 the job posting explicitly describes building
+      the RevOps foundation \"from scratch.\" GTM org is nascent and scaling.\n\nSource:
+      Built In NYC job posting (builtinnyc.com/job/revenue-operations-lead/4722474),
+      LeadIQ employee directory\n\n### Recent News\n\n- **May 2025:** Raised $33M
+      Series B+ round, bringing total funding to ~$133M (Sacra)\n- **Feb 2026:** Launched
+      public preview of \"Dives\" \u2014 a new feature enabling AI agents to build
+      interactive, real-time SQL visualizations in MotherDuck\n- **Ongoing 2026:**
+      Active hiring for first RevOps lead, signaling GTM systems build-out phase",
+      "attribute_type": "text"}]}}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "80e1fbb3-37e7-4919-ae77-90746d5ede57"},
+      "created_at": "2026-05-09T21:44:56.444000000Z", "web_url": "https://app.attio.com/doherty-consulting/company/80e1fbb3-37e7-4919-ae77-90746d5ede57",
+      "values": {"record_id": [{"active_from": "2026-05-09T21:44:56.444000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "80e1fbb3-37e7-4919-ae77-90746d5ede57", "attribute_type": "text"}],
+      "domains": [{"active_from": "2026-05-09T21:44:56.444000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "domain": "loops.so", "root_domain": "loops.so", "attribute_type": "domain"}],
+      "name": [{"active_from": "2026-05-09T21:44:56.444000000Z", "active_until": null,
+      "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "Loops", "attribute_type": "text"}], "description": [{"active_from":
+      "2026-05-09T21:44:56.695000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "Loops is an email platform designed
+      specifically for modern SaaS companies, offering easy email marketing solutions.
+      It enables users to create, send, and track beautiful email campaigns, including
+      newsletters, automated messages, and one-off campaigns...", "attribute_type":
+      "text"}], "team": [], "categories": [{"active_from": "2026-05-09T21:44:56.696000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "4c2f33c0-e8e9-41f1-ab36-9ba6354117fd"}, "title": "Technology",
+      "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:44:56.696000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "d1282a45-3109-405b-bc74-bf81871ed58f"}, "title": "Marketing &
+      Advertising", "is_archived": false}, "attribute_type": "select"}, {"active_from":
+      "2026-05-09T21:44:56.696000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "a913f7aa-9a18-48dc-ae0a-317125451ac8"}, "title": "SAAS", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:44:56.696000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "cb8ff1f3-a968-4925-9d0f-8886dfc485de"}, "title": "B2B", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:44:56.696000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "4adb623b-a001-4b1b-b1b1-f54e29be6f54"}, "title": "Information
+      Technology & Services", "is_archived": false}, "attribute_type": "select"}],
+      "primary_location": [], "logo_url": [{"active_from": "2026-05-09T21:44:56.695000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "https://brandbadge.clearbit.com/bf60d4ce-766e-453d-bd2f-caf5a51ae7f9", "attribute_type":
+      "text"}], "angellist": [], "facebook": [], "instagram": [], "linkedin": [{"active_from":
+      "2026-05-09T21:44:56.695000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "https://linkedin.com/company/sendwithloops",
+      "attribute_type": "text"}], "twitter": [{"active_from": "2026-05-09T21:44:56.695000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "https://x.com/sendwithloops", "attribute_type": "text"}], "twitter_follower_count":
+      [{"active_from": "2026-05-09T21:44:56.695000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": 3853, "attribute_type": "number"}],
+      "estimated_arr_usd": [{"active_from": "2026-05-09T21:44:56.695000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "option": {"id": {"workspace_id":
+      "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+      "attribute_id": "1af6617a-01b7-4132-b380-72e6f15ec826", "option_id": "b77e29de-1814-47ba-b415-ec9a2589bca2"},
+      "title": "$0-$1M", "is_archived": false}, "attribute_type": "select"}], "funding_raised_usd":
+      [{"active_from": "2026-05-09T21:44:56.696000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "currency_code": "USD", "currency_value": 3200000,
+      "attribute_type": "currency"}], "foundation_date": [{"active_from": "2026-05-09T21:44:56.695000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "2022-01-01", "attribute_type": "date"}], "employee_range": [{"active_from":
+      "2026-05-09T21:44:56.696000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "11b72cf6-0d4f-4181-aeb1-d689bac7e31b",
+      "option_id": "3d3fcdca-ab7c-43d9-8e1c-8cb9d9a0e4a6"}, "title": "1-10", "is_archived":
+      false}, "attribute_type": "select"}], "first_calendar_interaction": [], "last_calendar_interaction":
+      [], "next_calendar_interaction": [], "first_email_interaction": [], "last_email_interaction":
+      [], "first_interaction": [], "last_interaction": [], "next_interaction": [],
+      "strongest_connection_strength_legacy": [], "strongest_connection_strength":
+      [], "strongest_connection_user": [], "associated_deals": [], "created_at": [{"active_from":
+      "2026-05-09T21:44:56.444000000Z", "active_until": null, "created_by_actor":
+      {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "2026-05-09T21:44:44.289000000Z", "attribute_type": "timestamp"}],
+      "created_by": [{"active_from": "2026-05-09T21:44:56.444000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "referenced_actor_type": "workspace-member", "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1",
+      "attribute_type": "actor-reference"}], "industry": [], "company_size": [], "icp_tier":
+      [], "attr_123": [], "account_status": [], "renewal_date": [], "nps_score": [],
+      "tech_stack": [], "csm_name": [], "onboarding_status": [], "annual_contract_value":
+      [], "subscription_status": [], "billing_coupon_name": [], "arr_contribution_usd":
+      [], "company_research": [{"active_from": "2026-05-09T21:46:08.049000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "## Loops\n\nDomain:
+      loops.so\nAs of: 2026-05-09\n\n### Key Facts\n\n- **Headcount:** ~11\u201320
+      (Tracxn: 11 as of Mar 2026; Prospeo: 11\u201320; CRM: 1\u201310 \u2014 best
+      estimate ~11\u201315)\n- **Funding:** $3.2M total raised\n- **Stage:** Seed,
+      Sep 2023 (led by Craft Ventures; also backed by Altman Capital, SV Angel, Liquid2,
+      Box Group, Twenty-Two Ventures; YC W22)\n- **GTM motion:** PLG-first (free plan,
+      self-serve onboarding) with founder-led sales\n- **Open GTM reqs:** 1 confirmed
+      open \u2014 Head of Growth & Analytics (no dedicated sales or marketing hires
+      currently listed)\n- **Product:** Modern email platform for SaaS companies \u2014
+      handles marketing, product, and transactional email in one place\n- **Estimated
+      ARR:** ~$731K\u2013$1M (Extruct AI / Getlatka estimates; not officially confirmed)\n\n###
+      Structural Headline\n\nFounder-led with no dedicated sales, marketing, or RevOps
+      hire. Only two known employees are Co-Founder/CEO Chris Frantz and Co-Founder/CTO
+      Adam Kaczmarek \u2014 the CEO is effectively the sole GTM person. The one open
+      role is Head of Growth & Analytics, signaling the company is just now looking
+      to add its first growth hire.\n\nSources: Extruct AI (extruct.ai), Tracxn, Getlatka,
+      loops.so/updates/loops-launches-today", "attribute_type": "text"}], "company_research_2":
+      [{"active_from": "2026-05-09T22:16:51.457000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "## Loops\n\nDomain: loops.so\nAs of:
+      2026-05-09\n\n## Key Facts\n\n- **Headcount:** 2\u201310 (LinkedIn; likely ~3
+      based on Latka reporting \"3 person team\" as of 2024)\n- **Funding:** $3.2M
+      total raised (led by Craft Ventures, with Altman Capital and SV Angel)\n- **Stage:**
+      Seed / YC W22 \u2014 no subsequent rounds found\n- **GTM motion:** Founder-led,
+      PLG \u2014 product is self-serve, no sales team evident\n- **Sales team:** No
+      dedicated sales or marketing hires found; founders appear to own all GTM\n-
+      **Open GTM reqs:** None found on careers page, YC jobs board, Ashby, Greenhouse,
+      or Lever\n- **Product:** Email platform for SaaS companies \u2014 send product,
+      marketing, and transactional email from one place (Notion-style editor, strong
+      deliverability focus)\n- **Traction:** $731.4K revenue in 2024 (Latka); April
+      2024 monthly revenue exceeded first 17 months combined \u2014 strong growth
+      inflection\n- **ARR:** ~$731K (Latka/Extruct estimate, 2024); CRM also shows
+      $0\u2013$1M\n\n## Structural Headline\n\nFounder-led with no dedicated sales
+      or GTM hires \u2014 Chris Frantz (CEO) and Adam Kaczmarek (co-founder) own all
+      sales, marketing, and product. Team is ~3 people total with no open roles. This
+      is a micro-team, likely pre-sales-hire.\n\nSource: Latka, LinkedIn, YC company
+      page\n\n## Recent News\n\n- Apr 2024: CEO Chris Frantz announced monthly revenue
+      exceeded the first 17 months of revenue combined \u2014 significant growth milestone\n-
+      2024: Loops reported $731.4K in annual revenue on a ~3-person team (Latka)\n-
+      No significant funding, hiring, or product launch news found in the last 6 months
+      (Nov 2025\u2013May 2026)\n\n---\n*\u26a0\ufe0f Note: \"Loops\" is a common name
+      \u2014 verified this profile is loops.so (YC W22 email platform for SaaS), not
+      loops.fi (DeFi), getgetloops.ai, or any other entity.*", "attribute_type": "text"}]}},
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "91c97a02-e54d-41ce-bc44-c8625950d512"},
+      "created_at": "2026-05-09T22:29:45.712000000Z", "web_url": "https://app.attio.com/doherty-consulting/company/91c97a02-e54d-41ce-bc44-c8625950d512",
+      "values": {"record_id": [{"active_from": "2026-05-09T22:29:45.712000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "91c97a02-e54d-41ce-bc44-c8625950d512", "attribute_type": "text"}],
+      "domains": [{"active_from": "2026-05-09T22:29:45.712000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "domain": "armstrong1234.com", "root_domain": "armstrong1234.com", "attribute_type":
+      "domain"}], "name": [{"active_from": "2026-05-09T22:29:45.712000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "Armstrong", "attribute_type": "text"}], "description": [{"active_from":
+      "2026-05-09T22:29:46.006000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "Armstrong Foam Roofing, Painting &
+      Windows has been a trusted provider of top-quality foam roofing, painting, windows,
+      and doors services in the San Francisco Bay Area since 1966. With a commitment
+      to excellence, Armstrong ensures the improvement, beau...", "attribute_type":
+      "text"}], "team": [], "categories": [{"active_from": "2026-05-09T22:29:46.008000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "d4289cb1-4811-4b11-a28b-3ad2880d50b7"}, "title": "B2C", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T22:29:46.008000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "2a215ecd-aad9-4de8-b696-8cefc3f01cfc"}, "title": "Building Materials",
+      "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-09T22:29:46.008000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "c25c8c4e-5d2d-43de-8527-d9f578dcb98e"}, "title": "Services", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T22:29:46.008000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "7ad9d370-7c3b-47f9-95e3-bedd2211f67f"}, "title": "Construction",
+      "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-09T22:29:46.008000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "e07cb5b0-6d87-4902-b465-f7c0c5b29a91"}, "title": "Printing", "is_archived":
+      false}, "attribute_type": "select"}, {"active_from": "2026-05-09T22:29:46.008000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "9776b17e-d911-4397-9ac0-018f94d40572"}, "title": "E-commerce",
+      "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-09T22:29:46.008000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "option":
+      {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+      "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+      "option_id": "57d50891-0d3c-40dc-a364-0940a6bc8a8b"}, "title": "Home Improvement",
+      "is_archived": false}, "attribute_type": "select"}], "primary_location": [{"active_from":
+      "2026-05-09T22:29:46.007000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "line_1": "4575 San Pablo Avenue", "line_2":
+      null, "line_3": null, "line_4": null, "locality": "Emeryville", "region": "California",
+      "postcode": "94608", "country_code": "US", "latitude": "37.8351503", "longitude":
+      "-122.2816047", "attribute_type": "location"}], "logo_url": [{"active_from":
+      "2026-05-09T22:29:46.007000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "https://brandbadge.clearbit.com/d019cb7a-191f-4a5f-88a0-f753e776edb0",
+      "attribute_type": "text"}], "angellist": [], "facebook": [{"active_from": "2026-05-09T22:29:46.007000000Z",
+      "active_until": null, "created_by_actor": {"type": "system", "id": null}, "value":
+      "https://facebook.com/armstrong1234", "attribute_type": "text"}], "instagram":
+      [], "linkedin": [], "twitter": [], "twitter_follower_count": [], "estimated_arr_usd":
+      [{"active_from": "2026-05-09T22:29:46.007000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+      "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "1af6617a-01b7-4132-b380-72e6f15ec826",
+      "option_id": "74b1f86f-8541-40a1-8550-4a0f8a52bf46"}, "title": "$1M-$10M", "is_archived":
+      false}, "attribute_type": "select"}], "funding_raised_usd": [], "foundation_date":
+      [], "employee_range": [{"active_from": "2026-05-09T22:29:46.008000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "option": {"id": {"workspace_id":
+      "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+      "attribute_id": "11b72cf6-0d4f-4181-aeb1-d689bac7e31b", "option_id": "3d3fcdca-ab7c-43d9-8e1c-8cb9d9a0e4a6"},
+      "title": "1-10", "is_archived": false}, "attribute_type": "select"}], "first_calendar_interaction":
+      [], "last_calendar_interaction": [], "next_calendar_interaction": [], "first_email_interaction":
+      [], "last_email_interaction": [], "first_interaction": [], "last_interaction":
+      [], "next_interaction": [], "strongest_connection_strength_legacy": [], "strongest_connection_strength":
+      [], "strongest_connection_user": [], "associated_deals": [], "created_at": [{"active_from":
+      "2026-05-09T22:29:45.712000000Z", "active_until": null, "created_by_actor":
+      {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "value": "2026-05-09T22:27:48.037000000Z", "attribute_type": "timestamp"}],
+      "created_by": [{"active_from": "2026-05-09T22:29:45.712000000Z", "active_until":
+      null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+      "referenced_actor_type": "workspace-member", "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1",
+      "attribute_type": "actor-reference"}], "industry": [], "company_size": [], "icp_tier":
+      [], "attr_123": [], "account_status": [], "renewal_date": [], "nps_score": [],
+      "tech_stack": [], "csm_name": [], "onboarding_status": [], "annual_contract_value":
+      [], "subscription_status": [], "billing_coupon_name": [], "arr_contribution_usd":
+      [], "company_research": [{"active_from": "2026-05-09T22:30:29.703000000Z", "active_until":
+      null, "created_by_actor": {"type": "system", "id": null}, "value": "## Armstrong
+      Foam Roofing, Painting & Windows\n\nDomain: armstrong1234.com\nAs of: 2026-05-09\n\n###
+      Key Facts\n\n- **Headcount:** ~11\u201350 (ZoomInfo); LinkedIn shows 51\u2013200;
+      SignalHire estimates 100\u2013200 \u2014 likely 20\u201360 in practice for a
+      local family business\n- **Funding:** No funding history found \u2014 private,
+      bootstrapped family business\n- **Stage:** N/A \u2014 privately held, no venture
+      backing\n- **GTM motion:** Inbound/word-of-mouth, reputation-led; 30,000+ completed
+      jobs cited as social proof; no evidence of outbound sales team\n- **Sales team:**
+      No dedicated sales org identified; likely owner/founder-led sales\n- **Open
+      GTM reqs:** Website lists open roles for paint crews only \u2014 no sales or
+      marketing positions\n- **Product:** Foam roofing, exterior painting, and replacement
+      windows & doors for residential and commercial properties in the San Francisco
+      Bay Area\n\n### Structural Headline\n\nMulti-generational family-owned business
+      with no discernible sales or marketing org. The employment page (armstrong1234.com/employment)
+      lists only field/trade crew openings \u2014 no sales, ops, or marketing hires.
+      Leadership structure is not publicly documented; ownership appears family-held
+      with no named executives found online.\n\nSource: armstrong1234.com/employment,
+      ZoomInfo, LinkedIn", "attribute_type": "text"}], "company_research_2": [{"active_from":
+      "2026-05-10T00:23:40.149000000Z", "active_until": null, "created_by_actor":
+      {"type": "system", "id": null}, "value": "## Armstrong Foam Roofing, Painting
+      & Windows\n\nDomain: armstrong1234.com\nAs of: 2026-05-10\n\n### Key Facts\n\n-
+      **Headcount:** ~25\u2013100 (SignalHire; CRM record shows 1\u201310 \u2014 sources
+      conflict, likely a very small operation)\n- **Funding:** No funding history
+      found for this entity (a $150K figure surfaced for \"Armstrong Aluminum\" \u2014
+      different company; not applicable)\n- **Stage:** Bootstrapped / unfunded \u2014
+      family-owned since 1966\n- **GTM motion:** Founder/family-led; no evidence of
+      a dedicated sales org\n- **Sales team:** No dedicated sales team identified\n-
+      **Open GTM reqs:** None found\n- **Product:** Foam roofing, painting, windows,
+      and doors services for residential and commercial clients in the San Francisco
+      Bay Area\n- **Traction:** 30,000+ satisfied customers; 30,000+ homes painted
+      (per company website)\n\n### Structural Headline\n\nMultigenerational family-owned
+      business with no evidence of a dedicated sales, marketing, or RevOps function.
+      Founder Howard opened the company in 1966; all GTM appears to be reputation-
+      and referral-driven. One third-party source (MapQuest) lists the business as
+      \"permanently closed\" \u2014 status unverified and may be erroneous given active
+      website and Facebook page.\n\nSource: armstrong1234.com, MapQuest, Facebook\n\n###
+      Recent News\n\nNo significant news found in the last 6 months.\n\n---\n\n**Note:**
+      Armstrong is a very common name \u2014 this profile is specific to Armstrong
+      Foam Roofing, Painting & Windows (armstrong1234.com, Emeryville CA). Conflation
+      risk with Armstrong World Industries, Armstrong Aluminum, and other entities
+      sharing the name. Verify you have the correct company before outreach.", "attribute_type":
+      "text"}]}}]}'
+    headers:
+      access-control-allow-origin: '*'
+      access-control-expose-headers: x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc: h3=":443"; ma=86400
+      cf-cache-status: DYNAMIC
+      cf-ray: 9fc6a23d5b0134bd-SJC
+      connection: keep-alive
+      content-length: '50777'
+      content-type: application/json; charset=utf-8
+      date: Sat, 16 May 2026 01:33:21 GMT
+      server: cloudflare
+      strict-transport-security: max-age=7776000; includeSubDomains; preload
+      transfer-encoding: chunked
+      vary: Origin
+      via: 1.1 google
+      x-accurate-at: '2026-05-16T01:33:20.977000000Z'
+      x-attio-execution-id: a6b9980f-3342-4d6b-bcb3-ba81941a92fa
+      x-attio-record-query-score: '0'
+      x-frame-options: DENY
+    status: 200
+    statusText: OK
+version: 1
