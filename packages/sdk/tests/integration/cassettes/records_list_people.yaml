@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"limit":5}'
+    body: ''
     headers:
       Accept:
       - '*/*'
@@ -8,34 +8,33 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
-      Content-Length:
-      - '11'
       Content-Type:
       - application/json
       Host:
       - api.attio.com
       User-Agent:
       - attio-python/0.1.0
-    method: POST
-    uri: https://api.attio.com/v2/objects/people/records/query
+    method: GET
+    uri: https://api.attio.com/v2/objects/people/records?limit=5
   response:
     body:
-      string: '{"data": []}'
+      string: '{"status_code": 404, "type": "invalid_request_error", "code": "not_found",
+        "message": "Could not find endpoint \"GET /v2/objects/people/records\"."}'
     headers:
       CF-RAY:
-      - 9fc6a219dbe07ac4-SJC
+      - 9fc6a2216a36679a-SJC
       Connection:
       - keep-alive
-      Content-Length:
-      - '11'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 16 May 2026 01:33:15 GMT
+      - Sat, 16 May 2026 01:33:16 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
       - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
       access-control-allow-origin:
       - '*'
       access-control-expose-headers:
@@ -44,22 +43,17 @@ interactions:
       - h3=":443"; ma=86400
       cf-cache-status:
       - DYNAMIC
-      set-cookie:
-      - _cfuvid=GaPZSZqLHHrImqJ6DMDNKyjvhWdWvwBXPMMBlzw3_GQ-1778895195.1782904-1.0.1.1-lxilx._cglnYXuoroKgN5afhMepkrmQbmYIiUB2Hn1U;
-        HttpOnly; SameSite=None; Secure; Path=/; Domain=attio.com
+      content-length:
+      - '141'
       vary:
       - Origin
       via:
       - 1.1 google
-      x-accurate-at:
-      - '2026-05-16T01:33:15.314000000Z'
       x-attio-execution-id:
-      - 6a5b8f36-c7fc-41aa-84f2-b898b6b61091
-      x-attio-record-query-score:
-      - '0'
+      - 7d60d40a-67f8-46f0-b2db-361b2d2c4986
       x-frame-options:
       - DENY
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
 version: 1

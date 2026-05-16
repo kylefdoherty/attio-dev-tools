@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/objects/deals/attributes/stage/statuses
+  response:
+    body:
+      string: '{"data": [{"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "62223a68-9a27-4176-a5a7-acd83ce36dc8",
+        "status_id": "5fe9ed26-d25a-478d-970d-cf599d02b23f"}, "title": "Discovery",
+        "is_archived": false, "target_time_in_status": null, "celebration_enabled":
+        false}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "62223a68-9a27-4176-a5a7-acd83ce36dc8",
+        "status_id": "606af267-5baf-4017-b09f-ebe2d01b532a"}, "title": "Solution Definition",
+        "is_archived": false, "target_time_in_status": null, "celebration_enabled":
+        false}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "62223a68-9a27-4176-a5a7-acd83ce36dc8",
+        "status_id": "1d79e025-f7c3-4356-a65a-f1252889b02c"}, "title": "Proposal",
+        "is_archived": false, "target_time_in_status": null, "celebration_enabled":
+        false}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "62223a68-9a27-4176-a5a7-acd83ce36dc8",
+        "status_id": "49aa1549-51ee-4b9e-bf23-33f15611d044"}, "title": "Negotiation",
+        "is_archived": false, "target_time_in_status": null, "celebration_enabled":
+        false}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "62223a68-9a27-4176-a5a7-acd83ce36dc8",
+        "status_id": "426f1faa-7ed3-425a-80f5-ff3ee3db3912"}, "title": "Closed Won",
+        "is_archived": false, "target_time_in_status": null, "celebration_enabled":
+        false}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "62223a68-9a27-4176-a5a7-acd83ce36dc8",
+        "status_id": "dee9bfd8-a502-42e5-afcf-8d3ff446d0fe"}, "title": "Closed Lost",
+        "is_archived": false, "target_time_in_status": null, "celebration_enabled":
+        false}]}'
+    headers:
+      CF-RAY:
+      - 9fc6a19b5adcce68-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:32:55 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '1920'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:32:55.245768000Z'
+      x-attio-execution-id:
+      - 3849194d-dad3-4c4c-94c3-48dcda7e8041
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,452 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/objects/companies/attributes
+  response:
+    body:
+      string: '{"data": [{"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "b81d44f2-0c9e-4d41-a0b8-7770afd1f5cd"},
+        "title": "Record ID", "description": null, "api_slug": "record_id", "type":
+        "text", "is_system_attribute": true, "is_writable": false, "is_required":
+        false, "is_unique": true, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "cbd78839-21fa-4e0a-bea2-20c201420250"},
+        "title": "Domains", "description": null, "api_slug": "domains", "type": "domain",
+        "is_system_attribute": true, "is_writable": true, "is_required": false, "is_unique":
+        true, "is_multiselect": true, "is_default_value_enabled": false, "is_archived":
+        false, "default_value": null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "dccf6dab-dd7f-487a-b820-060ce4ff5f85"}, "title": "Name",
+        "description": null, "api_slug": "name", "type": "text", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "efe88f48-d08f-4ca0-8ed6-9aded61a93fa"}, "title": "Description",
+        "description": null, "api_slug": "description", "type": "text", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "60ec752a-a718-4811-b7f6-8b93cfb4185f"}, "title": "Team",
+        "description": null, "api_slug": "team", "type": "record-reference", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        true, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "0b1c77ca-9b81-47ba-8d2e-490c74901031", "attribute_id": "d980b8e1-25e4-4da6-9969-9dc0c34d172d"},
+        "object_slug": "people", "api_slug": "company", "is_multiselect": false, "title":
+        "Company"}, "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency":
+        {"default_currency_code": null, "display_type": null}, "record_reference":
+        {"allowed_object_ids": ["0b1c77ca-9b81-47ba-8d2e-490c74901031"]}}}, {"id":
+        {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7"}, "title": "Categories",
+        "description": null, "api_slug": "categories", "type": "select", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        true, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "3536fefc-3891-4d44-9f2e-bec9ecd2fbea"}, "title": "Primary
+        location", "description": null, "api_slug": "primary_location", "type": "location",
+        "is_system_attribute": true, "is_writable": true, "is_required": false, "is_unique":
+        false, "is_multiselect": false, "is_default_value_enabled": false, "is_archived":
+        false, "default_value": null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "a2ee4e34-8db2-44e8-b5bf-6aa0ae0582d4"}, "title": "Logo URL",
+        "description": null, "api_slug": "logo_url", "type": "text", "is_system_attribute":
+        true, "is_writable": false, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "59a33322-43bf-4aa7-88a2-812ede341754"}, "title": "AngelList",
+        "description": null, "api_slug": "angellist", "type": "text", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "4d37df33-fea0-474d-a84c-d86cb5fcc525"}, "title": "Facebook",
+        "description": null, "api_slug": "facebook", "type": "text", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "e5303faf-93d7-4ec4-a2bb-2b92e8cdaaba"}, "title": "Instagram",
+        "description": null, "api_slug": "instagram", "type": "text", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "5147e446-9ae7-441f-b2e3-86730e42280a"}, "title": "LinkedIn",
+        "description": null, "api_slug": "linkedin", "type": "text", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "a64e5dd0-47b7-4573-9543-d59c3e9b0ac6"}, "title": "Twitter",
+        "description": null, "api_slug": "twitter", "type": "text", "is_system_attribute":
+        true, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "42b5545f-deae-4582-ba55-454b9317171e"}, "title": "Twitter
+        follower count", "description": null, "api_slug": "twitter_follower_count",
+        "type": "number", "is_system_attribute": true, "is_writable": false, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "1af6617a-01b7-4132-b380-72e6f15ec826"},
+        "title": "Estimated ARR", "description": null, "api_slug": "estimated_arr_usd",
+        "type": "select", "is_system_attribute": true, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "df824a93-0425-4ca5-a68b-43d3d2e69dc1"},
+        "title": "Funding raised", "description": null, "api_slug": "funding_raised_usd",
+        "type": "currency", "is_system_attribute": true, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        "USD", "display_type": "symbol"}, "record_reference": {"allowed_object_ids":
+        null}}}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "9d84be17-a698-4719-be6e-4ed91a9e122f"},
+        "title": "Foundation date", "description": null, "api_slug": "foundation_date",
+        "type": "date", "is_system_attribute": true, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "11b72cf6-0d4f-4181-aeb1-d689bac7e31b"},
+        "title": "Employee range", "description": null, "api_slug": "employee_range",
+        "type": "select", "is_system_attribute": true, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "f605c1a5-074c-4f84-b8c9-e81fdeb90e47"},
+        "title": "First calendar interaction", "description": null, "api_slug": "first_calendar_interaction",
+        "type": "interaction", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "f1d746b7-28a7-4e20-ac8a-d37aa77bbfc3"},
+        "title": "Last calendar interaction", "description": null, "api_slug": "last_calendar_interaction",
+        "type": "interaction", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "1486c6de-5e7c-4229-8902-bbbc29f1e0ea"},
+        "title": "Next calendar interaction", "description": null, "api_slug": "next_calendar_interaction",
+        "type": "interaction", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "4912afbd-a48a-435a-9eeb-e823df58f61e"},
+        "title": "First email interaction", "description": null, "api_slug": "first_email_interaction",
+        "type": "interaction", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "a814aab6-7fc2-4601-a963-1f3a02af2bb7"},
+        "title": "Last email interaction", "description": null, "api_slug": "last_email_interaction",
+        "type": "interaction", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "a1d813b8-4334-4d58-a91f-8fad94c9aa9a"},
+        "title": "First interaction", "description": null, "api_slug": "first_interaction",
+        "type": "interaction", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "e5eae6e7-54d2-4d3e-9477-d96bd3948a25"},
+        "title": "Last interaction", "description": null, "api_slug": "last_interaction",
+        "type": "interaction", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "a5a09a98-e2e2-4db9-b4d0-fb91dee7c553"},
+        "title": "Next interaction", "description": null, "api_slug": "next_interaction",
+        "type": "interaction", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "22b0e4a8-e81f-4627-8981-29052e6489f3"},
+        "title": "Connection strength (legacy)", "description": null, "api_slug":
+        "strongest_connection_strength_legacy", "type": "number", "is_system_attribute":
+        true, "is_writable": false, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "a837afb4-ae03-4a44-b862-b27ad9bc3598"}, "title": "Connection
+        strength", "description": null, "api_slug": "strongest_connection_strength",
+        "type": "select", "is_system_attribute": true, "is_writable": false, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "65e5c99d-481c-46ae-8e39-2f6a31ed9047"},
+        "title": "Strongest connection", "description": null, "api_slug": "strongest_connection_user",
+        "type": "actor-reference", "is_system_attribute": true, "is_writable": false,
+        "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "b44e672b-f0e8-42d9-9a18-18cc18b6b02a"},
+        "title": "Associated deals", "description": "Deal records associated with
+        a Company record", "api_slug": "associated_deals", "type": "record-reference",
+        "is_system_attribute": true, "is_writable": true, "is_required": false, "is_unique":
+        false, "is_multiselect": true, "is_default_value_enabled": false, "is_archived":
+        false, "default_value": null, "relationship": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "fcc28edb-0181-4678-ac2e-b5f994cc960b"},
+        "object_slug": "deals", "api_slug": "associated_company", "is_multiselect":
+        false, "title": "Associated company"}, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": ["ee436058-77a1-49f0-ad36-1fd67798d7db"]}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "04576b6f-9215-4fa0-aca2-9d08f44c189b"},
+        "title": "Created at", "description": null, "api_slug": "created_at", "type":
+        "timestamp", "is_system_attribute": true, "is_writable": false, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        true, "is_archived": false, "default_value": {"type": "dynamic", "template":
+        "PT0S"}, "relationship": null, "created_at": "2025-11-03T18:16:13.224000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "6c9cdd9e-6a72-46a6-b639-1cbde62a7582"}, "title": "Created
+        by", "description": null, "api_slug": "created_by", "type": "actor-reference",
+        "is_system_attribute": true, "is_writable": false, "is_required": false, "is_unique":
+        false, "is_multiselect": false, "is_default_value_enabled": true, "is_archived":
+        false, "default_value": {"type": "dynamic", "template": "current-user"}, "relationship":
+        null, "created_at": "2025-11-03T18:16:13.224000000Z", "config": {"currency":
+        {"default_currency_code": null, "display_type": null}, "record_reference":
+        {"allowed_object_ids": null}}}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "ed1c7a00-7751-4ce0-9b0b-08601e4d56ee"},
+        "title": "Industry", "description": "Primary business sector", "api_slug":
+        "industry", "type": "select", "is_system_attribute": false, "is_writable":
+        true, "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-01-10T07:57:53.814000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "5f9406ce-eca4-4280-9c7b-7e00ecf5df51"},
+        "title": "Company Size", "description": "Number of employees", "api_slug":
+        "company_size", "type": "select", "is_system_attribute": false, "is_writable":
+        true, "is_required": false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-01-10T07:57:54.178000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "b4a2b4ad-1f28-47a7-b466-61e8a7df5de8"},
+        "title": "ICP Tier", "description": "Target account tier", "api_slug": "icp_tier",
+        "type": "select", "is_system_attribute": false, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-01-10T07:57:54.752000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "c729dfa7-d1bd-4a4d-8569-9facf1776d1e"},
+        "title": "attr 123", "description": "", "api_slug": "attr_123", "type": "text",
+        "is_system_attribute": false, "is_writable": true, "is_required": false, "is_unique":
+        false, "is_multiselect": false, "is_default_value_enabled": false, "is_archived":
+        false, "default_value": null, "relationship": null, "created_at": "2026-01-10T09:09:17.473000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "63fc28c1-d165-43aa-84c9-3bbe12003e36"}, "title": "Account
+        Status", "description": "", "api_slug": "account_status", "type": "select",
+        "is_system_attribute": false, "is_writable": true, "is_required": false, "is_unique":
+        false, "is_multiselect": false, "is_default_value_enabled": false, "is_archived":
+        false, "default_value": null, "relationship": null, "created_at": "2026-02-21T20:27:58.185000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "538d01fe-74b7-42fe-8cc5-de0e0711195e"}, "title": "Renewal
+        Date", "description": "", "api_slug": "renewal_date", "type": "date", "is_system_attribute":
+        false, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2026-02-21T20:28:02.998000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "6c9dc527-170e-429c-89f8-65c15b7ce28d"}, "title": "NPS Score",
+        "description": "", "api_slug": "nps_score", "type": "number", "is_system_attribute":
+        false, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        false, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2026-02-21T20:28:04.112000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "23f4b849-dbbf-4c52-ba1b-39642fe68e76"}, "title": "Tech Stack",
+        "description": "", "api_slug": "tech_stack", "type": "select", "is_system_attribute":
+        false, "is_writable": true, "is_required": false, "is_unique": false, "is_multiselect":
+        true, "is_default_value_enabled": false, "is_archived": false, "default_value":
+        null, "relationship": null, "created_at": "2026-02-21T20:28:05.274000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "138a4fed-7679-4a81-9fb0-513d562681e9"}, "title": "Customer
+        Success Manager", "description": "", "api_slug": "csm_name", "type": "text",
+        "is_system_attribute": false, "is_writable": true, "is_required": false, "is_unique":
+        false, "is_multiselect": false, "is_default_value_enabled": false, "is_archived":
+        false, "default_value": null, "relationship": null, "created_at": "2026-02-21T20:28:15.143000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "7204fc67-5165-401f-ba14-ed3ceac63c8f"}, "title": "Onboarding
+        Status", "description": "", "api_slug": "onboarding_status", "type": "select",
+        "is_system_attribute": false, "is_writable": true, "is_required": false, "is_unique":
+        false, "is_multiselect": false, "is_default_value_enabled": false, "is_archived":
+        false, "default_value": null, "relationship": null, "created_at": "2026-02-21T20:28:15.920000000Z",
+        "config": {"currency": {"default_currency_code": null, "display_type": null},
+        "record_reference": {"allowed_object_ids": null}}}, {"id": {"workspace_id":
+        "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "fdb66b74-65a1-4968-9eb8-c2829e20b7c3"}, "title": "Annual
+        Contract Value", "description": "", "api_slug": "annual_contract_value", "type":
+        "currency", "is_system_attribute": false, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-02-21T20:28:37.629000000Z", "config": {"currency": {"default_currency_code":
+        "USD", "display_type": "symbol"}, "record_reference": {"allowed_object_ids":
+        null}}}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "88100bca-9883-439d-97c1-7fddcfa41890"},
+        "title": "Subscription Status", "description": "", "api_slug": "subscription_status",
+        "type": "select", "is_system_attribute": false, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-03-17T21:52:56.011000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "6360d984-9574-4abf-a56c-54c01a0ab5b3"},
+        "title": "Billing Coupon Name", "description": "", "api_slug": "billing_coupon_name",
+        "type": "text", "is_system_attribute": false, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-03-17T21:52:57.490000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "be7b730a-bc2f-4c89-8cbd-678e61ddd7f1"},
+        "title": "ARR Contribution (USD)", "description": "", "api_slug": "arr_contribution_usd",
+        "type": "currency", "is_system_attribute": false, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-03-17T21:52:59.428000000Z", "config": {"currency": {"default_currency_code":
+        "USD", "display_type": "symbol"}, "record_reference": {"allowed_object_ids":
+        null}}}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "2736971a-ff6e-45c6-ba90-f76e751c6642"},
+        "title": "Company Research", "description": "", "api_slug": "company_research",
+        "type": "text", "is_system_attribute": false, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-05-09T21:07:25.686000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "899ece66-8563-43fe-b6ab-685dd9b037cc"},
+        "title": "Company Research 2", "description": "", "api_slug": "company_research_2",
+        "type": "text", "is_system_attribute": false, "is_writable": true, "is_required":
+        false, "is_unique": false, "is_multiselect": false, "is_default_value_enabled":
+        false, "is_archived": false, "default_value": null, "relationship": null,
+        "created_at": "2026-05-09T21:22:31.141000000Z", "config": {"currency": {"default_currency_code":
+        null, "display_type": null}, "record_reference": {"allowed_object_ids": null}}}]}'
+    headers:
+      CF-RAY:
+      - 9fc6a1974a4ad029-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:32:54 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '30807'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:32:54.458626000Z'
+      x-attio-execution-id:
+      - 6dd68378-d3f3-4ca8-8b89-13d7ec542779
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,138 @@
+interactions:
+- request:
+    body: '{"limit":5}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11'
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: POST
+    uri: https://api.attio.com/v2/objects/deals/records/query
+  response:
+    body:
+      string: '{"data": [{"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "ee436058-77a1-49f0-ad36-1fd67798d7db", "record_id": "4bb12418-c26b-463b-9548-ec3ba6143448"},
+        "created_at": "2025-12-16T15:32:42.770000000Z", "web_url": "https://app.attio.com/doherty-consulting/deals/record/4bb12418-c26b-463b-9548-ec3ba6143448",
+        "values": {"record_id": [{"active_from": "2025-12-16T15:32:42.770000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "value": "4bb12418-c26b-463b-9548-ec3ba6143448",
+        "attribute_type": "text"}], "name": [{"active_from": "2025-12-16T15:32:42.770000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "value": "Test Deal 2", "attribute_type":
+        "text"}], "stage": [{"active_from": "2025-12-16T15:32:42.770000000Z", "active_until":
+        null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+        "status": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "62223a68-9a27-4176-a5a7-acd83ce36dc8",
+        "status_id": "5fe9ed26-d25a-478d-970d-cf599d02b23f"}, "title": "Discovery",
+        "is_archived": false, "target_time_in_status": null, "celebration_enabled":
+        false}, "attribute_type": "status"}], "owner": [{"active_from": "2025-12-16T15:32:42.770000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "referenced_actor_type": "workspace-member",
+        "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1", "attribute_type":
+        "actor-reference"}], "value": [], "associated_people": [], "associated_company":
+        [], "created_at": [{"active_from": "2025-12-16T15:32:42.770000000Z", "active_until":
+        null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+        "value": "2025-12-16T15:32:29.396000000Z", "attribute_type": "timestamp"}],
+        "created_by": [{"active_from": "2025-12-16T15:32:42.770000000Z", "active_until":
+        null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+        "referenced_actor_type": "workspace-member", "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1",
+        "attribute_type": "actor-reference"}], "date_entered_discovery": [], "date_entered_solution_definition":
+        [], "date_entered_proposal": [], "date_entered_negotiation": [], "date_closed_won":
+        [], "date_closed_lost": [], "updated_at": [], "deal_source": [], "competitor":
+        [], "decision_timeline": [], "next_step": [], "close_probability": [], "new_attr_1":
+        [], "pipeline_attr": [], "deal_type": [], "contract_length_months": [], "discount_percentage":
+        [], "lost_reason": [], "poc_status": [], "budget_confirmed": [], "expected_close_date":
+        []}}, {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id":
+        "ee436058-77a1-49f0-ad36-1fd67798d7db", "record_id": "941a9355-4e5a-49a6-a029-11040bc8cc64"},
+        "created_at": "2025-12-16T00:40:04.431000000Z", "web_url": "https://app.attio.com/doherty-consulting/deals/record/941a9355-4e5a-49a6-a029-11040bc8cc64",
+        "values": {"record_id": [{"active_from": "2025-12-16T00:40:04.431000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "value": "941a9355-4e5a-49a6-a029-11040bc8cc64",
+        "attribute_type": "text"}], "name": [{"active_from": "2025-12-16T01:01:49.210000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "value": "Test Deal 1", "attribute_type":
+        "text"}], "stage": [{"active_from": "2025-12-16T15:28:45.270000000Z", "active_until":
+        null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+        "status": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "ee436058-77a1-49f0-ad36-1fd67798d7db", "attribute_id": "62223a68-9a27-4176-a5a7-acd83ce36dc8",
+        "status_id": "606af267-5baf-4017-b09f-ebe2d01b532a"}, "title": "Solution Definition",
+        "is_archived": false, "target_time_in_status": null, "celebration_enabled":
+        false}, "attribute_type": "status"}], "owner": [{"active_from": "2025-12-16T00:40:04.431000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "referenced_actor_type": "workspace-member",
+        "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1", "attribute_type":
+        "actor-reference"}], "value": [{"active_from": "2025-12-16T00:40:04.431000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "currency_code": "USD", "currency_value":
+        10000, "attribute_type": "currency"}], "associated_people": [], "associated_company":
+        [], "created_at": [{"active_from": "2025-12-16T00:40:04.431000000Z", "active_until":
+        null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+        "value": "2025-12-16T00:39:41.045000000Z", "attribute_type": "timestamp"}],
+        "created_by": [{"active_from": "2025-12-16T00:40:04.431000000Z", "active_until":
+        null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+        "referenced_actor_type": "workspace-member", "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1",
+        "attribute_type": "actor-reference"}], "date_entered_discovery": [{"active_from":
+        "2025-12-16T01:01:50.174000000Z", "active_until": null, "created_by_actor":
+        {"type": "system", "id": null}, "value": "2025-12-16", "attribute_type": "date"}],
+        "date_entered_solution_definition": [{"active_from": "2026-02-20T20:35:59.937000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "value": "2026-02-20", "attribute_type": "date"}], "date_entered_proposal":
+        [], "date_entered_negotiation": [], "date_closed_won": [], "date_closed_lost":
+        [], "updated_at": [{"active_from": "2025-12-16T01:01:49.887000000Z", "active_until":
+        null, "created_by_actor": {"type": "system", "id": null}, "value": "2025-12-15",
+        "attribute_type": "date"}], "deal_source": [], "competitor": [], "decision_timeline":
+        [], "next_step": [], "close_probability": [], "new_attr_1": [], "pipeline_attr":
+        [], "deal_type": [], "contract_length_months": [], "discount_percentage":
+        [], "lost_reason": [], "poc_status": [], "budget_confirmed": [], "expected_close_date":
+        []}}]}'
+    headers:
+      CF-RAY:
+      - 9fc6a2412869cee5-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:33:22 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '6114'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:33:21.611000000Z'
+      x-attio-execution-id:
+      - f1f21ff6-78b0-4ceb-ae97-59024820ccf8
+      x-attio-record-query-score:
+      - '0'
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

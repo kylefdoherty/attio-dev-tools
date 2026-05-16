@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"limit":5}'
+    body: ''
     headers:
       Accept:
       - '*/*'
@@ -8,34 +8,34 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
-      Content-Length:
-      - '11'
       Content-Type:
       - application/json
       Host:
       - api.attio.com
       User-Agent:
       - attio-python/0.1.0
-    method: POST
-    uri: https://api.attio.com/v2/objects/people/records/query
+    method: GET
+    uri: https://api.attio.com/v2/objects/companies
   response:
     body:
-      string: '{"data": []}'
+      string: '{"data": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368"}, "api_slug": "companies",
+        "singular_noun": "Company", "plural_noun": "Companies", "created_at": "2025-11-03T18:16:13.152000000Z"}}'
     headers:
       CF-RAY:
-      - 9fc6a219dbe07ac4-SJC
+      - 9fc6a1920aa6eb28-SJC
       Connection:
       - keep-alive
-      Content-Length:
-      - '11'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 16 May 2026 01:33:15 GMT
+      - Sat, 16 May 2026 01:32:53 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
       - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
       access-control-allow-origin:
       - '*'
       access-control-expose-headers:
@@ -44,19 +44,16 @@ interactions:
       - h3=":443"; ma=86400
       cf-cache-status:
       - DYNAMIC
-      set-cookie:
-      - _cfuvid=GaPZSZqLHHrImqJ6DMDNKyjvhWdWvwBXPMMBlzw3_GQ-1778895195.1782904-1.0.1.1-lxilx._cglnYXuoroKgN5afhMepkrmQbmYIiUB2Hn1U;
-        HttpOnly; SameSite=None; Secure; Path=/; Domain=attio.com
+      content-length:
+      - '243'
       vary:
       - Origin
       via:
       - 1.1 google
       x-accurate-at:
-      - '2026-05-16T01:33:15.314000000Z'
+      - '2026-05-16T01:32:53.569577000Z'
       x-attio-execution-id:
-      - 6a5b8f36-c7fc-41aa-84f2-b898b6b61091
-      x-attio-record-query-score:
-      - '0'
+      - 03a638b7-4578-4d52-9df4-af60229d49b4
       x-frame-options:
       - DENY
     status:

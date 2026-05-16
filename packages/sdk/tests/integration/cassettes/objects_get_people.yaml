@@ -10,8 +10,6 @@ interactions:
       - keep-alive
       Content-Type:
       - application/json
-      Cookie:
-      - _cfuvid=2AuM9d6T0tc4m3MhnWAX9IjVBiT78fAc2rgQHN5v0BA-1778893944.9693477-1.0.1.1-EZlsp630etorwzyIzRGN6.malTpu1ioN_Up7BfzvITc
       Host:
       - api.attio.com
       User-Agent:
@@ -20,7 +18,9 @@ interactions:
     uri: https://api.attio.com/v2/objects/people
   response:
     body:
-      string: '{"data":{"id":{"workspace_id":"74716136-8b3f-4b28-b67f-75d3212684e1","object_id":"0b1c77ca-9b81-47ba-8d2e-490c74901031"},"api_slug":"people","singular_noun":"Person","plural_noun":"People","created_at":"2025-11-03T18:16:13.152000000Z"}}'
+      string: '{"data": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "0b1c77ca-9b81-47ba-8d2e-490c74901031"}, "api_slug": "people",
+        "singular_noun": "Person", "plural_noun": "People", "created_at": "2025-11-03T18:16:13.152000000Z"}}'
     headers:
       CF-RAY:
       - 9fc683a14ae1eb2c-SJC
@@ -54,6 +54,66 @@ interactions:
       - '2026-05-16T01:12:27.214706000Z'
       x-attio-execution-id:
       - 707eeee2-68a2-4b00-9773-9e8e07f6f9a1
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/objects/people
+  response:
+    body:
+      string: '{"data": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "0b1c77ca-9b81-47ba-8d2e-490c74901031"}, "api_slug": "people",
+        "singular_noun": "Person", "plural_noun": "People", "created_at": "2025-11-03T18:16:13.152000000Z"}}'
+    headers:
+      CF-RAY:
+      - 9fc6a18ff8c31742-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:32:53 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '236'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:32:53.240016000Z'
+      x-attio-execution-id:
+      - b6e097bb-0d2c-43a8-863b-f088635b817c
       x-frame-options:
       - DENY
     status:

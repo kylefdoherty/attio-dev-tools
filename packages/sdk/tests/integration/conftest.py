@@ -53,8 +53,70 @@ def _scrub_request(request):
 
 
 def _scrub_response(response):
-    """Scrub sensitive data from recorded responses."""
+    """Scrub PII from recorded responses for public repo safety."""
+    import json as _json
+
+    body = response.get("body", {}).get("string", "")
+    if body:
+        try:
+            if isinstance(body, bytes):
+                body = body.decode("utf-8")
+            data = _json.loads(body)
+            _scrub_dict(data)
+            response["body"]["string"] = _json.dumps(data)
+        except (_json.JSONDecodeError, TypeError, UnicodeDecodeError):
+            pass
     return response
+
+
+_SCRUB_FIELDS = {
+    "first_name": "Test",
+    "last_name": "User",
+    "full_name": "Test User",
+    "email_address": "test@example.com",
+    "workspace_name": "Test Workspace",
+    "workspace_slug": "test-workspace",
+}
+
+
+def _scrub_dict(obj):
+    """Recursively scrub known PII fields from response data."""
+    if isinstance(obj, dict):
+        for key, replacement in _SCRUB_FIELDS.items():
+            if key in obj and isinstance(obj[key], str):
+                obj[key] = replacement
+        for value in obj.values():
+            _scrub_dict(value)
+    elif isinstance(obj, list):
+        for item in obj:
+            _scrub_dict(item)
+
+
+def _patch_vcr_httpcore_bytes():
+    """Monkey-patch VCR's httpcore stubs to fix str/bytes body mismatch.
+
+    VCR.py 8.x with decode_compressed_response=True stores response bodies
+    as Python str in YAML cassettes.  But httpcore.Response(content=...)
+    expects bytes, causing a TypeError on playback with httpx 0.28+.
+
+    This patches _deserialize_response to call convert_body_to_bytes before
+    constructing the httpcore Response.
+    """
+    import vcr.stubs.httpcore_stubs as stubs
+    from vcr.serializers.compat import convert_body_to_bytes as _to_bytes
+
+    _orig = stubs._deserialize_response
+
+    def _fixed_deserialize_response(vcr_response):
+        # Ensure body is bytes for both legacy and modern cassette formats
+        if "status_code" not in vcr_response:
+            _to_bytes(vcr_response)
+        return _orig(vcr_response)
+
+    stubs._deserialize_response = _fixed_deserialize_response
+
+
+_patch_vcr_httpcore_bytes()
 
 
 # Shared VCR instance used by all integration test modules
@@ -62,7 +124,7 @@ my_vcr = vcr.VCR(
     cassette_library_dir=CASSETTE_DIR,
     record_mode=RECORD_MODE,
     match_on=["method", "path", "query"],
-    filter_headers=["authorization", "Authorization"],
+    filter_headers=["authorization", "Authorization", "Cookie"],
     before_record_request=_scrub_request,
     before_record_response=_scrub_response,
     decode_compressed_response=True,

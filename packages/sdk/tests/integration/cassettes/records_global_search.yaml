@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"limit":5}'
+    body: '{"query":"a","objects":["people","companies"],"limit":5}'
     headers:
       Accept:
       - '*/*'
@@ -9,7 +9,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '11'
+      - '56'
       Content-Type:
       - application/json
       Host:
@@ -17,21 +17,23 @@ interactions:
       User-Agent:
       - attio-python/0.1.0
     method: POST
-    uri: https://api.attio.com/v2/objects/people/records/query
+    uri: https://api.attio.com/v2/objects/records/search
   response:
     body:
-      string: '{"data": []}'
+      string: '{"status_code": 400, "type": "invalid_request_error", "code": "validation_type",
+        "message": "Body payload validation error.", "validation_errors": [{"code":
+        "invalid", "path": ["request_as"], "message": "Invalid input"}]}'
     headers:
       CF-RAY:
-      - 9fc6a219dbe07ac4-SJC
+      - 9fc6a23438c5ae99-SJC
       Connection:
       - keep-alive
       Content-Length:
-      - '11'
+      - '207'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 16 May 2026 01:33:15 GMT
+      - Sat, 16 May 2026 01:33:19 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -44,22 +46,15 @@ interactions:
       - h3=":443"; ma=86400
       cf-cache-status:
       - DYNAMIC
-      set-cookie:
-      - _cfuvid=GaPZSZqLHHrImqJ6DMDNKyjvhWdWvwBXPMMBlzw3_GQ-1778895195.1782904-1.0.1.1-lxilx._cglnYXuoroKgN5afhMepkrmQbmYIiUB2Hn1U;
-        HttpOnly; SameSite=None; Secure; Path=/; Domain=attio.com
       vary:
       - Origin
       via:
       - 1.1 google
-      x-accurate-at:
-      - '2026-05-16T01:33:15.314000000Z'
       x-attio-execution-id:
-      - 6a5b8f36-c7fc-41aa-84f2-b898b6b61091
-      x-attio-record-query-score:
-      - '0'
+      - 95269b9f-45d1-41a3-a460-8ec87eb5d7b6
       x-frame-options:
       - DENY
     status:
-      code: 200
-      message: OK
+      code: 400
+      message: Bad Request
 version: 1
