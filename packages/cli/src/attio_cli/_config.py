@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -45,6 +46,25 @@ def _write_config(config: dict[str, Any]) -> None:
     path.write_text(json.dumps(config, indent=2) + "\n")
 
 
+def _resolve_1password(op_reference: str) -> str | None:
+    """Resolve a secret from 1Password using the `op` CLI.
+
+    Returns the secret value, or None if `op` is not installed or the reference is invalid.
+    """
+    try:
+        result = subprocess.run(
+            ["op", "read", op_reference],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+        return None
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return None
+
+
 def get_api_key(
     *,
     flag_value: str | None = None,
@@ -52,7 +72,7 @@ def get_api_key(
 ) -> str | None:
     """Resolve the API key using the priority chain.
 
-    Priority: explicit flag > ATTIO_API_KEY env var > profile > default profile.
+    Priority: explicit flag > ATTIO_API_KEY env var > profile (1password or plain key) > default profile.
     """
     # 1. Explicit flag
     if flag_value:
@@ -67,13 +87,15 @@ def get_api_key(
     config = _read_config()
     profiles = config.get("profiles", {})
 
-    if profile_name:
-        profile = profiles.get(profile_name, {})
-        return profile.get("api_key")
+    name = profile_name or config.get("active_profile", "default")
+    profile = profiles.get(name, {})
 
-    # 4. Active profile
-    active = config.get("active_profile", "default")
-    profile = profiles.get(active, {})
+    # 3a. 1Password reference — resolve at runtime
+    op_ref = profile.get("op_reference")
+    if op_ref:
+        return _resolve_1password(op_ref)
+
+    # 3b. Plain API key
     return profile.get("api_key")
 
 
@@ -83,6 +105,21 @@ def save_api_key(api_key: str, *, profile_name: str = "default", workspace_name:
     profiles = config.setdefault("profiles", {})
     profile = profiles.setdefault(profile_name, {})
     profile["api_key"] = api_key
+    profile.pop("op_reference", None)
+    if workspace_name:
+        profile["workspace_name"] = workspace_name
+    if "active_profile" not in config:
+        config["active_profile"] = profile_name
+    _write_config(config)
+
+
+def save_1password_ref(op_reference: str, *, profile_name: str = "default", workspace_name: str | None = None) -> None:
+    """Save a 1Password reference to a named profile. No secret is stored on disk."""
+    config = _read_config()
+    profiles = config.setdefault("profiles", {})
+    profile = profiles.setdefault(profile_name, {})
+    profile["op_reference"] = op_reference
+    profile.pop("api_key", None)
     if workspace_name:
         profile["workspace_name"] = workspace_name
     if "active_profile" not in config:

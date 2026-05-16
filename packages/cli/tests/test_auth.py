@@ -47,6 +47,35 @@ class TestAuthLogin:
             result = runner.invoke(app, ["auth", "login", "--api-key", "bad_key"])
             assert result.exit_code != 0
 
+    def test_login_with_1password(self):
+        """Login with --1password should resolve via op CLI and save reference."""
+        mock_client_instance = MagicMock()
+        mock_info = MagicMock()
+        mock_info.workspace_name = "1P Workspace"
+        mock_client_instance.self_.identify.return_value = mock_info
+        mock_client_instance.close.return_value = None
+
+        with (
+            patch("attio_cli._config._resolve_1password", return_value="sk_live_from_1password"),
+            patch("attio.AttioClient", return_value=mock_client_instance),
+            patch("attio_cli._config.save_1password_ref") as mock_save,
+        ):
+            result = runner.invoke(app, ["auth", "login", "--1password", "op://Vault/Attio/credential"])
+            assert result.exit_code == 0
+            assert "1Password" in result.output
+            mock_save.assert_called_once_with(
+                "op://Vault/Attio/credential",
+                profile_name="default",
+                workspace_name="1P Workspace",
+            )
+
+    def test_login_with_1password_op_not_installed(self):
+        """Login with --1password should fail gracefully if op CLI is missing."""
+        with patch("attio_cli._config._resolve_1password", return_value=None):
+            result = runner.invoke(app, ["auth", "login", "--1password", "op://Vault/Attio/credential"])
+            assert result.exit_code != 0
+            assert "op" in result.output.lower() or "1password" in result.output.lower()
+
 
 class TestAuthLogout:
     """Test the auth logout command."""
@@ -93,3 +122,63 @@ class TestAuthStatus:
             assert result.exit_code == 0
             parsed = json.loads(result.output)
             assert parsed["data"]["workspace_name"] == "Test WS"
+
+
+class TestOnePasswordIntegration:
+    """Test 1Password config integration."""
+
+    def test_resolve_1password_success(self):
+        """_resolve_1password should call op read and return the secret."""
+        from attio_cli._config import _resolve_1password
+
+        mock_result = MagicMock()
+        mock_result.returncode = 0
+        mock_result.stdout = "sk_live_secret_key\n"
+
+        with patch("attio_cli._config.subprocess.run", return_value=mock_result) as mock_run:
+            result = _resolve_1password("op://Vault/Attio/credential")
+            assert result == "sk_live_secret_key"
+            mock_run.assert_called_once_with(
+                ["op", "read", "op://Vault/Attio/credential"],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+
+    def test_resolve_1password_op_not_found(self):
+        """_resolve_1password should return None if op is not installed."""
+        from attio_cli._config import _resolve_1password
+
+        with patch("attio_cli._config.subprocess.run", side_effect=FileNotFoundError):
+            result = _resolve_1password("op://Vault/Attio/credential")
+            assert result is None
+
+    def test_resolve_1password_op_error(self):
+        """_resolve_1password should return None if op returns non-zero."""
+        from attio_cli._config import _resolve_1password
+
+        mock_result = MagicMock()
+        mock_result.returncode = 1
+        mock_result.stdout = ""
+
+        with patch("attio_cli._config.subprocess.run", return_value=mock_result):
+            result = _resolve_1password("op://Vault/Attio/credential")
+            assert result is None
+
+    def test_get_api_key_from_1password_profile(self):
+        """get_api_key should resolve op_reference from profile config."""
+        from attio_cli._config import get_api_key
+
+        config = {
+            "active_profile": "default",
+            "profiles": {
+                "default": {"op_reference": "op://Vault/Attio/credential"},
+            },
+        }
+        with (
+            patch("attio_cli._config._read_config", return_value=config),
+            patch("attio_cli._config._resolve_1password", return_value="sk_live_resolved") as mock_op,
+        ):
+            result = get_api_key()
+            assert result == "sk_live_resolved"
+            mock_op.assert_called_once_with("op://Vault/Attio/credential")
