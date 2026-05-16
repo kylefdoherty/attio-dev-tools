@@ -1,18 +1,65 @@
 # attio-python
 
-Unofficial Python SDK for the [Attio](https://attio.com) CRM API.
+Unofficial Python SDK and CLI for the [Attio](https://attio.com) CRM API.
 
 **This project is not affiliated with, endorsed by, or associated with Attio.**
+
+This monorepo contains two packages:
+
+- **`attio`** — Python SDK for the Attio API (full type safety, sync + async, Pydantic models)
+- **`attio-cli`** — Command-line interface for the Attio API (human + AI agent friendly)
 
 ## Installation
 
 ```bash
+# SDK only
 pip install attio
+
+# CLI (includes the SDK)
+pip install attio-cli
 ```
 
 Requires Python 3.10+.
 
-## Quick Start
+## CLI Quick Start
+
+```bash
+# Authenticate
+attio auth login --api-key sk_your_key_here
+
+# List people
+attio people list
+
+# Create a person (simplified values — no array-of-dicts needed)
+attio people create --values '{"name": "Jane Doe", "email": "jane@acme.com", "job_title": "CTO"}'
+
+# Search across all objects
+attio search "Acme"
+
+# Get all deals (auto-paginate)
+attio deals list --all
+
+# JSON output for scripting and AI agents
+attio people list --json
+
+# Raw API access
+attio api GET /objects
+attio api POST /objects/people/records/query --body '{"filter": {"name": {"$contains": "Jane"}}}'
+```
+
+The CLI supports 23 command groups covering the full Attio API. Run `attio --help` to see all commands.
+
+### CLI Features
+
+- **Full API parity** — every SDK method has a CLI command
+- **Simplified values** — `{"name": "Jane Doe"}` auto-expands to Attio's array-of-dicts format
+- **`--json` everywhere** — structured output for scripting and AI agents, auto-enabled when piped
+- **`--all` flag** — auto-paginate through all results on any list command
+- **`attio api` escape hatch** — hit any endpoint with auth handled
+- **Semantic exit codes** — 0-8 mapping (auth, permission, not found, rate limit, etc.)
+- **Agent-first** — non-interactive by default, data to stdout, errors to stderr
+
+## SDK Quick Start
 
 ### Synchronous
 
