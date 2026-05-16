@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=2AuM9d6T0tc4m3MhnWAX9IjVBiT78fAc2rgQHN5v0BA-1778893944.9693477-1.0.1.1-EZlsp630etorwzyIzRGN6.malTpu1ioN_Up7BfzvITc
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/workspace_members
+  response:
+    body:
+      string: '{"data":[{"id":{"workspace_id":"74716136-8b3f-4b28-b67f-75d3212684e1","workspace_member_id":"635cebb2-d0d3-4c03-8485-44354bdf4cb1"},"first_name":"Kyle","last_name":"Doherty","avatar_url":null,"email_address":"kyle@dohertygtm.com","access_level":"admin","created_at":"2025-11-03T18:16:17.133000000Z"}]}'
+    headers:
+      CF-RAY:
+      - 9fc683ad3f51f555-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:12:29 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '301'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:12:29.115068000Z'
+      x-attio-execution-id:
+      - 6557a3ad-4cda-4d74-a7fd-c8931d9d48fc
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

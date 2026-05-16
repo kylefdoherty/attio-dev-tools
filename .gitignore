@@ -21,6 +21,9 @@ htmlcov/
 .pytest_cache/
 tests/fixtures/cassettes/
 
+# NOTE: tests/integration/cassettes/ is NOT ignored -- those YAML files contain
+# scrubbed API responses used by VCR.py integration tests and should be committed.
+
 # Type checking
 .mypy_cache/
 

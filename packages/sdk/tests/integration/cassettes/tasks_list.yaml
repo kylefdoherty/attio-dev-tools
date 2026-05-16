@@ -1,0 +1,60 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=2AuM9d6T0tc4m3MhnWAX9IjVBiT78fAc2rgQHN5v0BA-1778893944.9693477-1.0.1.1-EZlsp630etorwzyIzRGN6.malTpu1ioN_Up7BfzvITc
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/tasks
+  response:
+    body:
+      string: '{"data":[]}'
+    headers:
+      CF-RAY:
+      - 9fc683a71a9dcf05-SJC
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:12:28 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:12:28.255501000Z'
+      x-attio-execution-id:
+      - 050bdb01-52ff-4e0b-a5fd-e9e1e55fa6f4
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,64 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=2AuM9d6T0tc4m3MhnWAX9IjVBiT78fAc2rgQHN5v0BA-1778893944.9693477-1.0.1.1-EZlsp630etorwzyIzRGN6.malTpu1ioN_Up7BfzvITc
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/self
+  response:
+    body:
+      string: '{"active":true,"scope":"call_recording:read-write comment:read-write
+        file:read-write list_configuration:read-write list_entry:read-write meeting:read-write
+        note:read-write object_configuration:read-write record_permission:read-write
+        task:read-write user_management:read-write webhook:read-write","client_id":"df642098-becc-4c2b-b9c4-e5fff55a7049","token_type":"Bearer","exp":null,"iat":1778892789,"sub":"74716136-8b3f-4b28-b67f-75d3212684e1","aud":"df642098-becc-4c2b-b9c4-e5fff55a7049","iss":"attio.com","authorized_by_workspace_member_id":"635cebb2-d0d3-4c03-8485-44354bdf4cb1","workspace_id":"74716136-8b3f-4b28-b67f-75d3212684e1","workspace_name":"Doherty
+        Consulting","workspace_slug":"doherty-consulting","workspace_logo_url":null}'
+    headers:
+      CF-RAY:
+      - 9fc683ab9a38fb44-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:12:28 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '736'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-attio-execution-id:
+      - c0deb022-1ef9-450f-a489-3e55e42abd6f
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1
