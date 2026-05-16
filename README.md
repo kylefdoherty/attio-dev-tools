@@ -13,14 +13,17 @@ This monorepo contains three packages:
 ## Installation
 
 ```bash
-# SDK only
+# Python SDK
 pip install attio
 
-# CLI (includes the SDK)
+# CLI (includes the Python SDK)
 pip install attio-cli
+
+# Node/TypeScript SDK
+npm install attio-node
 ```
 
-Requires Python 3.10+.
+Python packages require Python 3.10+. Node SDK requires Node 18+.
 
 ## CLI Quick Start
 
