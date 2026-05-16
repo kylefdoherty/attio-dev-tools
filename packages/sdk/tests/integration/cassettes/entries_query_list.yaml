@@ -1,0 +1,137 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/lists
+  response:
+    body:
+      string: '{"data": [{"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "list_id": "30bfd20d-ced7-4474-9776-70466ed9d117"}, "api_slug": "target_logos_6",
+        "created_at": "2025-12-15T00:51:46.411000000Z", "name": "Target Logos", "workspace_access":
+        "full-access", "workspace_member_access": [{"level": "full-access", "workspace_member_id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}], "parent_object": ["companies"],
+        "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "list_id":
+        "a63f2393-c988-429f-a0cb-2f88325ac25a"}, "api_slug": "deal_movement_last_7_days",
+        "created_at": "2025-12-16T00:42:09.988000000Z", "name": "Deal Movement Last
+        7 Days", "workspace_access": null, "workspace_member_access": [{"level": "full-access",
+        "workspace_member_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}], "parent_object":
+        ["deals"], "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}},
+        {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "list_id":
+        "2ffc93cb-fdd6-4037-a471-45c4df487a76"}, "api_slug": "test_list", "created_at":
+        "2026-01-15T17:52:52.829000000Z", "name": "Test List", "workspace_access":
+        "full-access", "workspace_member_access": [{"level": "full-access", "workspace_member_id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}], "parent_object": ["companies"],
+        "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}}]}'
+    headers:
+      CF-RAY:
+      - 9fc6a1fbcebddf26-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:33:10 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '1438'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:33:10.489365000Z'
+      x-attio-execution-id:
+      - 0bfbe262-ae10-4006-a529-d8f4805526d0
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"limit":5}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11'
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: POST
+    uri: https://api.attio.com/v2/lists/target_logos_6/entries/query
+  response:
+    body:
+      string: '{"data": []}'
+    headers:
+      CF-RAY:
+      - 9fc6a1fd7801300b-SJC
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:33:11 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:33:10.782000000Z'
+      x-attio-execution-id:
+      - 20ab8a11-731d-447b-9286-292a74d0420c
+      x-attio-record-query-score:
+      - '0'
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1
