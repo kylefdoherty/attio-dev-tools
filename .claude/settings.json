@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "if": "Bash(git commit *)",
+            "prompt": "A git commit is about to be made. Check if the changes being committed affect any user-facing behavior, CLI commands, SDK API surface, auth flow, or features. If they do, verify that README.md has been updated in this commit to reflect the changes. If the README is stale, respond with ok: false and explain what needs updating. If the README is already current or the changes are purely internal (tests, refactoring, internal code), respond with ok: true."
+          }
+        ]
+      }
+    ]
+  }
+}

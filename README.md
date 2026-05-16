@@ -28,7 +28,7 @@ Requires Python 3.10+.
 attio auth login
 
 # Or via 1Password (no secret stored on disk)
-attio auth login --1password "op://Vault/Attio API Key/credential"
+attio auth login --1password "op://Vault/attio-cli/credential"
 
 # List people
 attio people list
