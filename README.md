@@ -1,13 +1,14 @@
 # attio-dev-tools
 
-Unofficial Python SDK and CLI for the [Attio](https://attio.com) CRM API.
+Unofficial SDKs and CLI for the [Attio](https://attio.com) CRM API.
 
 **This project is not affiliated with, endorsed by, or associated with Attio.**
 
-This monorepo contains two packages:
+This monorepo contains three packages:
 
-- **`attio`** — Python SDK for the Attio API (full type safety, sync + async, Pydantic models)
-- **`attio-cli`** — Command-line interface for the Attio API (human + AI agent friendly)
+- **`attio`** -- Python SDK for the Attio API (full type safety, sync + async, Pydantic models)
+- **`attio-cli`** -- Command-line interface for the Attio API (human + AI agent friendly)
+- **`attio-node`** -- TypeScript SDK for the Attio API (zero dependencies, automatic retries, full API coverage)
 
 ## Installation
 

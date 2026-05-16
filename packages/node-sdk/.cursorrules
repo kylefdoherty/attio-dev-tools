@@ -1,0 +1,24 @@
+# Cursor Rules — attio-node SDK
+
+Read AGENTS.md at the project root for the full SDK reference.
+
+## Quick Reference
+
+```typescript
+import { AttioClient } from 'attio-node';
+const client = new AttioClient({ apiKey: process.env.ATTIO_API_KEY });
+```
+
+- All resources: `client.{resource}.{method}()`
+- Response shapes: list/query → `{ data: T[] }`, get/create/update → `{ data: T }`, delete → void
+- Record values are always arrays: `name: [{ value: 'Acme' }]`
+- `assert` = upsert by matching attribute
+- Rate limiting is automatic — don't add manual retry logic
+- Errors: `AttioError` (base), `RateLimitError` (429), `ScopeError` (403)
+
+## Common Mistakes to Avoid
+
+- Forgetting to wrap record values in arrays
+- Using `update` when `assert` (upsert) is the right choice
+- Adding manual rate limit handling (the SDK does this automatically)
+- Trying to create `email-address` type attributes via API (use `text` type instead)
