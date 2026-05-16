@@ -18,6 +18,7 @@ from attio_cli.commands._record_helpers import (
     ENTRY_LIST_COLUMNS,
     GENERIC_COLUMNS,
     VALUE_COLUMNS,
+    get_columns_for_object,
     parse_json_option,
     record_to_dict,
 )
@@ -38,12 +39,15 @@ def list_records(
 ) -> None:
     """List records for a given object with optional filtering and sorting."""
     client = get_client(ctx)
+    # Resolve columns dynamically -- uses pre-built definitions for standard
+    # objects and fetches attribute metadata for custom ones.
+    cols = get_columns_for_object(object, client)
     try:
         if all_results:
             filter_obj = parse_json_option(filter) if filter else None
             iterator = client.records.query_all(object, filter=filter_obj)
             all_data = [record_to_dict(r) for r in iterator]
-            output_list(all_data, GENERIC_COLUMNS, ctx, title=f"Records ({object}) (all)")
+            output_list(all_data, cols, ctx, title=f"Records ({object}) (all)")
             return
 
         filter_obj = parse_json_option(filter)
@@ -55,7 +59,7 @@ def list_records(
         else:
             result = client.records.list(object, limit=limit, offset=offset)
         data = [record_to_dict(r) for r in result.data]
-        output_list(data, GENERIC_COLUMNS, ctx, title=f"Records ({object})")
+        output_list(data, cols, ctx, title=f"Records ({object})")
     except SystemExit:
         raise
     except Exception as e:
