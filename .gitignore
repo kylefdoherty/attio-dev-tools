@@ -47,6 +47,8 @@ Thumbs.db
 # Node.js
 node_modules/
 *.tsbuildinfo
+.next/
+next-env.d.ts
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
