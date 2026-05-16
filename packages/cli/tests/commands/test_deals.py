@@ -37,7 +37,7 @@ class TestDealsAppend:
         """deals append --json should return the updated record."""
         mock_record = _make_mock_record(record_id="rec_d123")
 
-        with patch("attio_cli.commands.deals.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.deals.append.return_value = mock_record
             mock_gc.return_value = mock_client
@@ -74,7 +74,7 @@ class TestDealsValues:
         mock_response = MagicMock()
         mock_response.data = [mock_value]
 
-        with patch("attio_cli.commands.deals.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.deals.get_attribute_values.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -106,7 +106,7 @@ class TestDealsEntries:
         mock_response = MagicMock()
         mock_response.data = [mock_entry]
 
-        with patch("attio_cli.commands.deals.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.deals.list_entries.return_value = mock_response
             mock_gc.return_value = mock_client

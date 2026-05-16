@@ -43,7 +43,7 @@ class TestRecordsList:
         mock_response = MagicMock()
         mock_response.data = [_make_mock_record()]
 
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.list.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -60,7 +60,7 @@ class TestRecordsList:
         mock_response = MagicMock()
         mock_response.data = []
 
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.query.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -85,7 +85,7 @@ class TestRecordsListAll:
         mock_record1 = _make_mock_record(record_id="rec_1")
         mock_record2 = _make_mock_record(record_id="rec_2")
 
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.query_all.return_value = [mock_record1, mock_record2]
             mock_gc.return_value = mock_client
@@ -106,7 +106,7 @@ class TestRecordsGet:
         """records get should return a single record."""
         mock_record = _make_mock_record()
 
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.get.return_value = mock_record
             mock_gc.return_value = mock_client
@@ -126,7 +126,7 @@ class TestRecordsCreate:
         """records create should return the created record."""
         mock_record = _make_mock_record(record_id="rec_new")
 
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.create.return_value = mock_record
             mock_gc.return_value = mock_client
@@ -149,7 +149,7 @@ class TestRecordsDelete:
 
     def test_delete_with_yes(self):
         """records delete --yes should skip confirmation."""
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.delete.return_value = None
             mock_gc.return_value = mock_client
@@ -168,7 +168,7 @@ class TestRecordsAppend:
         """records append --json should return the updated record."""
         mock_record = _make_mock_record(record_id="rec_123")
 
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.append.return_value = mock_record
             mock_gc.return_value = mock_client
@@ -213,7 +213,7 @@ class TestRecordsValues:
         mock_response = MagicMock()
         mock_response.data = [mock_value]
 
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.get_attribute_values.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -249,7 +249,7 @@ class TestRecordsEntries:
         mock_response = MagicMock()
         mock_response.data = [mock_entry]
 
-        with patch("attio_cli.commands.records.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.list_entries.return_value = mock_response
             mock_gc.return_value = mock_client

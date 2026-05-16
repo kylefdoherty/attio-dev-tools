@@ -48,7 +48,7 @@ class TestPeopleList:
         mock_response = MagicMock()
         mock_response.data = [_make_mock_record()]
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.list.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -65,7 +65,7 @@ class TestPeopleList:
         mock_response = MagicMock()
         mock_response.data = []
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.list.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -79,7 +79,7 @@ class TestPeopleList:
         mock_response = MagicMock()
         mock_response.data = []
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.query.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -96,7 +96,7 @@ class TestPeopleList:
         mock_response = MagicMock()
         mock_response.data = []
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.list.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -115,7 +115,7 @@ class TestPeopleListAll:
         mock_record1 = _make_mock_record(record_id="rec_1")
         mock_record2 = _make_mock_record(record_id="rec_2")
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.query_all.return_value = [mock_record1, mock_record2]
             mock_gc.return_value = mock_client
@@ -130,7 +130,7 @@ class TestPeopleListAll:
         """people list --all --filter should pass filter to query_all."""
         mock_record = _make_mock_record()
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.query_all.return_value = [mock_record]
             mock_gc.return_value = mock_client
@@ -152,7 +152,7 @@ class TestPeopleGet:
         """people get --json should return a single record."""
         mock_record = _make_mock_record()
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.get.return_value = mock_record
             mock_gc.return_value = mock_client
@@ -166,7 +166,7 @@ class TestPeopleGet:
         """people get with bad ID should return exit code 5."""
         from attio._exceptions import NotFoundError
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.get.side_effect = NotFoundError("Not found", status_code=404)
             mock_gc.return_value = mock_client
@@ -182,7 +182,7 @@ class TestPeopleCreate:
         """people create --json should return the created record."""
         mock_record = _make_mock_record(record_id="rec_new")
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.create.return_value = mock_record
             mock_gc.return_value = mock_client
@@ -201,7 +201,7 @@ class TestPeopleDelete:
 
     def test_delete_with_yes_flag(self):
         """people delete --yes should skip confirmation."""
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.delete.return_value = None
             mock_gc.return_value = mock_client
@@ -226,7 +226,7 @@ class TestPeopleSearch:
         search_item.object_slug = "people"
         mock_result.data = [search_item]
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.records.global_search.return_value = mock_result
             mock_gc.return_value = mock_client
@@ -245,7 +245,7 @@ class TestPeopleAppend:
         """people append --json should return the updated record."""
         mock_record = _make_mock_record(record_id="rec_123")
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.append.return_value = mock_record
             mock_gc.return_value = mock_client
@@ -282,7 +282,7 @@ class TestPeopleValues:
         mock_response = MagicMock()
         mock_response.data = [mock_value]
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.get_attribute_values.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -305,7 +305,7 @@ class TestPeopleValues:
         mock_response = MagicMock()
         mock_response.data = []
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.get_attribute_values.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -337,7 +337,7 @@ class TestPeopleEntries:
         mock_response = MagicMock()
         mock_response.data = [mock_entry]
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.list_entries.return_value = mock_response
             mock_gc.return_value = mock_client
@@ -360,7 +360,7 @@ class TestPeopleEntries:
         mock_response = MagicMock()
         mock_response.data = []
 
-        with patch("attio_cli.commands.people.get_client") as mock_gc:
+        with patch("attio_cli.commands._record_factory.get_client") as mock_gc:
             mock_client = MagicMock()
             mock_client.people.list_entries.return_value = mock_response
             mock_gc.return_value = mock_client
