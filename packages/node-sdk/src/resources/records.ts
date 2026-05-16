@@ -1,6 +1,6 @@
 import type { HttpClient } from '../client.js';
+import { type PaginateOptions, paginateOffset } from '../pagination.js';
 import type {
-  UpsertRecordParams,
   AttioEntry,
   AttioRecord,
   AttributeValue,
@@ -10,6 +10,7 @@ import type {
   ListResponse,
   RecordQueryParams,
   UpdateRecordParams,
+  UpsertRecordParams,
 } from '../types.js';
 
 export class RecordsResource {
@@ -74,7 +75,7 @@ export class RecordsResource {
     objectIdOrSlug: string,
     recordId: string,
     params: UpdateRecordParams,
-  ): Promise<{ data: AttioRecord}> {
+  ): Promise<{ data: AttioRecord }> {
     return this.client.request('PATCH', `/objects/${objectIdOrSlug}/records/${recordId}`, {
       body: params,
     });
@@ -116,5 +117,44 @@ export class RecordsResource {
     return this.client.request('POST', '/objects/records/search', {
       body: params,
     });
+  }
+
+  /**
+   * Auto-paginating query that yields individual records.
+   * Wraps query() and automatically fetches subsequent pages.
+   *
+   * @example
+   * ```ts
+   * for await (const record of client.records.queryAll('people', {
+   *   filter: { name: { $contains: 'Jane' } },
+   * })) {
+   *   console.log(record.id.record_id);
+   * }
+   * ```
+   */
+  queryAll(
+    objectIdOrSlug: string,
+    params?: Omit<RecordQueryParams, 'limit' | 'offset'>,
+    options?: PaginateOptions,
+  ): AsyncIterable<AttioRecord> {
+    return paginateOffset(
+      (limit, offset) => this.query(objectIdOrSlug, { ...params, limit, offset }),
+      options,
+    );
+  }
+
+  /**
+   * Auto-paginating list that yields individual records.
+   * Wraps list() and automatically fetches subsequent pages.
+   *
+   * @example
+   * ```ts
+   * for await (const record of client.records.listAll('people')) {
+   *   console.log(record.id.record_id);
+   * }
+   * ```
+   */
+  listAll(objectIdOrSlug: string, options?: PaginateOptions): AsyncIterable<AttioRecord> {
+    return paginateOffset((limit, offset) => this.list(objectIdOrSlug, { limit, offset }), options);
   }
 }

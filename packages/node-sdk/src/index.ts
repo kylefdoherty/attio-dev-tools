@@ -98,5 +98,7 @@ export class AttioClient {
 // Re-export everything
 export { HttpClient } from './client.js';
 export { AttioError, RateLimitError, ScopeError } from './errors.js';
-export { verifyWebhookSignature, WebhookEventType } from './webhook-utils.js';
+export type { PaginateOptions } from './pagination.js';
+export { collectAll, paginateCursor, paginateOffset } from './pagination.js';
 export type * from './types.js';
+export { verifyWebhookSignature, WebhookEventType } from './webhook-utils.js';

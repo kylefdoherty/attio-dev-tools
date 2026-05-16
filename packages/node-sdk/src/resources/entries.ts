@@ -1,12 +1,13 @@
 import type { HttpClient } from '../client.js';
+import { type PaginateOptions, paginateOffset } from '../pagination.js';
 import type {
-  UpsertEntryParams,
   AttioEntry,
   AttributeValue,
   CreateEntryParams,
   EntryQueryParams,
   ListResponse,
   UpdateEntryParams,
+  UpsertEntryParams,
 } from '../types.js';
 
 export class EntriesResource {
@@ -86,5 +87,44 @@ export class EntriesResource {
       `/lists/${listIdOrSlug}/entries/${entryId}/attributes/${attributeIdOrSlug}/values`,
       { params },
     );
+  }
+
+  /**
+   * Auto-paginating query that yields individual entries.
+   * Wraps query() and automatically fetches subsequent pages.
+   *
+   * @example
+   * ```ts
+   * for await (const entry of client.entries.queryAll('pipeline', {
+   *   filter: { status: { $eq: 'active' } },
+   * })) {
+   *   console.log(entry.id.entry_id);
+   * }
+   * ```
+   */
+  queryAll(
+    listIdOrSlug: string,
+    params?: Omit<EntryQueryParams, 'limit' | 'offset'>,
+    options?: PaginateOptions,
+  ): AsyncIterable<AttioEntry> {
+    return paginateOffset(
+      (limit, offset) => this.query(listIdOrSlug, { ...params, limit, offset }),
+      options,
+    );
+  }
+
+  /**
+   * Auto-paginating list that yields individual entries.
+   * Wraps list() and automatically fetches subsequent pages.
+   *
+   * @example
+   * ```ts
+   * for await (const entry of client.entries.listAll('pipeline')) {
+   *   console.log(entry.id.entry_id);
+   * }
+   * ```
+   */
+  listAll(listIdOrSlug: string, options?: PaginateOptions): AsyncIterable<AttioEntry> {
+    return paginateOffset((limit, offset) => this.list(listIdOrSlug, { limit, offset }), options);
   }
 }
