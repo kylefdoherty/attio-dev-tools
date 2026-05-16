@@ -1,21 +1,49 @@
-"""Records resource implementation (sync and async)."""
+"""Records resource implementation (sync and async).
+
+Thin adapters over ``SyncQueryableResource`` / ``AsyncQueryableResource`` that
+supply the Records-specific URL scheme, model type, and values key, plus the
+methods unique to Records (``list_entries``, ``global_search``).
+"""
 
 from __future__ import annotations
 
 from typing import Any
 
 from attio._pagination import AsyncOffsetIterator, OffsetIterator
-from attio.models._base import DataWrapper, ListResponse
+from attio.models._base import ListResponse
 from attio.models.common import AttributeValue
 from attio.models.records import GlobalSearchResult, Record, RecordEntry, Sort
-from attio.resources._base import AsyncResource, SyncResource
+from attio.resources._queryable import (
+    AsyncQueryableResource,
+    SyncQueryableResource,
+    _QueryableMixin,
+)
 
 
-class _RecordsMixin:
-    """Shared parameter/body construction logic for the Records resource."""
+# ---------------------------------------------------------------------------
+# Mixin kept for backward-compatibility of tests that import _RecordsMixin
+# ---------------------------------------------------------------------------
+
+
+class _RecordsMixin(_QueryableMixin[Record]):
+    """Records-specific parameter/body construction logic."""
+
+    _values_key = "values"
+    _item_model = Record
 
     @staticmethod
-    def _build_values_body(values: dict[str, Any]) -> dict[str, Any]:
+    def _collection_path(slug: str) -> str:
+        return f"/objects/{slug}/records"
+
+    @staticmethod
+    def _item_path(slug: str, item_id: str) -> str:
+        return f"/objects/{slug}/records/{item_id}"
+
+    # -- Records-only body builders -------------------------------------------
+
+    @staticmethod
+    def _build_values_body(values: dict[str, Any]) -> dict[str, Any]:  # type: ignore[override]
+        """Wrap values in ``{"data": {"values": ...}}``."""
         return {"data": {"values": values}}
 
     @staticmethod
@@ -31,28 +59,6 @@ class _RecordsMixin:
         }
 
     @staticmethod
-    def _build_query_body(
-        *,
-        filter: dict[str, Any] | None = None,
-        filter_view_id: str | None = None,
-        sorts: list[Sort] | None = None,
-        limit: int | None = None,
-        offset: int | None = None,
-    ) -> dict[str, Any]:
-        body: dict[str, Any] = {}
-        if filter is not None:
-            body["filter"] = filter
-        if filter_view_id is not None:
-            body["filter_view_id"] = filter_view_id
-        if sorts is not None:
-            body["sorts"] = [s.model_dump(exclude_none=True) for s in sorts]
-        if limit is not None:
-            body["limit"] = limit
-        if offset is not None:
-            body["offset"] = offset
-        return body
-
-    @staticmethod
     def _build_search_body(
         *,
         query: str,
@@ -64,49 +70,7 @@ class _RecordsMixin:
             body["limit"] = limit
         return body
 
-    @staticmethod
-    def _build_list_params(
-        *,
-        limit: int | None = None,
-        offset: int | None = None,
-    ) -> dict[str, Any] | None:
-        params: dict[str, Any] = {}
-        if limit is not None:
-            params["limit"] = limit
-        if offset is not None:
-            params["offset"] = offset
-        return params or None
-
-    @staticmethod
-    def _build_attribute_values_params(
-        *,
-        show_historic: bool = False,
-        limit: int | None = None,
-        offset: int | None = None,
-    ) -> dict[str, Any] | None:
-        params: dict[str, Any] = {}
-        if show_historic:
-            params["show_historic"] = "true"
-        if limit is not None:
-            params["limit"] = limit
-        if offset is not None:
-            params["offset"] = offset
-        return params or None
-
-    @staticmethod
-    def _parse_list_response(raw: dict[str, Any]) -> ListResponse[Record]:
-        return ListResponse[Record].model_validate(raw)
-
-    @staticmethod
-    def _parse_single_response(raw: dict[str, Any]) -> Record:
-        wrapper = DataWrapper[Record].model_validate(raw)
-        return wrapper.data
-
-    @staticmethod
-    def _parse_attribute_values_response(
-        raw: dict[str, Any],
-    ) -> ListResponse[AttributeValue]:
-        return ListResponse[AttributeValue].model_validate(raw)
+    # -- Records-only response parsers ----------------------------------------
 
     @staticmethod
     def _parse_entries_response(raw: dict[str, Any]) -> ListResponse[RecordEntry]:
@@ -119,7 +83,12 @@ class _RecordsMixin:
         return ListResponse[GlobalSearchResult].model_validate(raw)
 
 
-class RecordsResource(SyncResource, _RecordsMixin):
+# ---------------------------------------------------------------------------
+# Sync
+# ---------------------------------------------------------------------------
+
+
+class RecordsResource(SyncQueryableResource[Record], _RecordsMixin):
     """Synchronous Records resource."""
 
     def list(
@@ -130,9 +99,7 @@ class RecordsResource(SyncResource, _RecordsMixin):
         offset: int | None = None,
     ) -> ListResponse[Record]:
         """List records for an object."""
-        params = self._build_list_params(limit=limit, offset=offset)
-        raw = self._http.request("GET", f"/objects/{object}/records", params=params)
-        return self._parse_list_response(raw)
+        return self._list(object, limit=limit, offset=offset)
 
     def query(
         self,
@@ -145,56 +112,40 @@ class RecordsResource(SyncResource, _RecordsMixin):
         offset: int | None = None,
     ) -> ListResponse[Record]:
         """Query records with filters and sorting."""
-        body = self._build_query_body(
+        return self._query(
+            object,
             filter=filter,
             filter_view_id=filter_view_id,
             sorts=sorts,
             limit=limit,
             offset=offset,
         )
-        raw = self._http.request(
-            "POST", f"/objects/{object}/records/query", json=body
-        )
-        return self._parse_list_response(raw)
 
     def get(self, object: str, record_id: str) -> Record:
         """Get a single record by ID."""
-        raw = self._http.request(
-            "GET", f"/objects/{object}/records/{record_id}"
-        )
-        return self._parse_single_response(raw)
+        return self._get(object, record_id)
 
     def create(self, object: str, *, values: dict[str, Any]) -> Record:
         """Create a new record."""
         body = self._build_values_body(values)
-        raw = self._http.request("POST", f"/objects/{object}/records", json=body)
+        raw = self._http.request("POST", self._collection_path(object), json=body)
         return self._parse_single_response(raw)
 
     def update(
         self, object: str, record_id: str, *, values: dict[str, Any]
     ) -> Record:
         """Update a record (overwrites multiselect values)."""
-        body = self._build_values_body(values)
-        raw = self._http.request(
-            "PUT", f"/objects/{object}/records/{record_id}", json=body
-        )
-        return self._parse_single_response(raw)
+        return self._update(object, record_id, values)
 
     def append(
         self, object: str, record_id: str, *, values: dict[str, Any]
     ) -> Record:
         """Update a record (appends to multiselect values)."""
-        body = self._build_values_body(values)
-        raw = self._http.request(
-            "PATCH", f"/objects/{object}/records/{record_id}", json=body
-        )
-        return self._parse_single_response(raw)
+        return self._append(object, record_id, values)
 
     def delete(self, object: str, record_id: str) -> None:
         """Delete a record."""
-        self._http.request(
-            "DELETE", f"/objects/{object}/records/{record_id}"
-        )
+        self._delete(object, record_id)
 
     def upsert(
         self,
@@ -205,7 +156,7 @@ class RecordsResource(SyncResource, _RecordsMixin):
     ) -> Record:
         """Upsert a record by matching attribute (create or update)."""
         body = self._build_upsert_body(matching_attribute, values)
-        raw = self._http.request("PUT", f"/objects/{object}/records", json=body)
+        raw = self._http.request("PUT", self._collection_path(object), json=body)
         return self._parse_single_response(raw)
 
     def get_attribute_values(
@@ -219,15 +170,10 @@ class RecordsResource(SyncResource, _RecordsMixin):
         offset: int | None = None,
     ) -> ListResponse[AttributeValue]:
         """Get attribute values for a specific record and attribute."""
-        params = self._build_attribute_values_params(
-            show_historic=show_historic, limit=limit, offset=offset
+        return self._get_attribute_values(
+            object, record_id, attribute,
+            show_historic=show_historic, limit=limit, offset=offset,
         )
-        raw = self._http.request(
-            "GET",
-            f"/objects/{object}/records/{record_id}/attributes/{attribute}/values",
-            params=params,
-        )
-        return self._parse_attribute_values_response(raw)
 
     def list_entries(
         self,
@@ -267,20 +213,15 @@ class RecordsResource(SyncResource, _RecordsMixin):
         limit: int = 500,
     ) -> OffsetIterator[Record]:
         """Auto-paginating version of query(). Returns an iterator over all records."""
-
-        def fetch_page(offset: int, page_limit: int) -> ListResponse[Record]:
-            return self.query(
-                object,
-                filter=filter,
-                sorts=sorts,
-                limit=page_limit,
-                offset=offset,
-            )
-
-        return OffsetIterator(fetch_page, limit=limit)
+        return self._query_all(object, filter=filter, sorts=sorts, limit=limit)
 
 
-class AsyncRecordsResource(AsyncResource, _RecordsMixin):
+# ---------------------------------------------------------------------------
+# Async
+# ---------------------------------------------------------------------------
+
+
+class AsyncRecordsResource(AsyncQueryableResource[Record], _RecordsMixin):
     """Asynchronous Records resource."""
 
     async def list(
@@ -291,11 +232,7 @@ class AsyncRecordsResource(AsyncResource, _RecordsMixin):
         offset: int | None = None,
     ) -> ListResponse[Record]:
         """List records for an object."""
-        params = self._build_list_params(limit=limit, offset=offset)
-        raw = await self._http.request(
-            "GET", f"/objects/{object}/records", params=params
-        )
-        return self._parse_list_response(raw)
+        return await self._list(object, limit=limit, offset=offset)
 
     async def query(
         self,
@@ -308,30 +245,24 @@ class AsyncRecordsResource(AsyncResource, _RecordsMixin):
         offset: int | None = None,
     ) -> ListResponse[Record]:
         """Query records with filters and sorting."""
-        body = self._build_query_body(
+        return await self._query(
+            object,
             filter=filter,
             filter_view_id=filter_view_id,
             sorts=sorts,
             limit=limit,
             offset=offset,
         )
-        raw = await self._http.request(
-            "POST", f"/objects/{object}/records/query", json=body
-        )
-        return self._parse_list_response(raw)
 
     async def get(self, object: str, record_id: str) -> Record:
         """Get a single record by ID."""
-        raw = await self._http.request(
-            "GET", f"/objects/{object}/records/{record_id}"
-        )
-        return self._parse_single_response(raw)
+        return await self._get(object, record_id)
 
     async def create(self, object: str, *, values: dict[str, Any]) -> Record:
         """Create a new record."""
         body = self._build_values_body(values)
         raw = await self._http.request(
-            "POST", f"/objects/{object}/records", json=body
+            "POST", self._collection_path(object), json=body
         )
         return self._parse_single_response(raw)
 
@@ -339,27 +270,17 @@ class AsyncRecordsResource(AsyncResource, _RecordsMixin):
         self, object: str, record_id: str, *, values: dict[str, Any]
     ) -> Record:
         """Update a record (overwrites multiselect values)."""
-        body = self._build_values_body(values)
-        raw = await self._http.request(
-            "PUT", f"/objects/{object}/records/{record_id}", json=body
-        )
-        return self._parse_single_response(raw)
+        return await self._update(object, record_id, values)
 
     async def append(
         self, object: str, record_id: str, *, values: dict[str, Any]
     ) -> Record:
         """Update a record (appends to multiselect values)."""
-        body = self._build_values_body(values)
-        raw = await self._http.request(
-            "PATCH", f"/objects/{object}/records/{record_id}", json=body
-        )
-        return self._parse_single_response(raw)
+        return await self._append(object, record_id, values)
 
     async def delete(self, object: str, record_id: str) -> None:
         """Delete a record."""
-        await self._http.request(
-            "DELETE", f"/objects/{object}/records/{record_id}"
-        )
+        await self._delete(object, record_id)
 
     async def upsert(
         self,
@@ -371,7 +292,7 @@ class AsyncRecordsResource(AsyncResource, _RecordsMixin):
         """Upsert a record by matching attribute (create or update)."""
         body = self._build_upsert_body(matching_attribute, values)
         raw = await self._http.request(
-            "PUT", f"/objects/{object}/records", json=body
+            "PUT", self._collection_path(object), json=body
         )
         return self._parse_single_response(raw)
 
@@ -386,15 +307,10 @@ class AsyncRecordsResource(AsyncResource, _RecordsMixin):
         offset: int | None = None,
     ) -> ListResponse[AttributeValue]:
         """Get attribute values for a specific record and attribute."""
-        params = self._build_attribute_values_params(
-            show_historic=show_historic, limit=limit, offset=offset
+        return await self._get_attribute_values(
+            object, record_id, attribute,
+            show_historic=show_historic, limit=limit, offset=offset,
         )
-        raw = await self._http.request(
-            "GET",
-            f"/objects/{object}/records/{record_id}/attributes/{attribute}/values",
-            params=params,
-        )
-        return self._parse_attribute_values_response(raw)
 
     async def list_entries(
         self,
@@ -436,16 +352,4 @@ class AsyncRecordsResource(AsyncResource, _RecordsMixin):
         limit: int = 500,
     ) -> AsyncOffsetIterator[Record]:
         """Auto-paginating version of query(). Returns an async iterator over all records."""
-
-        async def fetch_page(
-            offset: int, page_limit: int
-        ) -> ListResponse[Record]:
-            return await self.query(
-                object,
-                filter=filter,
-                sorts=sorts,
-                limit=page_limit,
-                offset=offset,
-            )
-
-        return AsyncOffsetIterator(fetch_page, limit=limit)
+        return self._query_all(object, filter=filter, sorts=sorts, limit=limit)

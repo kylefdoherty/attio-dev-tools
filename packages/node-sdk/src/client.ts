@@ -54,15 +54,32 @@ export class HttpClient {
 
         const res = await fetch(url.toString(), fetchOptions);
 
-        // Handle rate limiting
+        // Handle rate limiting (429) — retry with Retry-After
         if (res.status === 429) {
-          const retryAfter = parseInt(res.headers.get('retry-after') ?? '2', 10);
+          const retryAfterHeader = res.headers.get('retry-after');
+          const retryAfterSec = retryAfterHeader != null
+            ? parseFloat(retryAfterHeader)
+            : this.retryDelay / 1000;
           if (attempt < this.maxRetries) {
-            await this.sleep(retryAfter * 1000);
+            await this.sleep(retryAfterSec * 1000);
             continue;
           }
           const body = await this.parseBody(res);
-          throw new RateLimitError(retryAfter, body);
+          throw new RateLimitError(retryAfterSec, body);
+        }
+
+        // Handle retryable server errors (5xx) — retry with exponential backoff
+        if (res.status >= 500) {
+          if (attempt < this.maxRetries) {
+            await this.sleep(this.retryDelay * 2 ** attempt);
+            continue;
+          }
+          const body = await this.parseBody(res);
+          throw new AttioError(
+            `Attio API ${method} ${path} ${res.status}: ${this.extractMessage(body)}`,
+            res.status,
+            body,
+          );
         }
 
         // Handle scope errors
@@ -79,7 +96,7 @@ export class HttpClient {
           return null as T;
         }
 
-        // Handle other errors
+        // Handle other non-retryable errors (4xx)
         if (!res.ok) {
           const body = await this.parseBody(res);
           throw new AttioError(
@@ -137,15 +154,32 @@ export class HttpClient {
           signal: controller.signal,
         });
 
-        // Handle rate limiting
+        // Handle rate limiting (429) — retry with Retry-After
         if (res.status === 429) {
-          const retryAfter = parseInt(res.headers.get('retry-after') ?? '2', 10);
+          const retryAfterHeader = res.headers.get('retry-after');
+          const retryAfterSec = retryAfterHeader != null
+            ? parseFloat(retryAfterHeader)
+            : this.retryDelay / 1000;
           if (attempt < this.maxRetries) {
-            await this.sleep(retryAfter * 1000);
+            await this.sleep(retryAfterSec * 1000);
             continue;
           }
           const body = await this.parseBody(res);
-          throw new RateLimitError(retryAfter, body);
+          throw new RateLimitError(retryAfterSec, body);
+        }
+
+        // Handle retryable server errors (5xx) — retry with exponential backoff
+        if (res.status >= 500) {
+          if (attempt < this.maxRetries) {
+            await this.sleep(this.retryDelay * 2 ** attempt);
+            continue;
+          }
+          const body = await this.parseBody(res);
+          throw new AttioError(
+            `Attio API POST ${path} ${res.status}: ${this.extractMessage(body)}`,
+            res.status,
+            body,
+          );
         }
 
         // Handle scope errors
@@ -157,7 +191,7 @@ export class HttpClient {
           );
         }
 
-        // Handle other errors
+        // Handle other non-retryable errors (4xx)
         if (!res.ok) {
           const body = await this.parseBody(res);
           throw new AttioError(

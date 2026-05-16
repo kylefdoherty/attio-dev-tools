@@ -1,23 +1,46 @@
-"""Entries resource implementation (sync and async)."""
+"""Entries resource implementation (sync and async).
+
+Thin adapters over ``SyncQueryableResource`` / ``AsyncQueryableResource`` that
+supply the Entries-specific URL scheme, model type, and values key, plus the
+methods unique to Entries (``create`` and ``upsert`` with parent context).
+"""
 
 from __future__ import annotations
 
 from typing import Any
 
 from attio._pagination import AsyncOffsetIterator, OffsetIterator
-from attio.models._base import DataWrapper, ListResponse
+from attio.models._base import ListResponse
 from attio.models.common import AttributeValue
 from attio.models.entries import Entry
 from attio.models.records import Sort
-from attio.resources._base import AsyncResource, SyncResource
+from attio.resources._queryable import (
+    AsyncQueryableResource,
+    SyncQueryableResource,
+    _QueryableMixin,
+)
 
 
-class _EntriesMixin:
-    """Shared parameter/body construction logic for the Entries resource."""
+# ---------------------------------------------------------------------------
+# Mixin kept for backward-compatibility of tests that import _EntriesMixin
+# ---------------------------------------------------------------------------
+
+
+class _EntriesMixin(_QueryableMixin[Entry]):
+    """Entries-specific parameter/body construction logic."""
+
+    _values_key = "entry_values"
+    _item_model = Entry
 
     @staticmethod
-    def _build_entry_values_body(entry_values: dict[str, Any]) -> dict[str, Any]:
-        return {"data": {"entry_values": entry_values}}
+    def _collection_path(slug: str) -> str:
+        return f"/lists/{slug}/entries"
+
+    @staticmethod
+    def _item_path(slug: str, item_id: str) -> str:
+        return f"/lists/{slug}/entries/{item_id}"
+
+    # -- Entries-only body builders -------------------------------------------
 
     @staticmethod
     def _build_create_body(
@@ -47,74 +70,18 @@ class _EntriesMixin:
             data["entry_values"] = entry_values
         return {"data": data}
 
+    # Keep the original name for backward-compatibility of mixin tests.
     @staticmethod
-    def _build_query_body(
-        *,
-        filter: dict[str, Any] | None = None,
-        filter_view_id: str | None = None,
-        sorts: list[Sort] | None = None,
-        limit: int | None = None,
-        offset: int | None = None,
-    ) -> dict[str, Any]:
-        body: dict[str, Any] = {}
-        if filter is not None:
-            body["filter"] = filter
-        if filter_view_id is not None:
-            body["filter_view_id"] = filter_view_id
-        if sorts is not None:
-            body["sorts"] = [s.model_dump(exclude_none=True) for s in sorts]
-        if limit is not None:
-            body["limit"] = limit
-        if offset is not None:
-            body["offset"] = offset
-        return body
-
-    @staticmethod
-    def _build_list_params(
-        *,
-        limit: int | None = None,
-        offset: int | None = None,
-    ) -> dict[str, Any] | None:
-        params: dict[str, Any] = {}
-        if limit is not None:
-            params["limit"] = limit
-        if offset is not None:
-            params["offset"] = offset
-        return params or None
-
-    @staticmethod
-    def _build_attribute_values_params(
-        *,
-        show_historic: bool = False,
-        limit: int | None = None,
-        offset: int | None = None,
-    ) -> dict[str, Any] | None:
-        params: dict[str, Any] = {}
-        if show_historic:
-            params["show_historic"] = "true"
-        if limit is not None:
-            params["limit"] = limit
-        if offset is not None:
-            params["offset"] = offset
-        return params or None
-
-    @staticmethod
-    def _parse_list_response(raw: dict[str, Any]) -> ListResponse[Entry]:
-        return ListResponse[Entry].model_validate(raw)
-
-    @staticmethod
-    def _parse_single_response(raw: dict[str, Any]) -> Entry:
-        wrapper = DataWrapper[Entry].model_validate(raw)
-        return wrapper.data
-
-    @staticmethod
-    def _parse_attribute_values_response(
-        raw: dict[str, Any],
-    ) -> ListResponse[AttributeValue]:
-        return ListResponse[AttributeValue].model_validate(raw)
+    def _build_entry_values_body(entry_values: dict[str, Any]) -> dict[str, Any]:
+        return {"data": {"entry_values": entry_values}}
 
 
-class EntriesResource(SyncResource, _EntriesMixin):
+# ---------------------------------------------------------------------------
+# Sync
+# ---------------------------------------------------------------------------
+
+
+class EntriesResource(SyncQueryableResource[Entry], _EntriesMixin):
     """Synchronous Entries resource."""
 
     def list(
@@ -125,9 +92,7 @@ class EntriesResource(SyncResource, _EntriesMixin):
         offset: int | None = None,
     ) -> ListResponse[Entry]:
         """List entries for a list."""
-        params = self._build_list_params(limit=limit, offset=offset)
-        raw = self._http.request("GET", f"/lists/{list_slug}/entries", params=params)
-        return self._parse_list_response(raw)
+        return self._list(list_slug, limit=limit, offset=offset)
 
     def query(
         self,
@@ -140,24 +105,18 @@ class EntriesResource(SyncResource, _EntriesMixin):
         offset: int | None = None,
     ) -> ListResponse[Entry]:
         """Query entries with filters and sorting."""
-        body = self._build_query_body(
+        return self._query(
+            list_slug,
             filter=filter,
             filter_view_id=filter_view_id,
             sorts=sorts,
             limit=limit,
             offset=offset,
         )
-        raw = self._http.request(
-            "POST", f"/lists/{list_slug}/entries/query", json=body
-        )
-        return self._parse_list_response(raw)
 
     def get(self, list_slug: str, entry_id: str) -> Entry:
         """Get a single entry by ID."""
-        raw = self._http.request(
-            "GET", f"/lists/{list_slug}/entries/{entry_id}"
-        )
-        return self._parse_single_response(raw)
+        return self._get(list_slug, entry_id)
 
     def create(
         self,
@@ -169,34 +128,24 @@ class EntriesResource(SyncResource, _EntriesMixin):
     ) -> Entry:
         """Create a new entry in a list."""
         body = self._build_create_body(parent_record_id, parent_object, entry_values)
-        raw = self._http.request("POST", f"/lists/{list_slug}/entries", json=body)
+        raw = self._http.request("POST", self._collection_path(list_slug), json=body)
         return self._parse_single_response(raw)
 
     def update(
         self, list_slug: str, entry_id: str, *, entry_values: dict[str, Any]
     ) -> Entry:
         """Update an entry (overwrites multiselect values)."""
-        body = self._build_entry_values_body(entry_values)
-        raw = self._http.request(
-            "PUT", f"/lists/{list_slug}/entries/{entry_id}", json=body
-        )
-        return self._parse_single_response(raw)
+        return self._update(list_slug, entry_id, entry_values)
 
     def append(
         self, list_slug: str, entry_id: str, *, entry_values: dict[str, Any]
     ) -> Entry:
         """Update an entry (appends to multiselect values)."""
-        body = self._build_entry_values_body(entry_values)
-        raw = self._http.request(
-            "PATCH", f"/lists/{list_slug}/entries/{entry_id}", json=body
-        )
-        return self._parse_single_response(raw)
+        return self._append(list_slug, entry_id, entry_values)
 
     def delete(self, list_slug: str, entry_id: str) -> None:
         """Delete an entry."""
-        self._http.request(
-            "DELETE", f"/lists/{list_slug}/entries/{entry_id}"
-        )
+        self._delete(list_slug, entry_id)
 
     def upsert(
         self,
@@ -208,7 +157,7 @@ class EntriesResource(SyncResource, _EntriesMixin):
     ) -> Entry:
         """Upsert an entry by parent record (create or update)."""
         body = self._build_upsert_body(parent_record_id, parent_object, entry_values)
-        raw = self._http.request("PUT", f"/lists/{list_slug}/entries", json=body)
+        raw = self._http.request("PUT", self._collection_path(list_slug), json=body)
         return self._parse_single_response(raw)
 
     def get_attribute_values(
@@ -222,15 +171,10 @@ class EntriesResource(SyncResource, _EntriesMixin):
         offset: int | None = None,
     ) -> ListResponse[AttributeValue]:
         """Get attribute values for a specific entry and attribute."""
-        params = self._build_attribute_values_params(
-            show_historic=show_historic, limit=limit, offset=offset
+        return self._get_attribute_values(
+            list_slug, entry_id, attribute,
+            show_historic=show_historic, limit=limit, offset=offset,
         )
-        raw = self._http.request(
-            "GET",
-            f"/lists/{list_slug}/entries/{entry_id}/attributes/{attribute}/values",
-            params=params,
-        )
-        return self._parse_attribute_values_response(raw)
 
     def query_all(
         self,
@@ -241,20 +185,15 @@ class EntriesResource(SyncResource, _EntriesMixin):
         limit: int = 500,
     ) -> OffsetIterator[Entry]:
         """Auto-paginating version of query(). Returns an iterator over all entries."""
-
-        def fetch_page(offset: int, page_limit: int) -> ListResponse[Entry]:
-            return self.query(
-                list_slug,
-                filter=filter,
-                sorts=sorts,
-                limit=page_limit,
-                offset=offset,
-            )
-
-        return OffsetIterator(fetch_page, limit=limit)
+        return self._query_all(list_slug, filter=filter, sorts=sorts, limit=limit)
 
 
-class AsyncEntriesResource(AsyncResource, _EntriesMixin):
+# ---------------------------------------------------------------------------
+# Async
+# ---------------------------------------------------------------------------
+
+
+class AsyncEntriesResource(AsyncQueryableResource[Entry], _EntriesMixin):
     """Asynchronous Entries resource."""
 
     async def list(
@@ -265,11 +204,7 @@ class AsyncEntriesResource(AsyncResource, _EntriesMixin):
         offset: int | None = None,
     ) -> ListResponse[Entry]:
         """List entries for a list."""
-        params = self._build_list_params(limit=limit, offset=offset)
-        raw = await self._http.request(
-            "GET", f"/lists/{list_slug}/entries", params=params
-        )
-        return self._parse_list_response(raw)
+        return await self._list(list_slug, limit=limit, offset=offset)
 
     async def query(
         self,
@@ -282,24 +217,18 @@ class AsyncEntriesResource(AsyncResource, _EntriesMixin):
         offset: int | None = None,
     ) -> ListResponse[Entry]:
         """Query entries with filters and sorting."""
-        body = self._build_query_body(
+        return await self._query(
+            list_slug,
             filter=filter,
             filter_view_id=filter_view_id,
             sorts=sorts,
             limit=limit,
             offset=offset,
         )
-        raw = await self._http.request(
-            "POST", f"/lists/{list_slug}/entries/query", json=body
-        )
-        return self._parse_list_response(raw)
 
     async def get(self, list_slug: str, entry_id: str) -> Entry:
         """Get a single entry by ID."""
-        raw = await self._http.request(
-            "GET", f"/lists/{list_slug}/entries/{entry_id}"
-        )
-        return self._parse_single_response(raw)
+        return await self._get(list_slug, entry_id)
 
     async def create(
         self,
@@ -312,7 +241,7 @@ class AsyncEntriesResource(AsyncResource, _EntriesMixin):
         """Create a new entry in a list."""
         body = self._build_create_body(parent_record_id, parent_object, entry_values)
         raw = await self._http.request(
-            "POST", f"/lists/{list_slug}/entries", json=body
+            "POST", self._collection_path(list_slug), json=body
         )
         return self._parse_single_response(raw)
 
@@ -320,27 +249,17 @@ class AsyncEntriesResource(AsyncResource, _EntriesMixin):
         self, list_slug: str, entry_id: str, *, entry_values: dict[str, Any]
     ) -> Entry:
         """Update an entry (overwrites multiselect values)."""
-        body = self._build_entry_values_body(entry_values)
-        raw = await self._http.request(
-            "PUT", f"/lists/{list_slug}/entries/{entry_id}", json=body
-        )
-        return self._parse_single_response(raw)
+        return await self._update(list_slug, entry_id, entry_values)
 
     async def append(
         self, list_slug: str, entry_id: str, *, entry_values: dict[str, Any]
     ) -> Entry:
         """Update an entry (appends to multiselect values)."""
-        body = self._build_entry_values_body(entry_values)
-        raw = await self._http.request(
-            "PATCH", f"/lists/{list_slug}/entries/{entry_id}", json=body
-        )
-        return self._parse_single_response(raw)
+        return await self._append(list_slug, entry_id, entry_values)
 
     async def delete(self, list_slug: str, entry_id: str) -> None:
         """Delete an entry."""
-        await self._http.request(
-            "DELETE", f"/lists/{list_slug}/entries/{entry_id}"
-        )
+        await self._delete(list_slug, entry_id)
 
     async def upsert(
         self,
@@ -353,7 +272,7 @@ class AsyncEntriesResource(AsyncResource, _EntriesMixin):
         """Upsert an entry by parent record (create or update)."""
         body = self._build_upsert_body(parent_record_id, parent_object, entry_values)
         raw = await self._http.request(
-            "PUT", f"/lists/{list_slug}/entries", json=body
+            "PUT", self._collection_path(list_slug), json=body
         )
         return self._parse_single_response(raw)
 
@@ -368,15 +287,10 @@ class AsyncEntriesResource(AsyncResource, _EntriesMixin):
         offset: int | None = None,
     ) -> ListResponse[AttributeValue]:
         """Get attribute values for a specific entry and attribute."""
-        params = self._build_attribute_values_params(
-            show_historic=show_historic, limit=limit, offset=offset
+        return await self._get_attribute_values(
+            list_slug, entry_id, attribute,
+            show_historic=show_historic, limit=limit, offset=offset,
         )
-        raw = await self._http.request(
-            "GET",
-            f"/lists/{list_slug}/entries/{entry_id}/attributes/{attribute}/values",
-            params=params,
-        )
-        return self._parse_attribute_values_response(raw)
 
     def query_all(
         self,
@@ -387,16 +301,4 @@ class AsyncEntriesResource(AsyncResource, _EntriesMixin):
         limit: int = 500,
     ) -> AsyncOffsetIterator[Entry]:
         """Auto-paginating version of query(). Returns an async iterator over all entries."""
-
-        async def fetch_page(
-            offset: int, page_limit: int
-        ) -> ListResponse[Entry]:
-            return await self.query(
-                list_slug,
-                filter=filter,
-                sorts=sorts,
-                limit=page_limit,
-                offset=offset,
-            )
-
-        return AsyncOffsetIterator(fetch_page, limit=limit)
+        return self._query_all(list_slug, filter=filter, sorts=sorts, limit=limit)
