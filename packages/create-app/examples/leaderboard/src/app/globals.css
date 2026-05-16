@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 217 33% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 12%;
+    --muted-foreground: 215 20% 55%;
+    --accent: 217 33% 14%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 217 33% 14%;
+    --input: 217 33% 14%;
+    --ring: 224 64% 33%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* TV mode fullscreen */
+.tv-mode {
+  cursor: none;
+}
+
+.tv-mode:hover {
+  cursor: default;
+}
+
+/* Rank badge styling */
+.rank-badge-1 {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4a 50%, #ffd700 100%);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+}
+
+.rank-badge-2 {
+  background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 50%, #c0c0c0 100%);
+  box-shadow: 0 0 8px rgba(192, 192, 192, 0.3);
+}
+
+.rank-badge-3 {
+  background: linear-gradient(135deg, #cd7f32 0%, #daa06d 50%, #cd7f32 100%);
+  box-shadow: 0 0 8px rgba(205, 127, 50, 0.3);
+}
+
+/* Revenue glow for top performer */
+.revenue-glow {
+  text-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+}
+
+/* Smooth transitions for data updates */
+.data-cell {
+  transition: all 0.3s ease-out;
+}
