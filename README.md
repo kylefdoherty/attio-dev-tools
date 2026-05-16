@@ -24,8 +24,11 @@ Requires Python 3.10+.
 ## CLI Quick Start
 
 ```bash
-# Authenticate
-attio auth login --api-key sk_your_key_here
+# Authenticate (interactive hidden prompt)
+attio auth login
+
+# Or via 1Password (no secret stored on disk)
+attio auth login --1password "op://Vault/Attio API Key/credential"
 
 # List people
 attio people list
