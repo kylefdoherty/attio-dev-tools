@@ -76,6 +76,7 @@ _SCRUB_FIELDS = {
     "email_address": "test@example.com",
     "workspace_name": "Test Workspace",
     "workspace_slug": "test-workspace",
+    "secret": "REDACTED_WEBHOOK_SECRET",
 }
 
 

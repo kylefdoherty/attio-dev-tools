@@ -15,13 +15,13 @@ interactions:
       User-Agent:
       - attio-python/0.1.0
     method: GET
-    uri: https://api.attio.com/v2/webhooks
+    uri: https://api.attio.com/v2/notes
   response:
     body:
       string: '{"data": []}'
     headers:
       CF-RAY:
-      - 9fc683a9bca5cfd9-SJC
+      - 9fc69f4fbd484e35-SJC
       Connection:
       - keep-alive
       Content-Length:
@@ -29,7 +29,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 16 May 2026 01:12:28 GMT
+      - Sat, 16 May 2026 01:31:21 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -47,9 +47,9 @@ interactions:
       via:
       - 1.1 google
       x-accurate-at:
-      - '2026-05-16T01:12:28.567037000Z'
+      - '2026-05-16T01:31:21.035599000Z'
       x-attio-execution-id:
-      - 8f2ea16c-9fde-4062-a29a-239d487aeb3c
+      - 03683908-418a-4906-b5d0-1d6b1e756633
       x-frame-options:
       - DENY
     status:
@@ -71,13 +71,13 @@ interactions:
       User-Agent:
       - attio-python/0.1.0
     method: GET
-    uri: https://api.attio.com/v2/webhooks
+    uri: https://api.attio.com/v2/notes
   response:
     body:
       string: '{"data": []}'
     headers:
       CF-RAY:
-      - 9fc69f5d4a54a230-SJC
+      - 9fc6a335baa07a33-SJC
       Connection:
       - keep-alive
       Content-Length:
@@ -85,7 +85,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 16 May 2026 01:31:23 GMT
+      - Sat, 16 May 2026 01:34:00 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -103,65 +103,9 @@ interactions:
       via:
       - 1.1 google
       x-accurate-at:
-      - '2026-05-16T01:31:23.202899000Z'
+      - '2026-05-16T01:34:00.729667000Z'
       x-attio-execution-id:
-      - d933829a-55e0-49b8-b221-0a07f3fa68a6
-      x-frame-options:
-      - DENY
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      Host:
-      - api.attio.com
-      User-Agent:
-      - attio-python/0.1.0
-    method: GET
-    uri: https://api.attio.com/v2/webhooks
-  response:
-    body:
-      string: '{"data": []}'
-    headers:
-      CF-RAY:
-      - 9fc6a3530940e8c2-SJC
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '11'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Sat, 16 May 2026 01:34:05 GMT
-      Server:
-      - cloudflare
-      Strict-Transport-Security:
-      - max-age=7776000; includeSubDomains; preload
-      access-control-allow-origin:
-      - '*'
-      access-control-expose-headers:
-      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
-      alt-svc:
-      - h3=":443"; ma=86400
-      cf-cache-status:
-      - DYNAMIC
-      vary:
-      - Origin
-      via:
-      - 1.1 google
-      x-accurate-at:
-      - '2026-05-16T01:34:05.428065000Z'
-      x-attio-execution-id:
-      - 6e6a1e38-0654-45e4-9c8d-5860077bb3b9
+      - 05e3e7e3-c00c-48b2-a15c-cea52c243623
       x-frame-options:
       - DENY
     status:

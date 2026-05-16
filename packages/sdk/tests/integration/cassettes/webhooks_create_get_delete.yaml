@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: ''
+    body: '{"data":{"target_url":"https://example.com/test-webhook","subscriptions":[{"event_type":"record.created","filter":null}]}}'
     headers:
       Accept:
       - '*/*'
@@ -8,136 +8,27 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
+      Content-Length:
+      - '122'
       Content-Type:
       - application/json
       Host:
       - api.attio.com
       User-Agent:
       - attio-python/0.1.0
-    method: GET
+    method: POST
     uri: https://api.attio.com/v2/webhooks
   response:
     body:
-      string: '{"data": []}'
+      string: '{"data": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "webhook_id": "61da62a7-f6c5-4182-8392-59ecb1e0f47a"}, "target_url": "https://example.com/test-webhook",
+        "status": "active", "subscriptions": [{"event_type": "record.created", "filter":
+        null}], "created_at": "2026-05-16T01:34:05.738000000Z", "secret": "REDACTED_WEBHOOK_SECRET"}}'
     headers:
       CF-RAY:
-      - 9fc683a9bca5cfd9-SJC
+      - 9fc6a354fa5cf957-SJC
       Connection:
       - keep-alive
-      Content-Length:
-      - '11'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Sat, 16 May 2026 01:12:28 GMT
-      Server:
-      - cloudflare
-      Strict-Transport-Security:
-      - max-age=7776000; includeSubDomains; preload
-      access-control-allow-origin:
-      - '*'
-      access-control-expose-headers:
-      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
-      alt-svc:
-      - h3=":443"; ma=86400
-      cf-cache-status:
-      - DYNAMIC
-      vary:
-      - Origin
-      via:
-      - 1.1 google
-      x-accurate-at:
-      - '2026-05-16T01:12:28.567037000Z'
-      x-attio-execution-id:
-      - 8f2ea16c-9fde-4062-a29a-239d487aeb3c
-      x-frame-options:
-      - DENY
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      Host:
-      - api.attio.com
-      User-Agent:
-      - attio-python/0.1.0
-    method: GET
-    uri: https://api.attio.com/v2/webhooks
-  response:
-    body:
-      string: '{"data": []}'
-    headers:
-      CF-RAY:
-      - 9fc69f5d4a54a230-SJC
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '11'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Sat, 16 May 2026 01:31:23 GMT
-      Server:
-      - cloudflare
-      Strict-Transport-Security:
-      - max-age=7776000; includeSubDomains; preload
-      access-control-allow-origin:
-      - '*'
-      access-control-expose-headers:
-      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
-      alt-svc:
-      - h3=":443"; ma=86400
-      cf-cache-status:
-      - DYNAMIC
-      vary:
-      - Origin
-      via:
-      - 1.1 google
-      x-accurate-at:
-      - '2026-05-16T01:31:23.202899000Z'
-      x-attio-execution-id:
-      - d933829a-55e0-49b8-b221-0a07f3fa68a6
-      x-frame-options:
-      - DENY
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      Host:
-      - api.attio.com
-      User-Agent:
-      - attio-python/0.1.0
-    method: GET
-    uri: https://api.attio.com/v2/webhooks
-  response:
-    body:
-      string: '{"data": []}'
-    headers:
-      CF-RAY:
-      - 9fc6a3530940e8c2-SJC
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '11'
       Content-Type:
       - application/json; charset=utf-8
       Date:
@@ -146,6 +37,125 @@ interactions:
       - cloudflare
       Strict-Transport-Security:
       - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '375'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-attio-execution-id:
+      - e4629fd9-b104-4952-867f-3372560c23e6
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/webhooks/61da62a7-f6c5-4182-8392-59ecb1e0f47a
+  response:
+    body:
+      string: '{"data": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "webhook_id": "61da62a7-f6c5-4182-8392-59ecb1e0f47a"}, "target_url": "https://example.com/test-webhook",
+        "status": "active", "subscriptions": [{"event_type": "record.created", "filter":
+        null}], "created_at": "2026-05-16T01:34:05.738000000Z"}}'
+    headers:
+      CF-RAY:
+      - 9fc6a357183ee612-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:34:06 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '299'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:34:06.061189000Z'
+      x-attio-execution-id:
+      - d613c41c-c5c9-4958-a97e-6201744a1789
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: DELETE
+    uri: https://api.attio.com/v2/webhooks/61da62a7-f6c5-4182-8392-59ecb1e0f47a
+  response:
+    body:
+      string: '{}'
+    headers:
+      CF-RAY:
+      - 9fc6a358ae2467ca-SJC
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:34:06 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
       access-control-allow-origin:
       - '*'
       access-control-expose-headers:
@@ -158,10 +168,8 @@ interactions:
       - Origin
       via:
       - 1.1 google
-      x-accurate-at:
-      - '2026-05-16T01:34:05.428065000Z'
       x-attio-execution-id:
-      - 6e6a1e38-0654-45e4-9c8d-5860077bb3b9
+      - ee05285b-9317-4ad1-b1b1-4bae8e7289f6
       x-frame-options:
       - DENY
     status:
