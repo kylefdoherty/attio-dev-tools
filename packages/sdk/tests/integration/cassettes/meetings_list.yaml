@@ -1,0 +1,114 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/meetings
+  response:
+    body:
+      string: '{"data": [], "pagination": {"next_cursor": null}}'
+    headers:
+      CF-RAY:
+      - 9fc69f7ea8b2d8a7-SJC
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '45'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:31:28 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:31:28.630076000Z'
+      x-attio-execution-id:
+      - 765b20db-1ace-4273-b321-f112727c3453
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/meetings
+  response:
+    body:
+      string: '{"data": [], "pagination": {"next_cursor": null}}'
+    headers:
+      CF-RAY:
+      - 9fc6a1724a85f97b-SJC
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '45'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:32:48 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:32:48.531688000Z'
+      x-attio-execution-id:
+      - 71471f5f-6c45-4e99-aac2-96c650acec02
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

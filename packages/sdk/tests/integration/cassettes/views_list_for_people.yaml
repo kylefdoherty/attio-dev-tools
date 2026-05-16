@@ -1,0 +1,124 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/objects/people/views
+  response:
+    body:
+      string: '{"data": [{"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "0b1c77ca-9b81-47ba-8d2e-490c74901031", "view_id": "454d4527-5506-4428-958e-4b519abcd905"},
+        "title": "Recently Contacted People", "created_at": "2025-11-03T18:16:15.565000000Z"}],
+        "pagination": {"next_cursor": null}}'
+    headers:
+      CF-RAY:
+      - 9fc69f76481e98ce-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:31:27 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '289'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:31:27.211509000Z'
+      x-attio-execution-id:
+      - ad1f2228-2532-4cbc-9006-6932e27a55de
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/objects/people/views
+  response:
+    body:
+      string: '{"data": [{"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "0b1c77ca-9b81-47ba-8d2e-490c74901031", "view_id": "454d4527-5506-4428-958e-4b519abcd905"},
+        "title": "Recently Contacted People", "created_at": "2025-11-03T18:16:15.565000000Z"}],
+        "pagination": {"next_cursor": null}}'
+    headers:
+      CF-RAY:
+      - 9fc6a1694dd5c487-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:32:47 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '289'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:32:47.045917000Z'
+      x-attio-execution-id:
+      - bfec6313-e2e5-4917-b32c-7ebb7fc85e6c
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

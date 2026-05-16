@@ -1,0 +1,257 @@
+interactions:
+- request:
+    body: '{"limit":1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11'
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: POST
+    uri: https://api.attio.com/v2/objects/companies/records/query
+  response:
+    body:
+      string: '{"data": [{"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "record_id": "498f9009-e208-4386-90ce-f4c272b13a74"},
+        "created_at": "2026-05-09T21:43:08.480000000Z", "web_url": "https://app.attio.com/doherty-consulting/company/498f9009-e208-4386-90ce-f4c272b13a74",
+        "values": {"record_id": [{"active_from": "2026-05-09T21:43:08.480000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "value": "498f9009-e208-4386-90ce-f4c272b13a74",
+        "attribute_type": "text"}], "domains": [{"active_from": "2026-05-09T21:43:08.480000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "domain": "popl.co", "root_domain":
+        "popl.co", "attribute_type": "domain"}], "name": [{"active_from": "2026-05-09T21:43:08.480000000Z",
+        "active_until": null, "created_by_actor": {"type": "workspace-member", "id":
+        "635cebb2-d0d3-4c03-8485-44354bdf4cb1"}, "value": "Popl", "attribute_type":
+        "text"}], "description": [{"active_from": "2026-05-09T21:43:08.732000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "value": "Popl is the top digital business card platform for teams and individuals,
+        enabling easy contact sharing and lead generation globally.", "attribute_type":
+        "text"}], "team": [], "categories": [{"active_from": "2026-05-09T21:43:08.733000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+        "option_id": "d4289cb1-4811-4b11-a28b-3ad2880d50b7"}, "title": "B2C", "is_archived":
+        false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+        "option_id": "4adb623b-a001-4b1b-b1b1-f54e29be6f54"}, "title": "Information
+        Technology & Services", "is_archived": false}, "attribute_type": "select"},
+        {"active_from": "2026-05-09T21:43:08.733000000Z", "active_until": null, "created_by_actor":
+        {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+        "option_id": "4c2f33c0-e8e9-41f1-ab36-9ba6354117fd"}, "title": "Technology",
+        "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+        "option_id": "9776b17e-d911-4397-9ac0-018f94d40572"}, "title": "E-commerce",
+        "is_archived": false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+        "option_id": "cb8ff1f3-a968-4925-9d0f-8886dfc485de"}, "title": "B2B", "is_archived":
+        false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+        "option_id": "268994e1-4787-4c78-8d54-9e912d00b979"}, "title": "Mobile", "is_archived":
+        false}, "attribute_type": "select"}, {"active_from": "2026-05-09T21:43:08.733000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "54b40580-c0af-4b90-8f00-77853c27edd7",
+        "option_id": "a913f7aa-9a18-48dc-ae0a-317125451ac8"}, "title": "SAAS", "is_archived":
+        false}, "attribute_type": "select"}], "primary_location": [{"active_from":
+        "2026-05-09T21:43:08.732000000Z", "active_until": null, "created_by_actor":
+        {"type": "system", "id": null}, "line_1": "11740 Wilshire Boulevard", "line_2":
+        null, "line_3": null, "line_4": null, "locality": "Los Angeles", "region":
+        "California", "postcode": "90025", "country_code": "US", "latitude": "34.0483313",
+        "longitude": "-118.4610985", "attribute_type": "location"}], "logo_url": [{"active_from":
+        "2026-05-09T21:43:08.732000000Z", "active_until": null, "created_by_actor":
+        {"type": "system", "id": null}, "value": "https://brandbadge.clearbit.com/5456b228-6274-4d4c-b234-911ff2ecef71",
+        "attribute_type": "text"}], "angellist": [], "facebook": [], "instagram":
+        [], "linkedin": [{"active_from": "2026-05-09T21:43:08.732000000Z", "active_until":
+        null, "created_by_actor": {"type": "system", "id": null}, "value": "https://linkedin.com/company/poplco",
+        "attribute_type": "text"}], "twitter": [{"active_from": "2026-05-09T21:43:08.732000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "value": "https://x.com/poplco", "attribute_type": "text"}], "twitter_follower_count":
+        [{"active_from": "2026-05-09T21:43:08.733000000Z", "active_until": null, "created_by_actor":
+        {"type": "system", "id": null}, "value": 1033, "attribute_type": "number"}],
+        "estimated_arr_usd": [{"active_from": "2026-05-09T21:43:08.733000000Z", "active_until":
+        null, "created_by_actor": {"type": "system", "id": null}, "option": {"id":
+        {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1", "object_id": "74179437-bcdc-48d0-b401-e569a1278368",
+        "attribute_id": "1af6617a-01b7-4132-b380-72e6f15ec826", "option_id": "74b1f86f-8541-40a1-8550-4a0f8a52bf46"},
+        "title": "$1M-$10M", "is_archived": false}, "attribute_type": "select"}],
+        "funding_raised_usd": [], "foundation_date": [{"active_from": "2026-05-09T21:43:08.733000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "value": "2020-01-01", "attribute_type": "date"}], "employee_range": [{"active_from":
+        "2026-05-09T21:43:08.733000000Z", "active_until": null, "created_by_actor":
+        {"type": "system", "id": null}, "option": {"id": {"workspace_id": "74716136-8b3f-4b28-b67f-75d3212684e1",
+        "object_id": "74179437-bcdc-48d0-b401-e569a1278368", "attribute_id": "11b72cf6-0d4f-4181-aeb1-d689bac7e31b",
+        "option_id": "ae8c339f-d387-46f4-9795-88754d301fbd"}, "title": "11-50", "is_archived":
+        false}, "attribute_type": "select"}], "first_calendar_interaction": [], "last_calendar_interaction":
+        [], "next_calendar_interaction": [], "first_email_interaction": [], "last_email_interaction":
+        [], "first_interaction": [], "last_interaction": [], "next_interaction": [],
+        "strongest_connection_strength_legacy": [], "strongest_connection_strength":
+        [], "strongest_connection_user": [], "associated_deals": [], "created_at":
+        [{"active_from": "2026-05-09T21:43:08.480000000Z", "active_until": null, "created_by_actor":
+        {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+        "value": "2026-05-09T21:42:57.234000000Z", "attribute_type": "timestamp"}],
+        "created_by": [{"active_from": "2026-05-09T21:43:08.480000000Z", "active_until":
+        null, "created_by_actor": {"type": "workspace-member", "id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1"},
+        "referenced_actor_type": "workspace-member", "referenced_actor_id": "635cebb2-d0d3-4c03-8485-44354bdf4cb1",
+        "attribute_type": "actor-reference"}], "industry": [], "company_size": [],
+        "icp_tier": [], "attr_123": [], "account_status": [], "renewal_date": [],
+        "nps_score": [], "tech_stack": [], "csm_name": [], "onboarding_status": [],
+        "annual_contract_value": [], "subscription_status": [], "billing_coupon_name":
+        [], "arr_contribution_usd": [], "company_research": [{"active_from": "2026-05-09T21:45:52.955000000Z",
+        "active_until": null, "created_by_actor": {"type": "system", "id": null},
+        "value": "## Popl\n\nDomain: popl.co\nAs of: 2026-05-09\n\n## Key Facts\n\n-
+        **Headcount:** ~11\u201350 (CRM estimate; exact figure not publicly confirmed)\n-
+        **Funding:** ~$2.3\u20132.8M total raised (Tracxn reports $2.32M; Pitchbook
+        reports $2.83M)\n- **Stage:** Seed \u2014 latest round Apr 2026; backed by
+        Y Combinator, Cathexis Ventures, Urban Innovation Fund, Goat Capital\n- **GTM
+        motion:** Hybrid PLG + sales-led; Popl coined their own \"In-Person GTM\"
+        (IPM) motion centered on event lead capture and real-world networking\n- **Sales
+        team:** VP of Sales identified (Dieter Heren III, promoted from Dir. of RevOps
+        in Apr 2025); team size not publicly confirmed\n- **MRR:** $1M+ MRR reported
+        (implies ~$12M+ ARR run rate), though estimated ARR range is $1M\u2013$10M\n-
+        **Product:** Digital business card and in-person GTM platform for teams \u2014
+        event lead capture, contact sharing, and data enrichment\n\n## Structural
+        Headline\n\nNo CRO, CMO, or CEO publicly listed. The only named GTM executive
+        found is VP of Sales (Dieter Heren III), who was Director of RevOps as recently
+        as April 2025 \u2014 suggesting a lean, RevOps-heavy sales org with no dedicated
+        marketing leadership visible externally.\n\nSource: LinkedIn (Dieter Heren
+        III profile)", "attribute_type": "text"}], "company_research_2": [{"active_from":
+        "2026-05-09T21:50:20.409000000Z", "active_until": null, "created_by_actor":
+        {"type": "system", "id": null}, "value": "## Popl\n\n**Domain:** popl.co\n**As
+        of:** 2026-05-09\n\n---\n\n### Key Facts\n\n- **Headcount:** ~93\u2013125
+        (Latka reports 93 in 2024; RocketReach shows 125; LinkedIn says 51\u2013200)\n-
+        **Funding:** $2.32M total raised (Seed + YC W21)\n- **Stage:** Seed \u2014
+        YC W21 batch; last round Apr 2021 ($2.2M Seed led by Cathexis Ventures, Urban
+        Innovation Fund, Goat Capital)\n- **GTM motion:** Hybrid \u2014 PLG-rooted
+        (self-serve NFC card + app) with a growing outbound sales layer (SDRs, AEs,
+        field marketing)\n- **Sales/GTM team:** 21 open roles listed; active SDR,
+        AE, and field marketing hiring signals a scaling GTM org\n- **Open GTM reqs:**
+        ~15 of 21 open roles are GTM-facing (SDR, Field Marketing Rep, Experiential
+        Marketing Coordinator, Director of Customer Success)\n- **Product:** AI-powered
+        digital business card + event lead capture platform for teams and individuals
+        \u2014 connects NFC cards/QR codes to a digital profile and CRM-style contact
+        capture\n- **Revenue:** ~$12.2M (reported by Latka for 2024) \u2014 well above
+        the CRM-estimated $1M\u2013$10M ARR range\n\n---\n\n### Structural Headline\n\nCRO
+        seat exists (Dieter Heren) alongside a VP of Marketing (Bryce Alsten) and
+        VP of Operations (Natalie Miller) \u2014 the GTM leadership layer is in place,
+        but no CFO or dedicated RevOps leader is visible. The CRO is the likely buyer
+        or economic gatekeeper.\n\n*Source: RocketReach management page, TheOrg*\n\n---\n\n###
+        Recent News\n\n- **No significant funding news found in the last 6 months**
+        \u2014 last round was Apr 2021\n- **Active GTM hiring push underway** \u2014
+        21 open roles including SDR, Field Marketing Rep, Experiential Marketing Coordinator,
+        and Director of Customer Success (as of May 2026; source: LinkedIn, YC Work
+        at a Startup)\n- **Product evolution:** Launched", "attribute_type": "text"}]}}]}'
+    headers:
+      CF-RAY:
+      - 9fc6a16e6c7369a2-SJC
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:32:48 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '11029'
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:32:47.876000000Z'
+      x-attio-execution-id:
+      - 5d00122c-9a3c-46ce-9a6e-4b4ae6d7d4c6
+      x-attio-record-query-score:
+      - '0'
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Host:
+      - api.attio.com
+      User-Agent:
+      - attio-python/0.1.0
+    method: GET
+    uri: https://api.attio.com/v2/files?object=companies&record_id=498f9009-e208-4386-90ce-f4c272b13a74
+  response:
+    body:
+      string: '{"data": [], "pagination": {"next_cursor": null}}'
+    headers:
+      CF-RAY:
+      - 9fc6a17098641990-SJC
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '45'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 16 May 2026 01:32:48 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=7776000; includeSubDomains; preload
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - x-attio-client,x-attio-execution-id,x-attio-platform,x-attio-platform-version,x-attio-record-query-score,x-attio-app-installation-bundle-id,WWW-Authenticate
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - DYNAMIC
+      vary:
+      - Origin
+      via:
+      - 1.1 google
+      x-accurate-at:
+      - '2026-05-16T01:32:48.206709000Z'
+      x-attio-execution-id:
+      - e9739bd0-8137-435a-a0ab-973744324e0c
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1
