@@ -1,0 +1,10 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "env": {
+    "ATTIO_CLIENT_ID": "@attio-client-id",
+    "ATTIO_CLIENT_SECRET": "@attio-client-secret",
+    "ATTIO_REDIRECT_URI": "@attio-redirect-uri",
+    "SESSION_SECRET": "@session-secret"
+  }
+}

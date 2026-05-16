@@ -1,0 +1,25 @@
+{
+  "name": "create-attio-app",
+  "version": "0.1.0",
+  "description": "Scaffold an Attio-powered Next.js app with OAuth, session management, and a ready-to-use app shell",
+  "type": "module",
+  "bin": {
+    "create-attio-app": "./bin/create-app.js"
+  },
+  "files": [
+    "bin",
+    "template"
+  ],
+  "keywords": [
+    "attio",
+    "crm",
+    "nextjs",
+    "oauth",
+    "scaffold",
+    "template"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
