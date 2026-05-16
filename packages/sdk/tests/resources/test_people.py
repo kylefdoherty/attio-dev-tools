@@ -41,13 +41,15 @@ def _async_client() -> AsyncAttioClient:
 class TestPeopleResourceSync:
     @respx.mock
     def test_list(self) -> None:
-        route = respx.get(f"{BASE_URL}/objects/people/records").mock(
+        route = respx.post(f"{BASE_URL}/objects/people/records/query").mock(
             return_value=httpx.Response(200, json=MOCK_RECORDS_LIST)
         )
         client = _sync_client()
         result = client.people.list()
 
         assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body == {}
         assert isinstance(result, ListResponse)
         assert len(result.data) == 2
         assert isinstance(result.data[0], Record)
@@ -56,16 +58,15 @@ class TestPeopleResourceSync:
 
     @respx.mock
     def test_list_with_params(self) -> None:
-        route = respx.get(f"{BASE_URL}/objects/people/records").mock(
+        route = respx.post(f"{BASE_URL}/objects/people/records/query").mock(
             return_value=httpx.Response(200, json=MOCK_RECORDS_LIST)
         )
         client = _sync_client()
         client.people.list(limit=10, offset=5)
 
         assert route.called
-        request = route.calls[0].request
-        assert request.url.params["limit"] == "10"
-        assert request.url.params["offset"] == "5"
+        body = json.loads(route.calls[0].request.content)
+        assert body == {"limit": 10, "offset": 5}
         client.close()
 
     @respx.mock
@@ -168,13 +169,15 @@ class TestPeopleResourceSync:
 class TestPeopleResourceAsync:
     @respx.mock
     async def test_list(self) -> None:
-        route = respx.get(f"{BASE_URL}/objects/people/records").mock(
+        route = respx.post(f"{BASE_URL}/objects/people/records/query").mock(
             return_value=httpx.Response(200, json=MOCK_RECORDS_LIST)
         )
         client = _async_client()
         result = await client.people.list()
 
         assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body == {}
         assert isinstance(result, ListResponse)
         assert len(result.data) == 2
         assert isinstance(result.data[0], Record)

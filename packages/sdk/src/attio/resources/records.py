@@ -201,7 +201,7 @@ class RecordsResource(SyncQueryableResource[Record], _RecordsMixin):
     ) -> ListResponse[GlobalSearchResult]:
         """Search across all object records globally."""
         body = self._build_search_body(query=query, objects=objects, limit=limit)
-        raw = self._http.request("POST", "/objects/records/search", json=body)
+        raw = self._http.request("POST", "/records/search", json=body)
         return self._parse_search_response(raw)
 
     def query_all(
@@ -332,7 +332,7 @@ class AsyncRecordsResource(AsyncQueryableResource[Record], _RecordsMixin):
     ) -> ListResponse[GlobalSearchResult]:
         """Search across all object records globally."""
         body = self._build_search_body(query=query, objects=objects, limit=limit)
-        raw = await self._http.request("POST", "/objects/records/search", json=body)
+        raw = await self._http.request("POST", "/records/search", json=body)
         return self._parse_search_response(raw)
 
     def query_all(

@@ -48,13 +48,15 @@ def _async_client() -> AsyncAttioClient:
 class TestRecordsResourceSync:
     @respx.mock
     def test_list(self) -> None:
-        route = respx.get(f"{BASE_URL}/objects/people/records").mock(
+        route = respx.post(f"{BASE_URL}/objects/people/records/query").mock(
             return_value=httpx.Response(200, json=MOCK_RECORDS_LIST)
         )
         client = _sync_client()
         result = client.records.list("people")
 
         assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body == {}
         assert isinstance(result, ListResponse)
         assert len(result.data) == 2
         assert isinstance(result.data[0], Record)
@@ -64,16 +66,15 @@ class TestRecordsResourceSync:
 
     @respx.mock
     def test_list_with_params(self) -> None:
-        route = respx.get(f"{BASE_URL}/objects/people/records").mock(
+        route = respx.post(f"{BASE_URL}/objects/people/records/query").mock(
             return_value=httpx.Response(200, json=MOCK_RECORDS_LIST)
         )
         client = _sync_client()
         client.records.list("people", limit=10, offset=5)
 
         assert route.called
-        request = route.calls[0].request
-        assert request.url.params["limit"] == "10"
-        assert request.url.params["offset"] == "5"
+        body = json.loads(route.calls[0].request.content)
+        assert body == {"limit": 10, "offset": 5}
         client.close()
 
     @respx.mock
@@ -325,7 +326,7 @@ class TestRecordsResourceSync:
     @respx.mock
     def test_global_search(self) -> None:
         # NOTE: global_search uses a DIFFERENT URL pattern — not scoped to one object
-        route = respx.post(f"{BASE_URL}/objects/records/search").mock(
+        route = respx.post(f"{BASE_URL}/records/search").mock(
             return_value=httpx.Response(200, json=MOCK_GLOBAL_SEARCH_RESULTS)
         )
         client = _sync_client()
@@ -352,8 +353,8 @@ class TestRecordsResourceSync:
 
     @respx.mock
     def test_global_search_url_pattern(self) -> None:
-        """Verify global_search hits /objects/records/search, not /objects/{object}/records/search."""
-        route = respx.post(f"{BASE_URL}/objects/records/search").mock(
+        """Verify global_search hits /records/search, not /objects/{object}/records/search."""
+        route = respx.post(f"{BASE_URL}/records/search").mock(
             return_value=httpx.Response(200, json=MOCK_GLOBAL_SEARCH_RESULTS)
         )
         client = _sync_client()
@@ -361,7 +362,7 @@ class TestRecordsResourceSync:
 
         assert route.called
         request = route.calls[0].request
-        assert str(request.url).startswith(f"{BASE_URL}/objects/records/search")
+        assert str(request.url).startswith(f"{BASE_URL}/records/search")
         client.close()
 
     @respx.mock
@@ -471,13 +472,15 @@ class TestRecordsResourceSync:
 class TestRecordsResourceAsync:
     @respx.mock
     async def test_list(self) -> None:
-        route = respx.get(f"{BASE_URL}/objects/people/records").mock(
+        route = respx.post(f"{BASE_URL}/objects/people/records/query").mock(
             return_value=httpx.Response(200, json=MOCK_RECORDS_LIST)
         )
         client = _async_client()
         result = await client.records.list("people")
 
         assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body == {}
         assert isinstance(result, ListResponse)
         assert len(result.data) == 2
         assert isinstance(result.data[0], Record)
@@ -651,7 +654,7 @@ class TestRecordsResourceAsync:
 
     @respx.mock
     async def test_global_search(self) -> None:
-        route = respx.post(f"{BASE_URL}/objects/records/search").mock(
+        route = respx.post(f"{BASE_URL}/records/search").mock(
             return_value=httpx.Response(200, json=MOCK_GLOBAL_SEARCH_RESULTS)
         )
         client = _async_client()

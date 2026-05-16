@@ -144,9 +144,9 @@ class SyncQueryableResource(SyncResource, _QueryableMixin[T]):
         limit: int | None = None,
         offset: int | None = None,
     ) -> ListResponse[T]:
-        params = self._build_list_params(limit=limit, offset=offset)
-        raw = self._http.request("GET", self._collection_path(slug), params=params)
-        return self._parse_list_response(raw)
+        # Attio API does not support GET for listing records/entries;
+        # delegate to POST /query with just limit/offset params.
+        return self._query(slug, limit=limit, offset=offset)
 
     def _query(
         self,
@@ -249,9 +249,9 @@ class AsyncQueryableResource(AsyncResource, _QueryableMixin[T]):
         limit: int | None = None,
         offset: int | None = None,
     ) -> ListResponse[T]:
-        params = self._build_list_params(limit=limit, offset=offset)
-        raw = await self._http.request("GET", self._collection_path(slug), params=params)
-        return self._parse_list_response(raw)
+        # Attio API does not support GET for listing records/entries;
+        # delegate to POST /query with just limit/offset params.
+        return await self._query(slug, limit=limit, offset=offset)
 
     async def _query(
         self,

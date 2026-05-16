@@ -40,13 +40,15 @@ def _async_client() -> AsyncAttioClient:
 class TestCompaniesResourceSync:
     @respx.mock
     def test_list(self) -> None:
-        route = respx.get(f"{BASE_URL}/objects/companies/records").mock(
+        route = respx.post(f"{BASE_URL}/objects/companies/records/query").mock(
             return_value=httpx.Response(200, json=MOCK_RECORDS_LIST)
         )
         client = _sync_client()
         result = client.companies.list()
 
         assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body == {}
         assert isinstance(result, ListResponse)
         assert len(result.data) == 2
         assert isinstance(result.data[0], Record)
@@ -129,13 +131,15 @@ class TestCompaniesResourceSync:
 class TestCompaniesResourceAsync:
     @respx.mock
     async def test_list(self) -> None:
-        route = respx.get(f"{BASE_URL}/objects/companies/records").mock(
+        route = respx.post(f"{BASE_URL}/objects/companies/records/query").mock(
             return_value=httpx.Response(200, json=MOCK_RECORDS_LIST)
         )
         client = _async_client()
         result = await client.companies.list()
 
         assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body == {}
         assert isinstance(result, ListResponse)
         assert len(result.data) == 2
         await client.close()

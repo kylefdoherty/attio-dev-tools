@@ -418,13 +418,15 @@ class TestSyncQueryableHTTP:
 
     @respx.mock
     def test_list_no_params(self) -> None:
-        route = respx.get(f"{BASE_URL}/widgets/things/items").mock(
+        route = respx.post(f"{BASE_URL}/widgets/things/items/query").mock(
             return_value=httpx.Response(200, json=WIDGET_LIST_RESPONSE)
         )
         resource = _sync_resource()
         result = resource.list("things")
 
         assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body == {}
         assert isinstance(result, ListResponse)
         assert len(result.data) == 2
         assert isinstance(result.data[0], Widget)
@@ -432,15 +434,14 @@ class TestSyncQueryableHTTP:
 
     @respx.mock
     def test_list_with_pagination_params(self) -> None:
-        route = respx.get(f"{BASE_URL}/widgets/things/items").mock(
+        route = respx.post(f"{BASE_URL}/widgets/things/items/query").mock(
             return_value=httpx.Response(200, json=WIDGET_LIST_RESPONSE)
         )
         resource = _sync_resource()
         resource.list("things", limit=10, offset=5)
 
-        request = route.calls[0].request
-        assert request.url.params["limit"] == "10"
-        assert request.url.params["offset"] == "5"
+        body = json.loads(route.calls[0].request.content)
+        assert body == {"limit": 10, "offset": 5}
 
     @respx.mock
     def test_query_sends_post_to_query_endpoint(self) -> None:
@@ -646,28 +647,29 @@ class TestAsyncQueryableHTTP:
 
     @respx.mock
     async def test_list(self) -> None:
-        route = respx.get(f"{BASE_URL}/widgets/things/items").mock(
+        route = respx.post(f"{BASE_URL}/widgets/things/items/query").mock(
             return_value=httpx.Response(200, json=WIDGET_LIST_RESPONSE)
         )
         resource = _async_resource()
         result = await resource.list("things")
 
         assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body == {}
         assert isinstance(result, ListResponse)
         assert len(result.data) == 2
         assert isinstance(result.data[0], Widget)
 
     @respx.mock
     async def test_list_with_params(self) -> None:
-        route = respx.get(f"{BASE_URL}/widgets/things/items").mock(
+        route = respx.post(f"{BASE_URL}/widgets/things/items/query").mock(
             return_value=httpx.Response(200, json=WIDGET_LIST_RESPONSE)
         )
         resource = _async_resource()
         await resource.list("things", limit=10, offset=5)
 
-        request = route.calls[0].request
-        assert request.url.params["limit"] == "10"
-        assert request.url.params["offset"] == "5"
+        body = json.loads(route.calls[0].request.content)
+        assert body == {"limit": 10, "offset": 5}
 
     @respx.mock
     async def test_query(self) -> None:
