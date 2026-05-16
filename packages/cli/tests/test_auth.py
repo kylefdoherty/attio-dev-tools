@@ -16,8 +16,8 @@ runner = CliRunner()
 class TestAuthLogin:
     """Test the auth login command."""
 
-    def test_login_with_api_key_flag(self):
-        """Login with --api-key flag should validate and save."""
+    def test_login_interactive(self):
+        """Login with interactive prompt should validate and save."""
         mock_client_instance = MagicMock()
         mock_info = MagicMock()
         mock_info.workspace_name = "Test Workspace"
@@ -28,7 +28,7 @@ class TestAuthLogin:
             patch("attio.AttioClient", return_value=mock_client_instance),
             patch("attio_cli._config.save_api_key") as mock_save,
         ):
-            result = runner.invoke(app, ["auth", "login", "--api-key", "test_key_123"])
+            result = runner.invoke(app, ["auth", "login"], input="test_key_123\n")
             assert result.exit_code == 0
             mock_save.assert_called_once_with(
                 "test_key_123",
@@ -44,7 +44,7 @@ class TestAuthLogin:
             "attio.AttioClient",
             side_effect=AuthenticationError("Unauthorized", status_code=401),
         ):
-            result = runner.invoke(app, ["auth", "login", "--api-key", "bad_key"])
+            result = runner.invoke(app, ["auth", "login"], input="bad_key\n")
             assert result.exit_code != 0
 
     def test_login_with_1password(self):

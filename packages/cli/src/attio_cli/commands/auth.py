@@ -14,16 +14,14 @@ app = typer.Typer(no_args_is_help=True)
 @app.command()
 def login(
     ctx: typer.Context,
-    api_key: Optional[str] = typer.Option(None, "--api-key", help="API key to save (prefer interactive prompt or --1password)."),
     one_password: Optional[str] = typer.Option(None, "--1password", help="1Password secret reference (e.g. op://Vault/Item/field)."),
     profile_name: str = typer.Option("default", "--profile", help="Profile name to save as."),
 ) -> None:
     """Authenticate with the Attio API.
 
-    Three modes:
+    Two modes:
       - Interactive: run with no flags, enter key via hidden prompt
       - 1Password: --1password "op://Vault/Attio/credential" (no secret stored on disk)
-      - Direct: --api-key sk_... (not recommended, visible in shell history)
     """
     from attio import AttioClient
     from attio._exceptions import AttioError
@@ -43,8 +41,6 @@ def login(
                 exit_code=3,
             )
             return
-    elif api_key:
-        key = api_key
     else:
         key = typer.prompt("Enter your Attio API key", hide_input=True)
 
