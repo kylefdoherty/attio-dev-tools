@@ -134,6 +134,42 @@ describe('paginateOffset', () => {
 
     await expect(collectAll(paginateOffset(fetchPage))).rejects.toThrow('API error');
   });
+
+  it('propagates errors that occur on page 2', async () => {
+    let callIndex = 0;
+    const fetchPage = vi.fn(async (_limit: number, _offset: number) => {
+      callIndex++;
+      if (callIndex === 1) {
+        return { data: [{ id: 1 }, { id: 2 }] };
+      }
+      throw new Error('network timeout on page 2');
+    });
+
+    await expect(
+      collectAll(paginateOffset(fetchPage, { pageSize: 2 })),
+    ).rejects.toThrow('network timeout on page 2');
+    expect(fetchPage).toHaveBeenCalledTimes(2);
+  });
+
+  it('yields partial results from successful pages before error', async () => {
+    let callIndex = 0;
+    const fetchPage = vi.fn(async (_limit: number, _offset: number) => {
+      callIndex++;
+      if (callIndex === 1) {
+        return { data: ['a', 'b'] };
+      }
+      throw new Error('rate limited');
+    });
+
+    const items: string[] = [];
+    await expect(async () => {
+      for await (const item of paginateOffset(fetchPage, { pageSize: 2 })) {
+        items.push(item);
+      }
+    }).rejects.toThrow('rate limited');
+    // Items from page 1 were yielded before the error
+    expect(items).toEqual(['a', 'b']);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -247,6 +283,48 @@ describe('paginateCursor', () => {
 
     await expect(collectAll(paginateCursor(fetchPage))).rejects.toThrow('Cursor error');
   });
+
+  it('propagates errors that occur on page 2', async () => {
+    let callIndex = 0;
+    const fetchPage = vi.fn(async (_cursor?: string) => {
+      callIndex++;
+      if (callIndex === 1) {
+        return {
+          data: [{ id: 1 }, { id: 2 }],
+          pagination: { next_cursor: 'cursor_2' },
+        };
+      }
+      throw new Error('server error on page 2');
+    });
+
+    await expect(collectAll(paginateCursor(fetchPage))).rejects.toThrow(
+      'server error on page 2',
+    );
+    expect(fetchPage).toHaveBeenCalledTimes(2);
+  });
+
+  it('yields partial results from successful pages before error', async () => {
+    let callIndex = 0;
+    const fetchPage = vi.fn(async (_cursor?: string) => {
+      callIndex++;
+      if (callIndex === 1) {
+        return {
+          data: ['x', 'y'],
+          pagination: { next_cursor: 'cursor_2' },
+        };
+      }
+      throw new Error('502 bad gateway');
+    });
+
+    const items: string[] = [];
+    await expect(async () => {
+      for await (const item of paginateCursor(fetchPage)) {
+        items.push(item);
+      }
+    }).rejects.toThrow('502 bad gateway');
+    // Items from page 1 were yielded before the error
+    expect(items).toEqual(['x', 'y']);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -270,5 +348,30 @@ describe('collectAll', () => {
     }
     const result = await collectAll(gen());
     expect(result).toEqual([]);
+  });
+
+  it('propagates errors from the underlying iterable', async () => {
+    async function* gen() {
+      yield 1;
+      yield 2;
+      throw new Error('mid-iteration failure');
+    }
+    await expect(collectAll(gen())).rejects.toThrow('mid-iteration failure');
+  });
+
+  it('collects items yielded before the error', async () => {
+    async function* gen() {
+      yield 'a';
+      yield 'b';
+      throw new Error('boom');
+    }
+    // collectAll itself rejects, but we can verify via for-await
+    const items: string[] = [];
+    await expect(async () => {
+      for await (const item of gen()) {
+        items.push(item);
+      }
+    }).rejects.toThrow('boom');
+    expect(items).toEqual(['a', 'b']);
   });
 });

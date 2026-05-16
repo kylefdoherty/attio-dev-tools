@@ -288,3 +288,235 @@ class TestAsyncOffsetIterator:
             items.append(item)
         assert items == ["a", "b"]
         assert call_count == 2
+
+
+# ---------------------------------------------------------------------------
+# Error handling — CursorIterator (sync)
+# ---------------------------------------------------------------------------
+
+
+class TestCursorIteratorErrors:
+    def test_error_on_first_page_propagates(self) -> None:
+        """If fetch_page raises on the first call, the error propagates."""
+
+        def fetch_page(cursor: str | None) -> PaginatedResponse[str]:
+            raise RuntimeError("connection lost")
+
+        import pytest
+
+        with pytest.raises(RuntimeError, match="connection lost"):
+            list(CursorIterator(fetch_page=fetch_page))
+
+    def test_error_on_second_page_propagates(self) -> None:
+        """If fetch_page raises on page 2, the error propagates to the caller."""
+        call_count = 0
+
+        def fetch_page(cursor: str | None) -> PaginatedResponse[str]:
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return PaginatedResponse[str](
+                    data=["a", "b"],
+                    pagination=Pagination(next_cursor="cursor_2"),
+                )
+            raise RuntimeError("server error on page 2")
+
+        import pytest
+
+        with pytest.raises(RuntimeError, match="server error on page 2"):
+            list(CursorIterator(fetch_page=fetch_page))
+
+    def test_partial_results_before_error(self) -> None:
+        """Items from page 1 are yielded before the error on page 2."""
+        call_count = 0
+
+        def fetch_page(cursor: str | None) -> PaginatedResponse[str]:
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return PaginatedResponse[str](
+                    data=["a", "b"],
+                    pagination=Pagination(next_cursor="cursor_2"),
+                )
+            raise RuntimeError("rate limited")
+
+        import pytest
+
+        items: list[str] = []
+        with pytest.raises(RuntimeError, match="rate limited"):
+            for item in CursorIterator(fetch_page=fetch_page):
+                items.append(item)
+        # Page 1 items were yielded before the error
+        assert items == ["a", "b"]
+
+
+# ---------------------------------------------------------------------------
+# Error handling — OffsetIterator (sync)
+# ---------------------------------------------------------------------------
+
+
+class TestOffsetIteratorErrors:
+    def test_error_on_first_page_propagates(self) -> None:
+        """If fetch_page raises on the first call, the error propagates."""
+
+        def fetch_page(offset: int, limit: int) -> ListResponse[str]:
+            raise RuntimeError("connection refused")
+
+        import pytest
+
+        with pytest.raises(RuntimeError, match="connection refused"):
+            list(OffsetIterator(fetch_page=fetch_page, limit=10))
+
+    def test_error_on_second_page_propagates(self) -> None:
+        """If fetch_page raises on page 2, the error propagates to the caller."""
+        call_count = 0
+
+        def fetch_page(offset: int, limit: int) -> ListResponse[str]:
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return ListResponse[str](data=["a", "b", "c"])
+            raise RuntimeError("timeout on page 2")
+
+        import pytest
+
+        with pytest.raises(RuntimeError, match="timeout on page 2"):
+            list(OffsetIterator(fetch_page=fetch_page, limit=3))
+
+    def test_partial_results_before_error(self) -> None:
+        """Items from page 1 are yielded before the error on page 2."""
+        call_count = 0
+
+        def fetch_page(offset: int, limit: int) -> ListResponse[str]:
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return ListResponse[str](data=["x", "y", "z"])
+            raise RuntimeError("502 bad gateway")
+
+        import pytest
+
+        items: list[str] = []
+        with pytest.raises(RuntimeError, match="502 bad gateway"):
+            for item in OffsetIterator(fetch_page=fetch_page, limit=3):
+                items.append(item)
+        # Page 1 items were yielded before the error
+        assert items == ["x", "y", "z"]
+
+
+# ---------------------------------------------------------------------------
+# Error handling — AsyncCursorIterator
+# ---------------------------------------------------------------------------
+
+
+class TestAsyncCursorIteratorErrors:
+    async def test_error_on_first_page_propagates(self) -> None:
+        """If fetch_page raises on the first call, the error propagates."""
+
+        async def fetch_page(cursor: str | None) -> PaginatedResponse[str]:
+            raise RuntimeError("connection lost")
+
+        import pytest
+
+        with pytest.raises(RuntimeError, match="connection lost"):
+            async for _ in AsyncCursorIterator(fetch_page=fetch_page):
+                pass
+
+    async def test_error_on_second_page_propagates(self) -> None:
+        """If fetch_page raises on page 2, the error propagates."""
+        call_count = 0
+
+        async def fetch_page(cursor: str | None) -> PaginatedResponse[str]:
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return PaginatedResponse[str](
+                    data=["a", "b"],
+                    pagination=Pagination(next_cursor="cursor_2"),
+                )
+            raise RuntimeError("server error on page 2")
+
+        import pytest
+
+        with pytest.raises(RuntimeError, match="server error on page 2"):
+            async for _ in AsyncCursorIterator(fetch_page=fetch_page):
+                pass
+
+    async def test_partial_results_before_error(self) -> None:
+        """Items from page 1 are yielded before the error on page 2."""
+        call_count = 0
+
+        async def fetch_page(cursor: str | None) -> PaginatedResponse[str]:
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return PaginatedResponse[str](
+                    data=["a", "b"],
+                    pagination=Pagination(next_cursor="cursor_2"),
+                )
+            raise RuntimeError("rate limited")
+
+        import pytest
+
+        items: list[str] = []
+        with pytest.raises(RuntimeError, match="rate limited"):
+            async for item in AsyncCursorIterator(fetch_page=fetch_page):
+                items.append(item)
+        # Page 1 items were yielded before the error
+        assert items == ["a", "b"]
+
+
+# ---------------------------------------------------------------------------
+# Error handling — AsyncOffsetIterator
+# ---------------------------------------------------------------------------
+
+
+class TestAsyncOffsetIteratorErrors:
+    async def test_error_on_first_page_propagates(self) -> None:
+        """If fetch_page raises on the first call, the error propagates."""
+
+        async def fetch_page(offset: int, limit: int) -> ListResponse[str]:
+            raise RuntimeError("connection refused")
+
+        import pytest
+
+        with pytest.raises(RuntimeError, match="connection refused"):
+            async for _ in AsyncOffsetIterator(fetch_page=fetch_page, limit=10):
+                pass
+
+    async def test_error_on_second_page_propagates(self) -> None:
+        """If fetch_page raises on page 2, the error propagates."""
+        call_count = 0
+
+        async def fetch_page(offset: int, limit: int) -> ListResponse[str]:
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return ListResponse[str](data=["a", "b", "c"])
+            raise RuntimeError("timeout on page 2")
+
+        import pytest
+
+        with pytest.raises(RuntimeError, match="timeout on page 2"):
+            async for _ in AsyncOffsetIterator(fetch_page=fetch_page, limit=3):
+                pass
+
+    async def test_partial_results_before_error(self) -> None:
+        """Items from page 1 are yielded before the error on page 2."""
+        call_count = 0
+
+        async def fetch_page(offset: int, limit: int) -> ListResponse[str]:
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return ListResponse[str](data=["x", "y", "z"])
+            raise RuntimeError("502 bad gateway")
+
+        import pytest
+
+        items: list[str] = []
+        with pytest.raises(RuntimeError, match="502 bad gateway"):
+            async for item in AsyncOffsetIterator(fetch_page=fetch_page, limit=3):
+                items.append(item)
+        # Page 1 items were yielded before the error
+        assert items == ["x", "y", "z"]
