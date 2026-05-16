@@ -114,6 +114,9 @@ class ViewsResource(SyncResource, _ViewsMixin):
         return CursorIterator(fetch_page=fetch_page)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncViewsResource(AsyncResource, _ViewsMixin):
     """Asynchronous Views resource."""
 

@@ -104,6 +104,9 @@ class ListsResource(SyncResource, _ListsMixin):
         return self._parse_single_response(raw)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncListsResource(AsyncResource, _ListsMixin):
     """Asynchronous Lists resource."""
 

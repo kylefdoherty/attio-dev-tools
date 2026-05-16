@@ -14,6 +14,9 @@ class PeopleResource(StandardObjectResource):
     _object_slug = "people"
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncPeopleResource(AsyncStandardObjectResource):
     """Asynchronous People resource (convenience wrapper around Records)."""
 

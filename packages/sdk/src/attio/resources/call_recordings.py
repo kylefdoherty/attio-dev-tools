@@ -63,6 +63,9 @@ class CallRecordingsResource(SyncResource, _CallRecordingsMixin):
         return self._parse_single_response(raw)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncCallRecordingsResource(AsyncResource, _CallRecordingsMixin):
     """Asynchronous Call Recordings resource."""
 

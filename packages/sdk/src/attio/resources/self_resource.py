@@ -25,6 +25,9 @@ class SelfResource(SyncResource, _SelfMixin):
         return self._parse_response(raw)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncSelfResource(AsyncResource, _SelfMixin):
     """Asynchronous Self resource."""
 

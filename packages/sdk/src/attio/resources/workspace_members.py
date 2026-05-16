@@ -36,6 +36,9 @@ class WorkspaceMembersResource(SyncResource, _WorkspaceMembersMixin):
         return self._parse_single_response(raw)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncWorkspaceMembersResource(AsyncResource, _WorkspaceMembersMixin):
     """Asynchronous Workspace Members resource (read-only)."""
 

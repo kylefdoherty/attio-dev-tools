@@ -18,6 +18,9 @@ class WorkspacesResource(StandardObjectResource):
     _object_slug = "workspaces"
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncWorkspacesResource(AsyncStandardObjectResource):
     """Asynchronous Workspaces resource (convenience wrapper around Records)."""
 

@@ -14,6 +14,9 @@ class CompaniesResource(StandardObjectResource):
     _object_slug = "companies"
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncCompaniesResource(AsyncStandardObjectResource):
     """Asynchronous Companies resource (convenience wrapper around Records)."""
 

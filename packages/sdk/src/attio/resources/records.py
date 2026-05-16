@@ -216,9 +216,7 @@ class RecordsResource(SyncQueryableResource[Record], _RecordsMixin):
         return self._query_all(object, filter=filter, sorts=sorts, limit=limit)
 
 
-# ---------------------------------------------------------------------------
-# Async
-# ---------------------------------------------------------------------------
+# --- GENERATED ASYNC CODE BELOW --- #
 
 
 class AsyncRecordsResource(AsyncQueryableResource[Record], _RecordsMixin):
@@ -261,9 +259,7 @@ class AsyncRecordsResource(AsyncQueryableResource[Record], _RecordsMixin):
     async def create(self, object: str, *, values: dict[str, Any]) -> Record:
         """Create a new record."""
         body = self._build_values_body(values)
-        raw = await self._http.request(
-            "POST", self._collection_path(object), json=body
-        )
+        raw = await self._http.request("POST", self._collection_path(object), json=body)
         return self._parse_single_response(raw)
 
     async def update(
@@ -291,9 +287,7 @@ class AsyncRecordsResource(AsyncQueryableResource[Record], _RecordsMixin):
     ) -> Record:
         """Upsert a record by matching attribute (create or update)."""
         body = self._build_upsert_body(matching_attribute, values)
-        raw = await self._http.request(
-            "PUT", self._collection_path(object), json=body
-        )
+        raw = await self._http.request("PUT", self._collection_path(object), json=body)
         return self._parse_single_response(raw)
 
     async def get_attribute_values(
@@ -338,9 +332,7 @@ class AsyncRecordsResource(AsyncQueryableResource[Record], _RecordsMixin):
     ) -> ListResponse[GlobalSearchResult]:
         """Search across all object records globally."""
         body = self._build_search_body(query=query, objects=objects, limit=limit)
-        raw = await self._http.request(
-            "POST", "/objects/records/search", json=body
-        )
+        raw = await self._http.request("POST", "/objects/records/search", json=body)
         return self._parse_search_response(raw)
 
     def query_all(

@@ -105,6 +105,9 @@ class SelectOptionsResource(SyncResource, _SelectOptionsMixin):
         return self._parse_single_response(raw)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncSelectOptionsResource(AsyncResource, _SelectOptionsMixin):
     """Asynchronous Select Options resource."""
 

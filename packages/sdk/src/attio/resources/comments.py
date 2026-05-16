@@ -95,6 +95,9 @@ class CommentsResource(SyncResource, _CommentsMixin):
         self._http.request("DELETE", f"/comments/{comment_id}")
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncCommentsResource(AsyncResource, _CommentsMixin):
     """Asynchronous Comments resource."""
 

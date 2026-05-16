@@ -111,6 +111,9 @@ class NotesResource(SyncResource, _NotesMixin):
         self._http.request("DELETE", f"/notes/{note_id}")
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncNotesResource(AsyncResource, _NotesMixin):
     """Asynchronous Notes resource."""
 

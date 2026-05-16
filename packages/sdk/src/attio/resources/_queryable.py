@@ -231,15 +231,15 @@ class SyncQueryableResource(SyncResource, _QueryableMixin[T]):
         return OffsetIterator(fetch_page, limit=limit)
 
 
-# ---------------------------------------------------------------------------
-# Async queryable base
-# ---------------------------------------------------------------------------
+# --- GENERATED ASYNC CODE BELOW --- #
 
 
 class AsyncQueryableResource(AsyncResource, _QueryableMixin[T]):
     """Asynchronous base for queryable resources (Records / Entries).
 
-    Mirror of ``SyncQueryableResource`` with ``async`` / ``await``.
+    Provides the common CRUD + pagination implementations.  Subclasses add
+    resource-specific methods (create, upsert, etc.) and may re-expose base
+    methods with resource-specific parameter names via thin overrides.
     """
 
     async def _list(
@@ -250,9 +250,7 @@ class AsyncQueryableResource(AsyncResource, _QueryableMixin[T]):
         offset: int | None = None,
     ) -> ListResponse[T]:
         params = self._build_list_params(limit=limit, offset=offset)
-        raw = await self._http.request(
-            "GET", self._collection_path(slug), params=params
-        )
+        raw = await self._http.request("GET", self._collection_path(slug), params=params)
         return self._parse_list_response(raw)
 
     async def _query(
@@ -326,9 +324,7 @@ class AsyncQueryableResource(AsyncResource, _QueryableMixin[T]):
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> AsyncOffsetIterator[T]:
-        async def fetch_page(
-            offset: int, page_limit: int
-        ) -> ListResponse[T]:
+        async def fetch_page(offset: int, page_limit: int) -> ListResponse[T]:
             return await self._query(
                 slug,
                 filter=filter,

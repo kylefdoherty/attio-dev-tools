@@ -166,6 +166,9 @@ class FilesResource(SyncResource, _FilesMixin):
         self._http.request("DELETE", f"/files/{file_id}")
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncFilesResource(AsyncResource, _FilesMixin):
     """Asynchronous Files resource."""
 

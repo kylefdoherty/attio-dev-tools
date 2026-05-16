@@ -175,6 +175,9 @@ class TasksResource(SyncResource, _TasksMixin):
         self._http.request("DELETE", f"/tasks/{task_id}")
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncTasksResource(AsyncResource, _TasksMixin):
     """Asynchronous Tasks resource."""
 

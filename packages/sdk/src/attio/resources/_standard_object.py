@@ -132,6 +132,9 @@ class StandardObjectResource:
         )
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncStandardObjectResource:
     """Base for standard object convenience wrappers (async).
 
@@ -182,19 +185,15 @@ class AsyncStandardObjectResource:
 
     async def update(self, record_id: str, *, values: dict[str, Any]) -> Record:
         """Update a record (overwrites multiselect values)."""
-        return await self._records.update(
-            self._object_slug, record_id, values=values
-        )
+        return await self._records.update(self._object_slug, record_id, values=values)
 
     async def append(self, record_id: str, *, values: dict[str, Any]) -> Record:
         """Update a record (appends to multiselect values)."""
-        return await self._records.append(
-            self._object_slug, record_id, values=values
-        )
+        return await self._records.append(self._object_slug, record_id, values=values)
 
     async def delete(self, record_id: str) -> None:
         """Delete a record."""
-        await self._records.delete(self._object_slug, record_id)
+        return await self._records.delete(self._object_slug, record_id)
 
     async def upsert(
         self,

@@ -95,6 +95,9 @@ class ObjectsResource(SyncResource, _ObjectsMixin):
         return self._parse_single_response(raw)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncObjectsResource(AsyncResource, _ObjectsMixin):
     """Asynchronous Objects resource."""
 

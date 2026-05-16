@@ -53,6 +53,9 @@ class TranscriptsResource(SyncResource, _TranscriptsMixin):
         return self._parse_paginated_response(raw)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncTranscriptsResource(AsyncResource, _TranscriptsMixin):
     """Asynchronous Transcripts resource."""
 

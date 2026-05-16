@@ -95,6 +95,9 @@ class WebhooksResource(SyncResource, _WebhooksMixin):
         self._http.request("DELETE", f"/webhooks/{webhook_id}")
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncWebhooksResource(AsyncResource, _WebhooksMixin):
     """Asynchronous Webhooks resource."""
 

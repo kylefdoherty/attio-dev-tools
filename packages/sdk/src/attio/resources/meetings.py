@@ -96,6 +96,9 @@ class MeetingsResource(SyncResource, _MeetingsMixin):
         return self._parse_single_response(raw)
 
 
+# --- GENERATED ASYNC CODE BELOW --- #
+
+
 class AsyncMeetingsResource(AsyncResource, _MeetingsMixin):
     """Asynchronous Meetings resource."""
 

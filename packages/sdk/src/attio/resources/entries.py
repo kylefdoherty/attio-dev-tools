@@ -188,9 +188,7 @@ class EntriesResource(SyncQueryableResource[Entry], _EntriesMixin):
         return self._query_all(list_slug, filter=filter, sorts=sorts, limit=limit)
 
 
-# ---------------------------------------------------------------------------
-# Async
-# ---------------------------------------------------------------------------
+# --- GENERATED ASYNC CODE BELOW --- #
 
 
 class AsyncEntriesResource(AsyncQueryableResource[Entry], _EntriesMixin):
@@ -240,9 +238,7 @@ class AsyncEntriesResource(AsyncQueryableResource[Entry], _EntriesMixin):
     ) -> Entry:
         """Create a new entry in a list."""
         body = self._build_create_body(parent_record_id, parent_object, entry_values)
-        raw = await self._http.request(
-            "POST", self._collection_path(list_slug), json=body
-        )
+        raw = await self._http.request("POST", self._collection_path(list_slug), json=body)
         return self._parse_single_response(raw)
 
     async def update(
@@ -271,9 +267,7 @@ class AsyncEntriesResource(AsyncQueryableResource[Entry], _EntriesMixin):
     ) -> Entry:
         """Upsert an entry by parent record (create or update)."""
         body = self._build_upsert_body(parent_record_id, parent_object, entry_values)
-        raw = await self._http.request(
-            "PUT", self._collection_path(list_slug), json=body
-        )
+        raw = await self._http.request("PUT", self._collection_path(list_slug), json=body)
         return self._parse_single_response(raw)
 
     async def get_attribute_values(
