@@ -1,4 +1,4 @@
-# attio-python
+# attio-dev-tools
 
 Unofficial Python SDK and CLI for the [Attio](https://attio.com) CRM API.
 
