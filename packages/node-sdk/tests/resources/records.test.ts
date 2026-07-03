@@ -206,13 +206,59 @@ describe('RecordsResource', () => {
     const result = await client.records.globalSearch({
       query: 'Jane',
       objects: ['people'],
+      request_as: { type: 'workspace' },
       limit: 10,
     });
     expect(url).toBe('/v2/objects/records/search');
-    expect(body).toEqual({ query: 'Jane', objects: ['people'], limit: 10 });
+    expect(body).toEqual({
+      query: 'Jane',
+      objects: ['people'],
+      request_as: { type: 'workspace' },
+      limit: 10,
+    });
     expect(result.data).toHaveLength(1);
     expect(result.data[0].record_text).toBe('Jane Doe');
     expect(result.data[0].object_slug).toBe('people');
+    expect(result.data[0].id.record_id).toBe('rec_01abc');
+  });
+
+  it('globalSearch() supports workspace-member impersonation', async () => {
+    let body: unknown;
+    server.use(
+      http.post(`${BASE}/objects/records/search`, async ({ request }) => {
+        body = await request.json();
+        return HttpResponse.json({ data: [] });
+      }),
+    );
+    await client.records.globalSearch({
+      query: 'Jane',
+      objects: ['people'],
+      request_as: { type: 'workspace-member', email_address: 'alice@acme.com' },
+    });
+    expect(body).toMatchObject({
+      request_as: { type: 'workspace-member', email_address: 'alice@acme.com' },
+    });
+  });
+
+  it('query() rejects filter combined with filter_view_id', async () => {
+    await expect(
+      client.records.query('people', {
+        filter: { name: { $contains: 'Jane' } },
+        filter_view_id: 'view_01abc',
+      }),
+    ).rejects.toThrow(TypeError);
+  });
+
+  it('query() accepts filter_view_id on its own', async () => {
+    let body: unknown;
+    server.use(
+      http.post(`${BASE}/objects/:objId/records/query`, async ({ request }) => {
+        body = await request.json();
+        return HttpResponse.json({ data: [mockRecord] });
+      }),
+    );
+    await client.records.query('people', { filter_view_id: 'view_01abc', limit: 5 });
+    expect(body).toEqual({ filter_view_id: 'view_01abc', limit: 5 });
   });
 
   // -------------------------------------------------------------------------

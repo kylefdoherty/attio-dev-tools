@@ -72,9 +72,7 @@ export function verifyWebhookSignature(
   signature: string,
   secret: string,
 ): boolean {
-  const expected = createHmac('sha256', secret)
-    .update(rawBody)
-    .digest('hex');
+  const expected = createHmac('sha256', secret).update(rawBody).digest('hex');
 
   const expectedBuffer = Buffer.from(expected, 'utf8');
   const receivedBuffer = Buffer.from(signature, 'utf8');

@@ -14,16 +14,22 @@ const client = new AttioClient({ apiKey: process.env.ATTIO_API_KEY });
 
 - `client.objects` — list, get, create, update
 - `client.attributes` — list, get, create, update
-- `client.records` — list, query, search, get, create, update, append, delete, upsert, getAttributeValues
+- `client.records` — list, listAll, query, queryAll, globalSearch (beta), get, create, update, append, delete, upsert, getAttributeValues, listEntries
 - `client.lists` — list, get, create, update
-- `client.entries` — list, query, get, create, update, append, delete, upsert, getAttributeValues
+- `client.entries` — list, listAll, query, queryAll, get, create, update, append, delete, upsert, getAttributeValues
 - `client.notes` — list, get, create, delete
 - `client.tasks` — list, get, create, update, delete
 - `client.webhooks` — list, get, create, update, delete
 - `client.workspaceMembers` — list, get
 - `client.selectOptions` — list, create, update, listStatuses, createStatus, updateStatus
-- `client.views` — list (on objects or lists)
+- `client.views` — list, listAll (on objects or lists)
 - `client.comments` — create, get, delete, getThread, listThreads
+- `client.files` (beta) — list, listAll, get, upload, createFolder, createConnected, download, delete
+- `client.meetings` (beta) — list, listAll, get, create (alpha)
+- `client.callRecordings` (beta) — list, listAll, get, create (alpha), delete (alpha)
+- `client.transcripts` (beta) — get, segments
+- `client.sql` (beta, Enterprise) — query
+- `client.self` — get
 
 ## Key Patterns
 
@@ -65,6 +71,6 @@ yarn check:fix      # Auto-fix
 - When a user describes a CRM workflow in plain English, translate it into SDK calls using the resources above.
 - Prefer `upsert` over create-then-update when the user says "add or update" / "upsert".
 - Always wrap record values in arrays — this is the most common mistake.
-- For filtering records, use `client.records.query()` with a `filter` object.
+- For filtering records, use `client.records.query()` with a `filter` object. `filter` and `filter_view_id` are mutually exclusive.
 - The SDK handles rate limiting automatically — don't add manual retry logic.
 - Cannot create `email-address` type attributes via API — use `text` type for custom email fields.

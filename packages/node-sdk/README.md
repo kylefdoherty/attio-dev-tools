@@ -59,14 +59,59 @@ const { data: person } = await client.records.upsert('people', {
 });
 ```
 
-### Search across all records
+### Search across all records (beta)
 
 ```typescript
 const { data: results } = await client.records.globalSearch({
   query: 'Acme',
-  objects: ['companies', 'people'],
+  objects: ['companies', 'people'],   // required — at least one object
+  request_as: { type: 'workspace' },  // required — or impersonate a workspace member
   limit: 10,
 });
+```
+
+Search is eventually consistent — use `query()` when strong consistency matters.
+
+### Query with SQL (beta, Enterprise plan)
+
+```typescript
+const { data } = await client.sql.query(
+  "SELECT name, domains FROM companies WHERE name ILIKE '%acme%'",
+);
+console.log(data.rows);
+```
+
+### Iterate meetings and transcripts (beta)
+
+```typescript
+for await (const meeting of client.meetings.listAll({ participants: 'jane@acme.com' })) {
+  const { data: recordings } = await client.callRecordings.list(meeting.id.meeting_id);
+
+  for (const recording of recordings) {
+    for await (const segment of client.transcripts.segments(
+      meeting.id.meeting_id,
+      recording.id.call_recording_id,
+    )) {
+      console.log(`${segment.speaker.name}: ${segment.speech}`);
+    }
+  }
+}
+```
+
+### Upload and download files (beta)
+
+```typescript
+import { readFile } from 'node:fs/promises';
+
+const { data: file } = await client.files.upload({
+  file: await readFile('./report.pdf'),
+  object: 'deals',
+  record_id: recordId,
+  filename: 'report.pdf',
+});
+
+// download() returns the signed URL from the API's 302 redirect
+const { url } = await client.files.download(file.id.file_id);
 ```
 
 ### Create a note on a record
@@ -116,21 +161,26 @@ Every method is available as `client.{resource}.{method}()`.
 |----------|---------|
 | `objects` | list, get, create, update |
 | `attributes` | list, get, create, update |
-| `records` | list, query, search, globalSearch, get, create, update, append, delete, upsert, getAttributeValues, listEntries |
+| `records` | list, listAll, query, queryAll, globalSearch (beta), get, create, update, append, delete, upsert, getAttributeValues, listEntries |
 | `lists` | list, get, create, update |
-| `entries` | list, query, get, create, update, append, delete, upsert, getAttributeValues |
+| `entries` | list, listAll, query, queryAll, get, create, update, append, delete, upsert, getAttributeValues |
 | `notes` | list, get, create, delete |
 | `tasks` | list, get, create, update, delete |
 | `webhooks` | list, get, create, update, delete |
 | `workspaceMembers` | list, get |
 | `selectOptions` | list, create, update, listStatuses, createStatus, updateStatus |
-| `views` | list |
+| `views` | list, listAll |
 | `comments` | create, get, delete, getThread, listThreads |
-| `files` | list, get, createFolder, download, delete |
-| `meetings` | list, get |
-| `callRecordings` | list, get |
-| `transcripts` | get |
+| `files` (beta) | list, listAll, get, upload, createFolder, createConnected, download, delete |
+| `meetings` (beta) | list, listAll, get, create (alpha) |
+| `callRecordings` (beta) | list, listAll, get, create (alpha), delete (alpha) |
+| `transcripts` (beta) | get, segments |
+| `sql` (beta, Enterprise) | query |
 | `self` | get |
+
+**Beta/alpha endpoints** — Attio marks meetings, call recordings, transcripts, files, search, and SQL as beta (small changes possible); meeting create and call-recording create/delete are alpha (breaking changes possible). The SDK flags these in TSDoc.
+
+**Auto-pagination** — `queryAll`/`listAll`/`segments` return `AsyncIterable`s that transparently follow offset or cursor pagination. Use `for await...of`, or `collectAll()` to buffer everything into an array.
 
 For detailed method signatures and parameters, see [AGENTS.md](./AGENTS.md).
 
@@ -164,6 +214,8 @@ const { data: deals } = await client.records.query('deals', {
   filter_view_id: closedView.id.view_id,
 });
 ```
+
+`filter` and `filter_view_id` are mutually exclusive — the SDK throws a `TypeError` if both are provided. The view's sorts and columns are ignored; only its filter applies.
 
 ---
 

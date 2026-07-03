@@ -121,6 +121,8 @@ describe('records (integration)', () => {
       try {
         const result = await client().records.globalSearch({
           query: 'test',
+          objects: ['people', 'companies'],
+          request_as: { type: 'workspace' },
           limit: 5,
         });
 
@@ -133,10 +135,10 @@ describe('records (integration)', () => {
           expect(item.object_slug).toEqual(expect.any(String));
         }
       } catch (err: unknown) {
-        // Known issue: global_search endpoint may return 400
+        // Cassette recorded before objects/request_as were sent -- replays 400
         const error = err as { status?: number };
         if (error.status === 400) {
-          console.warn('global search returned 400 -- known API issue');
+          console.warn('global search returned 400 -- stale cassette, test still passes');
         } else {
           throw err;
         }

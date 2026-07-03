@@ -27,7 +27,7 @@ All resources follow the pattern: `client.{resource}.{method}()`.
 
 - `client.objects` — list, get, create, update
 - `client.attributes` — list(objectSlug), get(objectSlug, attributeSlug), create(objectSlug, data), update(objectSlug, attributeSlug, data)
-- `client.records` — list(objectSlug), query(objectSlug, filters?), search(objectSlug, query), get(objectSlug, recordId), create(objectSlug, data), update(objectSlug, recordId, data), append(objectSlug, recordId, data), delete(objectSlug, recordId), upsert(objectSlug, data), getAttributeValues(objectSlug, recordId, attributeSlug)
+- `client.records` — list(objectSlug), listAll(objectSlug), query(objectSlug, filters?), queryAll(objectSlug, filters?), globalSearch(params) (beta), get(objectSlug, recordId), create(objectSlug, data), update(objectSlug, recordId, data), append(objectSlug, recordId, data), delete(objectSlug, recordId), upsert(objectSlug, data), getAttributeValues(objectSlug, recordId, attributeSlug), listEntries(objectSlug, recordId)
 - `client.lists` — list, get, create, update
 - `client.entries` — list(listId), query(listId, filters?), get(listId, entryId), create(listId, data), update(listId, entryId, data), append(listId, entryId, data), delete(listId, entryId), upsert(listId, data), getAttributeValues(listId, entryId, attributeSlug)
 - `client.notes` — list(objectSlug, recordId), get(noteId), create(objectSlug, recordId, data), delete(noteId)
@@ -35,8 +35,14 @@ All resources follow the pattern: `client.{resource}.{method}()`.
 - `client.webhooks` — list, get, create, update, delete
 - `client.workspaceMembers` — list, get
 - `client.selectOptions` — list(objectSlug, attributeSlug), create(objectSlug, attributeSlug, data), update(objectSlug, attributeSlug, optionId, data), listStatuses(objectSlug, attributeSlug), createStatus(objectSlug, attributeSlug, data), updateStatus(objectSlug, attributeSlug, statusId, data)
-- `client.views` — list(target, targetIdOrSlug, params?) — list saved views on an object or list; use view_id as filter_view_id in queries
+- `client.views` — list(target, targetIdOrSlug, params?), listAll(target, targetIdOrSlug, params?) — list saved views on an object or list; use view_id as filter_view_id in queries
 - `client.comments` — create(data), get(commentId), delete(commentId), getThread(threadId), listThreads(recordId)
+- `client.files` (beta) — list(params?), listAll(params?), get(fileId), upload({file, object, record_id, filename?}), createFolder({object, record_id, name}), createConnected(params), download(fileId) → {url} (signed URL from 302), delete(fileId)
+- `client.meetings` (beta) — list(params?), listAll(params?), get(meetingId), create(data) (alpha, find-or-create by external_ref)
+- `client.callRecordings` (beta) — list(meetingId, params?), listAll(meetingId), get(meetingId, callRecordingId), create(meetingId, {data: {video_url}}) (alpha, 1 req/s), delete(meetingId, callRecordingId) (alpha)
+- `client.transcripts` (beta) — get(meetingId, callRecordingId, {cursor?}), segments(meetingId, callRecordingId) — async-iterate transcript segments
+- `client.sql` (beta, Enterprise) — query(sql) → {data: {rows}} — read-only SELECT over objects.<slug>/lists.<slug>
+- `client.self` — get() — current token and workspace info
 
 ## Key Patterns
 
@@ -83,6 +89,15 @@ const { data: deals } = await client.records.query('deals', {
   sorts: [{ attribute: 'created_at', direction: 'desc' }],
   limit: 50,
 });
+```
+
+`filter` and `filter_view_id` are mutually exclusive — the SDK throws a `TypeError` if both are provided.
+
+### Auto-pagination
+`queryAll`/`listAll` (offset-based) and `listAll`/`segments` on cursor-based resources (views, files, meetings, call recordings, transcripts) return `AsyncIterable`s:
+```typescript
+for await (const record of client.records.queryAll('people')) { /* ... */ }
+const all = await collectAll(client.files.listAll({ object: 'deals' }));
 ```
 
 ### Low-level HTTP

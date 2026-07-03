@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import { AttioClient } from '../../src/index.js';
+import { AttioClient, collectAll } from '../../src/index.js';
 import { server, mockObjectView, mockListView } from '../handlers.js';
 
 const BASE = 'https://api.attio.com/v2';
@@ -51,5 +51,49 @@ describe('ViewsResource', () => {
     expect(searchParams.get('show_archived')).toBe('true');
     expect(searchParams.get('limit')).toBe('10');
     expect(searchParams.get('cursor')).toBe('abc123');
+  });
+});
+
+describe('ViewsResource — listAll()', () => {
+  it('iterates through multiple cursor pages', async () => {
+    const view = (title: string) => ({ ...mockObjectView, title });
+
+    let callCount = 0;
+    server.use(
+      http.get(`${BASE}/objects/:objectId/views`, ({ request }) => {
+        callCount++;
+        const cursor = new URL(request.url).searchParams.get('cursor');
+        if (cursor === null) {
+          return HttpResponse.json({
+            data: [view('View 1'), view('View 2')],
+            pagination: { next_cursor: 'cur_2' },
+          });
+        }
+        return HttpResponse.json({ data: [view('View 3')], pagination: { next_cursor: null } });
+      }),
+    );
+
+    const views = await collectAll(client.views.listAll('objects', 'people'));
+
+    expect(views).toHaveLength(3);
+    expect(views[2].title).toBe('View 3');
+    expect(callCount).toBe(2);
+  });
+
+  it('passes show_archived and pageSize through to list()', async () => {
+    let searchParams = new URLSearchParams();
+    server.use(
+      http.get(`${BASE}/lists/:listId/views`, ({ request }) => {
+        searchParams = new URL(request.url).searchParams;
+        return HttpResponse.json({ data: [mockListView], pagination: { next_cursor: null } });
+      }),
+    );
+
+    await collectAll(
+      client.views.listAll('lists', 'pipeline', { show_archived: true }, { pageSize: 50 }),
+    );
+
+    expect(searchParams.get('show_archived')).toBe('true');
+    expect(searchParams.get('limit')).toBe('50');
   });
 });

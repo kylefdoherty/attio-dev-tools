@@ -60,6 +60,27 @@ describe('EntriesResource', () => {
     expect(body).toEqual({});
   });
 
+  it('query() rejects filter combined with filter_view_id', async () => {
+    await expect(
+      client.entries.query('pipeline', {
+        filter: { stage: { $eq: 'active' } },
+        filter_view_id: 'view_01abc',
+      }),
+    ).rejects.toThrow(TypeError);
+  });
+
+  it('query() accepts filter_view_id on its own', async () => {
+    let body: unknown;
+    server.use(
+      http.post(`${BASE}/lists/:listId/entries/query`, async ({ request }) => {
+        body = await request.json();
+        return HttpResponse.json({ data: [mockEntry] });
+      }),
+    );
+    await client.entries.query('pipeline', { filter_view_id: 'view_01abc' });
+    expect(body).toEqual({ filter_view_id: 'view_01abc' });
+  });
+
   it('get() → GET /lists/:slug/entries/:id', async () => {
     let url = '';
     server.use(

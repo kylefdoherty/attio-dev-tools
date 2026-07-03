@@ -158,7 +158,12 @@ export interface ActorReference {
 }
 
 export interface RecordQueryParams {
+  /** Attribute filter. Mutually exclusive with `filter_view_id`. */
   filter?: Record<string, unknown>;
+  /**
+   * Reuse the filter of a saved view (see `client.views.list()`).
+   * Mutually exclusive with `filter` — the view's sorts and columns are ignored.
+   */
   filter_view_id?: string;
   sorts?: Array<{ attribute: string; direction: 'asc' | 'desc' }>;
   limit?: number;
@@ -254,7 +259,12 @@ export interface AttioEntry {
 }
 
 export interface EntryQueryParams {
+  /** Attribute filter. Mutually exclusive with `filter_view_id`. */
   filter?: Record<string, unknown>;
+  /**
+   * Reuse the filter of a saved view (see `client.views.list()`).
+   * Mutually exclusive with `filter` — the view's sorts and columns are ignored.
+   */
   filter_view_id?: string;
   sorts?: Array<{ attribute: string; direction: 'asc' | 'desc' }>;
   limit?: number;
@@ -490,18 +500,40 @@ export interface AttioThread {
 // Files
 // ---------------------------------------------------------------------------
 
+export type FileStorageProvider =
+  | 'attio'
+  | 'dropbox'
+  | 'box'
+  | 'google-drive'
+  | 'microsoft-onedrive';
+
+export type FileEntryType = 'file' | 'folder' | 'connected-file' | 'connected-folder';
+
+/**
+ * A file entry attached to a record. (beta)
+ *
+ * Depending on `file_type`, some fields are only present on certain variants:
+ * native files carry `content_type`/`content_size`, connected entries carry
+ * `external_provider_file_id`/`microsoft_drive_id`.
+ */
 export interface AttioFile {
-  id: { file_id: string };
-  name: string;
-  type: 'file' | 'folder';
-  mime_type: string | null;
-  size: number | null;
-  parent_record: {
-    object: string;
-    record_id: string;
-  };
-  parent_folder_id: string | null;
-  storage_provider: string | null;
+  id: { workspace_id: string; file_id: string };
+  object_id: string;
+  object_slug: string;
+  record_id: string;
+  storage_provider: FileStorageProvider;
+  file_type: FileEntryType;
+  /** File or folder name. Present on native `file`/`folder` entries. */
+  name?: string;
+  /** MIME type. Present on native `file` entries. */
+  content_type?: string | null;
+  /** Size in bytes. Present on native `file` entries. */
+  content_size?: number | null;
+  parent_folder_id?: string | null;
+  /** The file/folder ID in the external provider. Present on connected entries. */
+  external_provider_file_id?: string;
+  /** Microsoft drive ID. Only populated for `microsoft-onedrive` entries. */
+  microsoft_drive_id?: string | null;
   created_by_actor: ActorReference;
   created_at: string;
 }
@@ -510,82 +542,172 @@ export interface ListFilesParams {
   object?: string;
   record_id?: string;
   parent_folder_id?: string;
-  storage_provider?: string;
+  storage_provider?: FileStorageProvider;
   limit?: number;
   cursor?: string;
 }
 
+/** Parameters for creating a native Attio folder. (beta) */
 export interface CreateFolderParams {
-  data: {
-    name: string;
-    parent_record: {
-      object: string;
-      record_id: string;
-    };
-    parent_folder_id?: string;
-    storage_provider?: string;
-  };
+  /** The object slug or ID. */
+  object: string;
+  /** The ID of the record to create the folder on. */
+  record_id: string;
+  /** The folder name. */
+  name: string;
+  /** Optional parent folder ID. Omit to create a top-level folder. */
+  parent_folder_id?: string;
 }
 
+/** Parameters for linking a file or folder from an external storage provider. (beta) */
+export interface CreateConnectedFileParams {
+  /** The object slug or ID. */
+  object: string;
+  /** The ID of the record to create the file entry on. */
+  record_id: string;
+  file_type: 'connected-file' | 'connected-folder';
+  storage_provider: Exclude<FileStorageProvider, 'attio'>;
+  /** The ID of the file or folder in the external storage provider. */
+  external_provider_file_id: string;
+  /** Microsoft drive ID. Only used when `storage_provider` is `microsoft-onedrive`. */
+  microsoft_drive_id?: string | null;
+}
+
+/** Parameters for uploading a file to native Attio storage. (beta) Max file size is 50 MB. */
 export interface UploadFileParams {
+  /** The file contents. Buffers are wrapped in a Blob automatically (Node 18+). */
   file: Blob | Buffer;
-  parent_record_object: string;
-  parent_record_record_id: string;
+  /** The object slug or ID. */
+  object: string;
+  /** The ID of the record to upload the file to. */
+  record_id: string;
+  /** Filename sent in the multipart form data (e.g. `report.pdf`). */
+  filename?: string;
+  /** Optional parent folder ID. Omit to upload to the root folder. */
   parent_folder_id?: string;
-  storage_provider?: string;
 }
 
 // ---------------------------------------------------------------------------
 // Meetings
 // ---------------------------------------------------------------------------
 
-export interface AttioMeeting {
-  id: { meeting_id: string };
-  title: string;
-  description: string | null;
-  is_all_day: boolean;
-  start: {
-    date: string;
-    time: string | null;
-    timezone: string | null;
-  };
-  end: {
-    date: string;
-    time: string | null;
-    timezone: string | null;
-  };
-  participants: Array<{
-    email_address: string;
-    is_organizer: boolean;
-    response_status: string | null;
-  }>;
-  linked_records: Array<{
-    target_object: string;
-    target_record_id: string;
-  }>;
-  created_at: string;
+/** A point in time for a non-all-day meeting. */
+export interface MeetingDateTime {
+  datetime: string;
+  timezone: string | null;
 }
 
+/** A calendar date for an all-day meeting. */
+export interface MeetingDate {
+  date: string;
+}
+
+export type MeetingParticipantStatus = 'accepted' | 'tentative' | 'declined' | 'pending';
+
+export interface MeetingParticipant {
+  /** The normalized email address of the participant, if available. */
+  email_address: string | null;
+  is_organizer: boolean;
+  status: MeetingParticipantStatus;
+}
+
+/** A meeting synced or created in Attio. (beta) */
+export interface AttioMeeting {
+  id: { workspace_id: string; meeting_id: string };
+  title: string;
+  description: string;
+  is_all_day: boolean;
+  /** Non-all-day meetings return `{ datetime, timezone }`; all-day meetings return `{ date }`. */
+  start: MeetingDateTime | MeetingDate;
+  /** Exclusive end (RFC 5545): the meeting ends before this time, not at it. */
+  end: MeetingDateTime | MeetingDate;
+  participants: MeetingParticipant[];
+  linked_records: Array<{
+    object_slug: string;
+    object_id: string;
+    record_id: string;
+  }>;
+  created_at: string;
+  created_by_actor: ActorReference;
+}
+
+/** Query parameters for `client.meetings.list()`. (beta) */
 export interface ListMeetingsParams {
-  linked_record_id?: string;
+  /** Object slug or ID to filter by. Must be provided together with `linked_record_id`. */
   linked_object?: string;
-  participant_email?: string;
-  start_date?: string;
-  end_date?: string;
+  /** Record ID to filter by. Must be provided together with `linked_object`. */
+  linked_record_id?: string;
+  /**
+   * One or more participant emails. Meetings that include at least one of the
+   * provided emails as a participant are returned. Arrays are joined with commas.
+   */
+  participants?: string | string[];
+  /** Sort order. Defaults to `start_asc`. */
+  sort?: 'start_asc' | 'start_desc';
+  /** Only meetings ending at or after this timestamp (inclusive). */
+  ends_from?: string;
+  /** Only meetings starting before this timestamp (exclusive). */
+  starts_before?: string;
+  /** IANA timezone for `ends_from`/`starts_before` when filtering all-day meetings. Defaults to UTC. */
   timezone?: string;
+  /** Max meetings per page (1-200, default 50). */
   limit?: number;
   cursor?: string;
+}
+
+/** External reference used to consistently identify and de-duplicate meetings. */
+export type MeetingExternalRef =
+  | string
+  | {
+      ical_uid: string;
+      provider: 'google' | 'microsoft';
+      /** Required for recurring event exceptions, optional otherwise. */
+      original_start_time?: string;
+      is_recurring: boolean;
+    };
+
+/**
+ * Parameters for `client.meetings.create()` (find-or-create). (alpha)
+ *
+ * When `is_all_day` is true, `start`/`end` must use `{ date }`; otherwise
+ * `{ datetime, timezone? }`. `end` is exclusive (RFC 5545).
+ */
+export interface CreateMeetingParams {
+  data: {
+    title: string;
+    description: string;
+    start: { datetime: string; timezone?: string | null } | { date: string };
+    end: { datetime: string; timezone?: string | null } | { date: string };
+    is_all_day: boolean;
+    /** Person and company records are auto-created/linked from participant emails. */
+    participants: Array<{
+      email_address: string;
+      is_organizer: boolean;
+      status: MeetingParticipantStatus;
+    }>;
+    /** Records to link. Participants' companies are also linked asynchronously. */
+    linked_records?: Array<{
+      object: string;
+      record_id: string;
+    }>;
+    external_ref: MeetingExternalRef;
+  };
 }
 
 // ---------------------------------------------------------------------------
 // Call Recordings
 // ---------------------------------------------------------------------------
 
+export type CallRecordingStatus = 'processing' | 'completed' | 'failed';
+
+/** A call recording attached to a meeting. (beta) */
 export interface AttioCallRecording {
-  id: { call_recording_id: string };
-  status: string;
-  web_url: string | null;
-  actor: ActorReference | null;
+  id: { workspace_id: string; meeting_id: string; call_recording_id: string };
+  /** `processing` on creation, transitions to `completed` or `failed`. */
+  status: CallRecordingStatus;
+  /** Link to the call recording in the Attio web application. */
+  web_url: string;
+  created_by_actor: ActorReference;
   created_at: string;
 }
 
@@ -594,29 +716,45 @@ export interface ListCallRecordingsParams {
   cursor?: string;
 }
 
+/** Parameters for `client.callRecordings.create()`. (alpha) */
+export interface CreateCallRecordingParams {
+  data: {
+    /**
+     * Publicly accessible HTTPS URL to a `.mp4` video (max 500MB). Attio
+     * downloads the video asynchronously and verifies the URL with a HEAD
+     * request that must return a `Content-Length` header.
+     */
+    video_url: string;
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Transcripts
 // ---------------------------------------------------------------------------
 
 export interface TranscriptSegment {
   speech: string;
+  /** Start of this segment in seconds, measured from the start of the recording. */
   start_time: number;
+  /** End of this segment in seconds, measured from the start of the recording. */
   end_time: number;
-  speaker: {
-    name: string | null;
-    email_address: string | null;
-  } | null;
+  speaker: { name: string };
 }
 
+/** A page of transcript for a call recording. (beta) */
 export interface AttioTranscript {
-  data: TranscriptSegment[];
+  id: { workspace_id: string; meeting_id: string; call_recording_id: string };
+  transcript: TranscriptSegment[];
+}
+
+export interface TranscriptResponse {
+  data: AttioTranscript;
   pagination: {
     next_cursor: string | null;
   };
 }
 
-export interface ListTranscriptParams {
-  limit?: number;
+export interface GetTranscriptParams {
   cursor?: string;
 }
 
@@ -637,19 +775,46 @@ export interface AttioSelfInfo {
 // Global Record Search
 // ---------------------------------------------------------------------------
 
+/**
+ * The context in which to perform a search. Use `{ type: 'workspace' }` for
+ * all results, or a workspace member to limit results to what that person can see.
+ */
+export type SearchRequestAs =
+  | { type: 'workspace' }
+  | { type: 'workspace-member'; workspace_member_id: string }
+  | { type: 'workspace-member'; email_address: string };
+
+/** Parameters for `client.records.globalSearch()`. (beta) */
 export interface GlobalSearchParams {
+  /** Query string (max 256 chars). An empty string returns a default set of results. */
   query: string;
-  objects?: string[];
+  /** Object slugs or IDs to search. At least one object must be specified. */
+  objects: string[];
+  /** The context in which to perform the search. */
+  request_as: SearchRequestAs;
+  /** Max results to return (1-25, default 25). */
   limit?: number;
 }
 
 export interface GlobalSearchResult {
-  record_id: string;
-  object_id: string;
-  object_slug: string;
+  id: { workspace_id: string; object_id: string; record_id: string };
+  /** Human-readable label for the record. */
   record_text: string;
   record_image: string | null;
+  object_slug: string;
   [key: string]: unknown;
+}
+
+// ---------------------------------------------------------------------------
+// SQL
+// ---------------------------------------------------------------------------
+
+/** Response from `client.sql.query()`. (beta) */
+export interface SqlQueryResponse {
+  data: {
+    /** One object per result row, keyed by the columns selected in the query. */
+    rows: Array<Record<string, unknown>>;
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -668,4 +833,10 @@ export interface RequestOptions {
   body?: unknown;
   params?: Record<string, string>;
   allowNotFound?: boolean;
+  /**
+   * Set to 'manual' for endpoints that respond with a redirect (e.g. file
+   * downloads). Instead of following the redirect, the request resolves with
+   * `{ url }` containing the Location header.
+   */
+  redirect?: 'manual';
 }

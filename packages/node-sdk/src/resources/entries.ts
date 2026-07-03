@@ -24,8 +24,17 @@ export class EntriesResource {
     return this.client.request('GET', `/lists/${listIdOrSlug}/entries`, { params: queryParams });
   }
 
-  /** Query entries with filters. */
+  /**
+   * Query entries with filters.
+   *
+   * `filter` and `filter_view_id` are mutually exclusive — provide at most one.
+   */
   async query(listIdOrSlug: string, params?: EntryQueryParams): Promise<ListResponse<AttioEntry>> {
+    if (params?.filter !== undefined && params?.filter_view_id !== undefined) {
+      throw new TypeError(
+        '`filter` and `filter_view_id` are mutually exclusive — provide at most one.',
+      );
+    }
     return this.client.request('POST', `/lists/${listIdOrSlug}/entries/query`, {
       body: params ?? {},
     });

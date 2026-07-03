@@ -11,6 +11,7 @@ import { ObjectsResource } from './resources/objects.js';
 import { RecordsResource } from './resources/records.js';
 import { SelectOptionsResource } from './resources/select-options.js';
 import { SelfResource } from './resources/self.js';
+import { SqlResource } from './resources/sql.js';
 import { TasksResource } from './resources/tasks.js';
 import { TranscriptsResource } from './resources/transcripts.js';
 import { ViewsResource } from './resources/views.js';
@@ -67,6 +68,9 @@ export class AttioClient {
   /** Get transcripts for call recordings. */
   readonly transcripts: TranscriptsResource;
 
+  /** Query records and lists with read-only SQL (beta, Enterprise plan only). */
+  readonly sql: SqlResource;
+
   /** Get information about the current API token and workspace. */
   readonly self: SelfResource;
 
@@ -91,6 +95,7 @@ export class AttioClient {
     this.meetings = new MeetingsResource(this.http);
     this.callRecordings = new CallRecordingsResource(this.http);
     this.transcripts = new TranscriptsResource(this.http);
+    this.sql = new SqlResource(this.http);
     this.self = new SelfResource(this.http);
   }
 }

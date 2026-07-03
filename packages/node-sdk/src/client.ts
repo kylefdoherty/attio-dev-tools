@@ -52,14 +52,17 @@ export class HttpClient {
           fetchOptions.body = JSON.stringify(options.body);
         }
 
+        if (options?.redirect) {
+          fetchOptions.redirect = options.redirect;
+        }
+
         const res = await fetch(url.toString(), fetchOptions);
 
         // Handle rate limiting (429) — retry with Retry-After
         if (res.status === 429) {
           const retryAfterHeader = res.headers.get('retry-after');
-          const retryAfterSec = retryAfterHeader != null
-            ? parseFloat(retryAfterHeader)
-            : this.retryDelay / 1000;
+          const retryAfterSec =
+            retryAfterHeader != null ? parseFloat(retryAfterHeader) : this.retryDelay / 1000;
           if (attempt < this.maxRetries) {
             await this.sleep(retryAfterSec * 1000);
             continue;
@@ -80,6 +83,19 @@ export class HttpClient {
             res.status,
             body,
           );
+        }
+
+        // Handle manual redirects (e.g. signed file download URLs) — resolve
+        // with the Location header instead of following the redirect
+        if (options?.redirect === 'manual' && res.status >= 300 && res.status < 400) {
+          const location = res.headers.get('location');
+          if (!location) {
+            throw new AttioError(
+              `Attio API ${method} ${path} ${res.status}: redirect response missing Location header`,
+              res.status,
+            );
+          }
+          return { url: location } as T;
         }
 
         // Handle scope errors
@@ -157,9 +173,8 @@ export class HttpClient {
         // Handle rate limiting (429) — retry with Retry-After
         if (res.status === 429) {
           const retryAfterHeader = res.headers.get('retry-after');
-          const retryAfterSec = retryAfterHeader != null
-            ? parseFloat(retryAfterHeader)
-            : this.retryDelay / 1000;
+          const retryAfterSec =
+            retryAfterHeader != null ? parseFloat(retryAfterHeader) : this.retryDelay / 1000;
           if (attempt < this.maxRetries) {
             await this.sleep(retryAfterSec * 1000);
             continue;

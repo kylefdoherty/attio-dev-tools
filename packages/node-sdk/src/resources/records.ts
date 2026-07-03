@@ -29,17 +29,31 @@ export class RecordsResource {
     });
   }
 
-  /** Query records with filters and sorting. */
+  /**
+   * Query records with filters and sorting.
+   *
+   * `filter` and `filter_view_id` are mutually exclusive — provide at most one.
+   */
   async query(
     objectIdOrSlug: string,
     params?: RecordQueryParams,
   ): Promise<ListResponse<AttioRecord>> {
+    if (params?.filter !== undefined && params?.filter_view_id !== undefined) {
+      throw new TypeError(
+        '`filter` and `filter_view_id` are mutually exclusive — provide at most one.',
+      );
+    }
     return this.client.request('POST', `/objects/${objectIdOrSlug}/records/query`, {
       body: params ?? {},
     });
   }
 
-  /** Search records by text. */
+  /**
+   * Search records by text on a single object.
+   *
+   * @deprecated This per-object endpoint is not part of the documented Attio
+   * API. Use {@link globalSearch} (POST /objects/records/search) instead.
+   */
   async search(
     objectIdOrSlug: string,
     params: { query: string; limit?: number },
@@ -112,7 +126,14 @@ export class RecordsResource {
     return this.client.request('GET', `/objects/${objectIdOrSlug}/records/${recordId}/entries`);
   }
 
-  /** Search across all object records globally. */
+  /**
+   * Fuzzy search for records across one or more objects. (beta)
+   *
+   * Matches names, domains, emails, phone numbers, and social handles on
+   * people and companies, and labels on other records. Results are
+   * eventually consistent (use query() when strong consistency matters).
+   * `objects` and `request_as` are required by the API.
+   */
   async globalSearch(params: GlobalSearchParams): Promise<ListResponse<GlobalSearchResult>> {
     return this.client.request('POST', '/objects/records/search', {
       body: params,

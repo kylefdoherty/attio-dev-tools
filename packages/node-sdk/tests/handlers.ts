@@ -159,50 +159,66 @@ export const mockThread = {
 };
 
 export const mockFile = {
-  id: { file_id: 'file_01abc' },
+  id: { workspace_id: 'ws_01abc', file_id: 'file_01abc' },
+  object_id: 'obj_01abc',
+  object_slug: 'deals',
+  record_id: 'rec_01abc',
+  storage_provider: 'attio' as const,
+  file_type: 'file' as const,
   name: 'report.pdf',
-  type: 'file' as const,
-  mime_type: 'application/pdf',
-  size: 102400,
-  parent_record: { object: 'deals', record_id: 'rec_01abc' },
+  content_type: 'application/pdf',
+  content_size: 102400,
   parent_folder_id: null,
-  storage_provider: null,
   created_by_actor: { type: 'workspace-member', id: 'wm_01abc' },
   created_at: '2024-01-01T00:00:00.000Z',
 };
 
 export const mockFolder = {
-  id: { file_id: 'file_02abc' },
+  id: { workspace_id: 'ws_01abc', file_id: 'file_02abc' },
+  object_id: 'obj_01abc',
+  object_slug: 'deals',
+  record_id: 'rec_01abc',
+  storage_provider: 'attio' as const,
+  file_type: 'folder' as const,
   name: 'Documents',
-  type: 'folder' as const,
-  mime_type: null,
-  size: null,
-  parent_record: { object: 'deals', record_id: 'rec_01abc' },
   parent_folder_id: null,
-  storage_provider: null,
+  created_by_actor: { type: 'workspace-member', id: 'wm_01abc' },
+  created_at: '2024-01-01T00:00:00.000Z',
+};
+
+export const mockConnectedFile = {
+  id: { workspace_id: 'ws_01abc', file_id: 'file_03abc' },
+  object_id: 'obj_01abc',
+  object_slug: 'deals',
+  record_id: 'rec_01abc',
+  storage_provider: 'google-drive' as const,
+  file_type: 'connected-file' as const,
+  external_provider_file_id: 'gdrive_file_123',
+  microsoft_drive_id: null,
   created_by_actor: { type: 'workspace-member', id: 'wm_01abc' },
   created_at: '2024-01-01T00:00:00.000Z',
 };
 
 export const mockMeeting = {
-  id: { meeting_id: 'meeting_01abc' },
+  id: { workspace_id: 'ws_01abc', meeting_id: 'meeting_01abc' },
   title: 'Quarterly Review',
   description: 'Q1 business review',
   is_all_day: false,
-  start: { date: '2024-03-15', time: '10:00:00', timezone: 'America/New_York' },
-  end: { date: '2024-03-15', time: '11:00:00', timezone: 'America/New_York' },
+  start: { datetime: '2024-03-15T10:00:00.000-04:00', timezone: 'America/New_York' },
+  end: { datetime: '2024-03-15T11:00:00.000-04:00', timezone: 'America/New_York' },
   participants: [
-    { email_address: 'jane@example.com', is_organizer: true, response_status: 'accepted' },
+    { email_address: 'jane@example.com', is_organizer: true, status: 'accepted' as const },
   ],
-  linked_records: [{ target_object: 'deals', target_record_id: 'rec_01abc' }],
+  linked_records: [{ object_slug: 'deals', object_id: 'obj_01abc', record_id: 'rec_01abc' }],
   created_at: '2024-01-01T00:00:00.000Z',
+  created_by_actor: { type: 'workspace-member', id: 'wm_01abc' },
 };
 
 export const mockCallRecording = {
-  id: { call_recording_id: 'cr_01abc' },
-  status: 'completed',
-  web_url: 'https://app.attio.com/recordings/cr_01abc',
-  actor: { type: 'workspace-member', id: 'wm_01abc' },
+  id: { workspace_id: 'ws_01abc', meeting_id: 'meeting_01abc', call_recording_id: 'cr_01abc' },
+  status: 'completed' as const,
+  web_url: 'https://app.attio.com/acme/calls/meeting_01abc/cr_01abc',
+  created_by_actor: { type: 'workspace-member', id: 'wm_01abc' },
   created_at: '2024-01-01T00:00:00.000Z',
 };
 
@@ -210,7 +226,12 @@ export const mockTranscriptSegment = {
   speech: 'Hello, welcome to the meeting.',
   start_time: 0,
   end_time: 3.5,
-  speaker: { name: 'Jane Doe', email_address: 'jane@example.com' },
+  speaker: { name: 'Jane Doe' },
+};
+
+export const mockTranscript = {
+  id: { workspace_id: 'ws_01abc', meeting_id: 'meeting_01abc', call_recording_id: 'cr_01abc' },
+  transcript: [mockTranscriptSegment],
 };
 
 export const mockSelfInfo = {
@@ -223,11 +244,17 @@ export const mockSelfInfo = {
 };
 
 export const mockGlobalSearchResult = {
-  record_id: 'rec_01abc',
-  object_id: 'obj_01abc',
-  object_slug: 'people',
+  id: { workspace_id: 'ws_01abc', object_id: 'obj_01abc', record_id: 'rec_01abc' },
   record_text: 'Jane Doe',
   record_image: null,
+  object_slug: 'people',
+};
+
+export const mockSqlRow = {
+  record_id: 'rec_01abc',
+  created_at: '2024-01-01T00:00:00.000Z',
+  name: 'Acme Corp',
+  domains: ['acme.com'],
 };
 
 // ---------------------------------------------------------------------------
@@ -380,8 +407,13 @@ export const handlers = [
   http.get(`${BASE}/files`, () =>
     HttpResponse.json({ data: [mockFile], pagination: { next_cursor: null } }),
   ),
-  http.get(`${BASE}/files/:fileId/download`, () =>
-    HttpResponse.json({ data: { url: 'https://storage.example.com/file.pdf' } }),
+  http.get(
+    `${BASE}/files/:fileId/download`,
+    () =>
+      new HttpResponse(null, {
+        status: 302,
+        headers: { Location: 'https://storage.example.com/file.pdf?signature=abc' },
+      }),
   ),
   http.get(`${BASE}/files/:fileId`, () => HttpResponse.json({ data: mockFile })),
   http.post(`${BASE}/files/upload`, () => HttpResponse.json({ data: mockFile })),
@@ -392,14 +424,21 @@ export const handlers = [
   http.get(`${BASE}/meetings`, () =>
     HttpResponse.json({ data: [mockMeeting], pagination: { next_cursor: null } }),
   ),
+  http.post(`${BASE}/meetings`, () => HttpResponse.json({ data: mockMeeting })),
   http.get(`${BASE}/meetings/:meetingId/call_recordings/:crId/transcript`, () =>
-    HttpResponse.json({ data: [mockTranscriptSegment], pagination: { next_cursor: null } }),
+    HttpResponse.json({ data: mockTranscript, pagination: { next_cursor: null } }),
   ),
   http.get(`${BASE}/meetings/:meetingId/call_recordings/:crId`, () =>
     HttpResponse.json({ data: mockCallRecording }),
   ),
+  http.delete(`${BASE}/meetings/:meetingId/call_recordings/:crId`, () =>
+    new HttpResponse(null, { status: 204 }),
+  ),
   http.get(`${BASE}/meetings/:meetingId/call_recordings`, () =>
     HttpResponse.json({ data: [mockCallRecording], pagination: { next_cursor: null } }),
+  ),
+  http.post(`${BASE}/meetings/:meetingId/call_recordings`, () =>
+    HttpResponse.json({ data: mockCallRecording }),
   ),
   http.get(`${BASE}/meetings/:meetingId`, () =>
     HttpResponse.json({ data: mockMeeting }),
@@ -412,6 +451,9 @@ export const handlers = [
   http.post(`${BASE}/objects/records/search`, () =>
     HttpResponse.json({ data: [mockGlobalSearchResult] }),
   ),
+
+  // SQL
+  http.post(`${BASE}/sql`, () => HttpResponse.json({ data: { rows: [mockSqlRow] } })),
 ];
 
 export const server = setupServer(...handlers);
