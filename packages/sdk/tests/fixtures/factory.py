@@ -1259,13 +1259,47 @@ MOCK_FILE_UPLOADED: dict[str, Any] = {
     },
 }
 
+MOCK_FILE_CONNECTED: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc123def456",
+            "file_id": "file_05conn123xyz",
+        },
+        "object_id": "obj_01abc123def456",
+        "object_slug": "people",
+        "record_id": "rec_01abc123def456",
+        "storage_provider": "google-drive",
+        "created_by_actor": {"id": "actor_01abc", "type": "api-token"},
+        "created_at": "2024-06-01T12:00:00.000Z",
+        "file_type": "connected-file",
+        "name": "Shared Deck",
+        "parent_folder_id": None,
+        "content_type": None,
+        "content_size": None,
+    },
+}
+
+MOCK_FILE_DOWNLOAD_URL: str = (
+    "https://storage.attio.com/files/file_01abc123def456/download?token=abc123"
+)
+
 MOCK_FILE_DOWNLOAD: dict[str, Any] = {
     "data": {
-        "url": "https://storage.attio.com/files/file_01abc123def456/download?token=abc123",
+        "url": MOCK_FILE_DOWNLOAD_URL,
     },
 }
 
 MOCK_FILE_DELETE: dict[str, Any] = {}
+
+MOCK_FILES_LIST_PAGE_1: dict[str, Any] = {
+    "data": [MOCK_FILE],
+    "pagination": {"next_cursor": "files_cursor_page_2"},
+}
+
+MOCK_FILES_LIST_PAGE_2: dict[str, Any] = {
+    "data": [MOCK_FILE_2],
+    "pagination": {"next_cursor": None},
+}
 
 # ---------------------------------------------------------------------------
 # Meetings
@@ -1327,6 +1361,20 @@ MOCK_MEETING_SINGLE: dict[str, Any] = {
     "data": MOCK_MEETING,
 }
 
+MOCK_MEETING_CREATED: dict[str, Any] = {
+    "data": MOCK_MEETING,
+}
+
+MOCK_MEETINGS_LIST_PAGE_1: dict[str, Any] = {
+    "data": [MOCK_MEETING],
+    "pagination": {"next_cursor": "meetings_cursor_page_2"},
+}
+
+MOCK_MEETINGS_LIST_PAGE_2: dict[str, Any] = {
+    "data": [MOCK_MEETING_2],
+    "pagination": {"next_cursor": None},
+}
+
 # ---------------------------------------------------------------------------
 # Call Recordings
 # ---------------------------------------------------------------------------
@@ -1364,6 +1412,30 @@ MOCK_CALL_RECORDING_SINGLE: dict[str, Any] = {
     "data": MOCK_CALL_RECORDING,
 }
 
+MOCK_CALL_RECORDING_CREATED: dict[str, Any] = {
+    "data": {
+        "id": {
+            "workspace_id": "ws_01abc123def456",
+            "call_recording_id": "cr_03new456abc789",
+        },
+        "meeting_id": "mtg_01abc123def456",
+        "status": "processing",
+        "web_url": "https://app.attio.com/recordings/cr_03new456abc789",
+        "actor": {"id": "actor_01abc", "type": "api-token"},
+        "created_at": "2024-04-01T16:00:00.000Z",
+    },
+}
+
+MOCK_CALL_RECORDINGS_LIST_PAGE_1: dict[str, Any] = {
+    "data": [MOCK_CALL_RECORDING],
+    "pagination": {"next_cursor": "recordings_cursor_page_2"},
+}
+
+MOCK_CALL_RECORDINGS_LIST_PAGE_2: dict[str, Any] = {
+    "data": [MOCK_CALL_RECORDING_2],
+    "pagination": {"next_cursor": None},
+}
+
 # ---------------------------------------------------------------------------
 # Transcripts
 # ---------------------------------------------------------------------------
@@ -1396,4 +1468,44 @@ MOCK_TRANSCRIPT_LIST: dict[str, Any] = {
         MOCK_TRANSCRIPT_SEGMENT_3,
     ],
     "pagination": {"next_cursor": None},
+}
+
+MOCK_TRANSCRIPT_LIST_PAGE_1: dict[str, Any] = {
+    "data": [MOCK_TRANSCRIPT_SEGMENT, MOCK_TRANSCRIPT_SEGMENT_2],
+    "pagination": {"next_cursor": "transcript_cursor_page_2"},
+}
+
+MOCK_TRANSCRIPT_LIST_PAGE_2: dict[str, Any] = {
+    "data": [MOCK_TRANSCRIPT_SEGMENT_3],
+    "pagination": {"next_cursor": None},
+}
+
+# ---------------------------------------------------------------------------
+# SQL
+# ---------------------------------------------------------------------------
+
+MOCK_SQL_RESULT: dict[str, Any] = {
+    "data": {
+        "rows": [
+            {
+                "record_id": "rec_01abc123def456",
+                "created_at": "2024-01-01T15:00:00.000000000Z",
+                "name": "Acme Corp",
+                "domains": ["acme.com"],
+            },
+            {
+                "record_id": "rec_02xyz789ghi012",
+                "created_at": "2024-02-01T09:00:00.000000000Z",
+                "name": "Globex",
+                "domains": ["globex.com"],
+            },
+        ],
+    },
+}
+
+MOCK_SQL_SYNTAX_ERROR: dict[str, Any] = {
+    "status_code": 400,
+    "type": "invalid_request_error",
+    "code": "filter_error",
+    "message": "SQL syntax error.",
 }

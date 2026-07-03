@@ -153,7 +153,11 @@ def _method_has_awaitable_calls(method: ast.FunctionDef, is_standard_object: boo
             # self._http.request / request_multipart
             if isinstance(node.func.value, ast.Attribute) and isinstance(node.func.value.value, ast.Name):
                 if node.func.value.value.id == "self":
-                    if node.func.value.attr == "_http" and node.func.attr in ("request", "request_multipart"):
+                    if node.func.value.attr == "_http" and node.func.attr in (
+                        "request",
+                        "request_multipart",
+                        "request_redirect_url",
+                    ):
                         return True
                     if is_standard_object and node.func.value.attr == "_records":
                         return True
@@ -170,7 +174,7 @@ def _is_paginator_method(method: ast.FunctionDef) -> bool:
 
     These methods should NOT be made async; they only need iterator type renames.
     """
-    if method.name == "query_all" or method.name.startswith("list_all_"):
+    if method.name in ("query_all", "list_all", "get_all") or method.name.startswith("list_all_"):
         return True
     if method.name.startswith("_query_all") or method.name.startswith("_list_all_"):
         return True
@@ -257,7 +261,11 @@ def _transform_async_method_lines(
         # self._http.request(...) / self._http.request_multipart(...)
         if isinstance(node.func.value, ast.Attribute) and isinstance(node.func.value.value, ast.Name):
             if node.func.value.value.id == "self":
-                if node.func.value.attr == "_http" and node.func.attr in ("request", "request_multipart"):
+                if node.func.value.attr == "_http" and node.func.attr in (
+                    "request",
+                    "request_multipart",
+                    "request_redirect_url",
+                ):
                     should_await = True
                     call_text = f"self._http.{node.func.attr}("
                 elif is_standard_object and node.func.value.attr == "_records":

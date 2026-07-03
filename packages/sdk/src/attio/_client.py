@@ -34,6 +34,7 @@ from attio.resources.select_options import (
     SelectOptionsResource,
 )
 from attio.resources.self_resource import AsyncSelfResource, SelfResource
+from attio.resources.sql import AsyncSqlResource, SqlResource
 from attio.resources.statuses import AsyncStatusesResource, StatusesResource
 from attio.resources.tasks import AsyncTasksResource, TasksResource
 from attio.resources.threads import AsyncThreadsResource, ThreadsResource
@@ -171,6 +172,11 @@ class AttioClient:
     def transcripts(self) -> TranscriptsResource:
         """Access the Transcripts resource."""
         return TranscriptsResource(self._http)
+
+    @cached_property
+    def sql(self) -> SqlResource:
+        """Access the SQL resource (beta, Enterprise plan only)."""
+        return SqlResource(self._http)
 
     # -- Standard object convenience wrappers (delegate to self.records) --
 
@@ -330,6 +336,11 @@ class AsyncAttioClient:
     def transcripts(self) -> AsyncTranscriptsResource:
         """Access the Transcripts resource."""
         return AsyncTranscriptsResource(self._http)
+
+    @cached_property
+    def sql(self) -> AsyncSqlResource:
+        """Access the SQL resource (beta, Enterprise plan only)."""
+        return AsyncSqlResource(self._http)
 
     # -- Standard object convenience wrappers (delegate to self.records) --
 

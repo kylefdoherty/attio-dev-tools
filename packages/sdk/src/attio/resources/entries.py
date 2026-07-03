@@ -181,11 +181,14 @@ class EntriesResource(SyncQueryableResource[Entry], _EntriesMixin):
         list_slug: str,
         *,
         filter: dict[str, Any] | None = None,
+        filter_view_id: str | None = None,
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> OffsetIterator[Entry]:
         """Auto-paginating version of query(). Returns an iterator over all entries."""
-        return self._query_all(list_slug, filter=filter, sorts=sorts, limit=limit)
+        return self._query_all(
+            list_slug, filter=filter, filter_view_id=filter_view_id, sorts=sorts, limit=limit
+        )
 
 
 # --- GENERATED ASYNC CODE BELOW --- #
@@ -291,8 +294,11 @@ class AsyncEntriesResource(AsyncQueryableResource[Entry], _EntriesMixin):
         list_slug: str,
         *,
         filter: dict[str, Any] | None = None,
+        filter_view_id: str | None = None,
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> AsyncOffsetIterator[Entry]:
         """Auto-paginating version of query(). Returns an async iterator over all entries."""
-        return self._query_all(list_slug, filter=filter, sorts=sorts, limit=limit)
+        return self._query_all(
+            list_slug, filter=filter, filter_view_id=filter_view_id, sorts=sorts, limit=limit
+        )

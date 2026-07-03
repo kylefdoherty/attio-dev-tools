@@ -199,6 +199,77 @@ class TestHttpTransport4xxNoRetry:
         transport.close()
 
 
+class TestHttpTransportRedirectUrl:
+    @respx.mock
+    def test_returns_location_header_on_302(self) -> None:
+        route = respx.get(f"{BASE_URL}/files/f_01/download").mock(
+            return_value=httpx.Response(
+                302, headers={"Location": "https://storage.example.com/signed"}
+            )
+        )
+        transport = HttpTransport(_config())
+        url = transport.request_redirect_url("GET", "/files/f_01/download")
+        assert route.called
+        assert url == "https://storage.example.com/signed"
+        transport.close()
+
+    @respx.mock
+    def test_retries_429_then_returns_redirect(self) -> None:
+        route = respx.get(f"{BASE_URL}/files/f_01/download").mock(
+            side_effect=[
+                httpx.Response(429, json={"message": "rate limited"}, headers={"retry-after": "0"}),
+                httpx.Response(302, headers={"Location": "https://storage.example.com/signed"}),
+            ]
+        )
+        transport = HttpTransport(_config())
+        url = transport.request_redirect_url("GET", "/files/f_01/download")
+        assert route.call_count == 2
+        assert url == "https://storage.example.com/signed"
+        transport.close()
+
+    @respx.mock
+    def test_json_body_fallback(self) -> None:
+        respx.get(f"{BASE_URL}/files/f_01/download").mock(
+            return_value=httpx.Response(200, json={"data": {"url": "https://storage.example.com/x"}})
+        )
+        transport = HttpTransport(_config())
+        url = transport.request_redirect_url("GET", "/files/f_01/download")
+        assert url == "https://storage.example.com/x"
+        transport.close()
+
+    @respx.mock
+    def test_error_status_raises(self) -> None:
+        respx.get(f"{BASE_URL}/files/f_01/download").mock(
+            return_value=httpx.Response(404, json={"message": "not found", "code": "not_found"})
+        )
+        transport = HttpTransport(_config())
+        with pytest.raises(NotFoundError):
+            transport.request_redirect_url("GET", "/files/f_01/download")
+        transport.close()
+
+    @respx.mock
+    def test_success_without_url_raises(self) -> None:
+        respx.get(f"{BASE_URL}/files/f_01/download").mock(
+            return_value=httpx.Response(200, json={"data": {}})
+        )
+        transport = HttpTransport(_config())
+        with pytest.raises(AttioAPIError):
+            transport.request_redirect_url("GET", "/files/f_01/download")
+        transport.close()
+
+
+class TestHttpTransportEmptyBody:
+    @respx.mock
+    def test_204_returns_empty_dict(self) -> None:
+        respx.delete(f"{BASE_URL}/things/t_01").mock(
+            return_value=httpx.Response(204)
+        )
+        transport = HttpTransport(_config())
+        result = transport.request("DELETE", "/things/t_01")
+        assert result == {}
+        transport.close()
+
+
 class TestHttpTransportContextManager:
     @respx.mock
     def test_context_manager(self) -> None:
@@ -313,6 +384,43 @@ class TestAsyncHttpTransport4xxNoRetry:
         with pytest.raises(AttioValidationError):
             await transport.request("GET", "/test")
         assert route.call_count == 1
+        await transport.close()
+
+
+class TestAsyncHttpTransportRedirectUrl:
+    @respx.mock
+    async def test_returns_location_header_on_302(self) -> None:
+        route = respx.get(f"{BASE_URL}/files/f_01/download").mock(
+            return_value=httpx.Response(
+                302, headers={"Location": "https://storage.example.com/signed"}
+            )
+        )
+        transport = AsyncHttpTransport(_config())
+        url = await transport.request_redirect_url("GET", "/files/f_01/download")
+        assert route.called
+        assert url == "https://storage.example.com/signed"
+        await transport.close()
+
+    @respx.mock
+    async def test_error_status_raises(self) -> None:
+        respx.get(f"{BASE_URL}/files/f_01/download").mock(
+            return_value=httpx.Response(404, json={"message": "not found", "code": "not_found"})
+        )
+        transport = AsyncHttpTransport(_config())
+        with pytest.raises(NotFoundError):
+            await transport.request_redirect_url("GET", "/files/f_01/download")
+        await transport.close()
+
+
+class TestAsyncHttpTransportEmptyBody:
+    @respx.mock
+    async def test_204_returns_empty_dict(self) -> None:
+        respx.delete(f"{BASE_URL}/things/t_01").mock(
+            return_value=httpx.Response(204)
+        )
+        transport = AsyncHttpTransport(_config())
+        result = await transport.request("DELETE", "/things/t_01")
+        assert result == {}
         await transport.close()
 
 

@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from attio.models._base import PaginatedResponse
 from attio.models.transcripts import TranscriptSegment
 from attio.resources._base import AsyncResource, SyncResource
+
+if TYPE_CHECKING:
+    from attio._pagination import AsyncCursorIterator, CursorIterator
 
 
 class _TranscriptsMixin:
@@ -52,6 +55,21 @@ class TranscriptsResource(SyncResource, _TranscriptsMixin):
         )
         return self._parse_paginated_response(raw)
 
+    def get_all(
+        self,
+        meeting_id: str,
+        recording_id: str,
+        *,
+        limit: int | None = None,
+    ) -> CursorIterator[TranscriptSegment]:
+        """Auto-paginate a full transcript. Returns an iterator over all segments."""
+        from attio._pagination import CursorIterator
+
+        def fetch_page(cursor: str | None) -> PaginatedResponse[TranscriptSegment]:
+            return self.get(meeting_id, recording_id, limit=limit, cursor=cursor)
+
+        return CursorIterator(fetch_page=fetch_page)
+
 
 # --- GENERATED ASYNC CODE BELOW --- #
 
@@ -75,3 +93,18 @@ class AsyncTranscriptsResource(AsyncResource, _TranscriptsMixin):
             params=params,
         )
         return self._parse_paginated_response(raw)
+
+    def get_all(
+        self,
+        meeting_id: str,
+        recording_id: str,
+        *,
+        limit: int | None = None,
+    ) -> AsyncCursorIterator[TranscriptSegment]:
+        """Auto-paginate a full transcript. Returns an async iterator over all segments."""
+        from attio._pagination import AsyncCursorIterator
+
+        async def fetch_page(cursor: str | None) -> PaginatedResponse[TranscriptSegment]:
+            return await self.get(meeting_id, recording_id, limit=limit, cursor=cursor)
+
+        return AsyncCursorIterator(fetch_page=fetch_page)

@@ -21,6 +21,7 @@ from attio.resources.select_options import (
     SelectOptionsResource,
 )
 from attio.resources.self_resource import AsyncSelfResource, SelfResource
+from attio.resources.sql import AsyncSqlResource, SqlResource
 from attio.resources.statuses import AsyncStatusesResource, StatusesResource
 from attio.resources.tasks import AsyncTasksResource, TasksResource
 from attio.resources.threads import AsyncThreadsResource, ThreadsResource
@@ -53,6 +54,7 @@ __all__ = [
     "AsyncRecordsResource",
     "AsyncSelectOptionsResource",
     "AsyncSelfResource",
+    "AsyncSqlResource",
     "AsyncStatusesResource",
     "AsyncTasksResource",
     "AsyncThreadsResource",
@@ -77,6 +79,7 @@ __all__ = [
     "RecordsResource",
     "SelectOptionsResource",
     "SelfResource",
+    "SqlResource",
     "StatusesResource",
     "TasksResource",
     "ThreadsResource",

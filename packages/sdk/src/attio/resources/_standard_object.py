@@ -123,12 +123,17 @@ class StandardObjectResource:
         self,
         *,
         filter: dict[str, Any] | None = None,
+        filter_view_id: str | None = None,
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> OffsetIterator[Record]:
         """Auto-paginating version of query(). Returns an iterator over all records."""
         return self._records.query_all(
-            self._object_slug, filter=filter, sorts=sorts, limit=limit
+            self._object_slug,
+            filter=filter,
+            filter_view_id=filter_view_id,
+            sorts=sorts,
+            limit=limit,
         )
 
 
@@ -243,10 +248,15 @@ class AsyncStandardObjectResource:
         self,
         *,
         filter: dict[str, Any] | None = None,
+        filter_view_id: str | None = None,
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> AsyncOffsetIterator[Record]:
         """Auto-paginating version of query(). Returns an async iterator over all records."""
         return self._records.query_all(
-            self._object_slug, filter=filter, sorts=sorts, limit=limit
+            self._object_slug,
+            filter=filter,
+            filter_view_id=filter_view_id,
+            sorts=sorts,
+            limit=limit,
         )

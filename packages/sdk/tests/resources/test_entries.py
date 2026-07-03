@@ -802,18 +802,25 @@ class TestEntriesMixin:
         sorts = [Sort(attribute="created_at", direction="desc")]
         result = _EntriesMixin._build_query_body(
             filter={"stage": "Open"},
-            filter_view_id="view_01",
             sorts=sorts,
             limit=100,
             offset=50,
         )
         assert result == {
             "filter": {"stage": "Open"},
-            "filter_view_id": "view_01",
             "sorts": [{"attribute": "created_at", "direction": "desc"}],
             "limit": 100,
             "offset": 50,
         }
+
+    def test_build_query_body_rejects_filter_with_filter_view_id(self) -> None:
+        from attio.resources.entries import _EntriesMixin
+
+        with pytest.raises(ValueError, match="mutually exclusive"):
+            _EntriesMixin._build_query_body(
+                filter={"stage": "Open"},
+                filter_view_id="view_01",
+            )
 
     def test_build_list_params_none(self) -> None:
         from attio.resources.entries import _EntriesMixin

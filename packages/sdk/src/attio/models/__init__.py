@@ -31,6 +31,7 @@ from attio.models.select_options import (
     StatusId,
 )
 from attio.models.self_info import SelfInfo
+from attio.models.sql import SqlQueryResult
 from attio.models.tasks import LinkedRecord, Task, TaskAssignee, TaskId
 from attio.models.threads import Thread, ThreadId
 from attio.models.transcripts import TranscriptSegment
@@ -76,6 +77,7 @@ __all__ = [
     "SelectOptionId",
     "SelfInfo",
     "Sort",
+    "SqlQueryResult",
     "Status",
     "StatusId",
     "Task",

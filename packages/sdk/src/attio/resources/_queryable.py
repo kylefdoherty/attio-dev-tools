@@ -66,6 +66,10 @@ class _QueryableMixin(Generic[T]):
         limit: int | None = None,
         offset: int | None = None,
     ) -> dict[str, Any]:
+        if filter is not None and filter_view_id is not None:
+            raise ValueError(
+                "filter and filter_view_id are mutually exclusive; provide only one"
+            )
         body: dict[str, Any] = {}
         if filter is not None:
             body["filter"] = filter
@@ -216,6 +220,7 @@ class SyncQueryableResource(SyncResource, _QueryableMixin[T]):
         slug: str,
         *,
         filter: dict[str, Any] | None = None,
+        filter_view_id: str | None = None,
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> OffsetIterator[T]:
@@ -223,6 +228,7 @@ class SyncQueryableResource(SyncResource, _QueryableMixin[T]):
             return self._query(
                 slug,
                 filter=filter,
+                filter_view_id=filter_view_id,
                 sorts=sorts,
                 limit=page_limit,
                 offset=offset,
@@ -321,6 +327,7 @@ class AsyncQueryableResource(AsyncResource, _QueryableMixin[T]):
         slug: str,
         *,
         filter: dict[str, Any] | None = None,
+        filter_view_id: str | None = None,
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> AsyncOffsetIterator[T]:
@@ -328,6 +335,7 @@ class AsyncQueryableResource(AsyncResource, _QueryableMixin[T]):
             return await self._query(
                 slug,
                 filter=filter,
+                filter_view_id=filter_view_id,
                 sorts=sorts,
                 limit=page_limit,
                 offset=offset,

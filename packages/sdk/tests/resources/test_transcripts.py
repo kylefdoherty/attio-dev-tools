@@ -8,7 +8,11 @@ import respx
 from attio import AsyncAttioClient, AttioClient
 from attio.models._base import PaginatedResponse
 from attio.models.transcripts import TranscriptSegment
-from tests.fixtures.factory import MOCK_TRANSCRIPT_LIST
+from tests.fixtures.factory import (
+    MOCK_TRANSCRIPT_LIST,
+    MOCK_TRANSCRIPT_LIST_PAGE_1,
+    MOCK_TRANSCRIPT_LIST_PAGE_2,
+)
 
 BASE_URL = "https://api.attio.com/v2"
 TEST_KEY = "test_key_transcripts"
@@ -79,6 +83,27 @@ class TestTranscriptsResourceSync:
         assert "/meetings/mtg_xyz/call_recordings/cr_abc/transcript" in str(request.url)
         client.close()
 
+    @respx.mock
+    def test_get_all_follows_cursor(self) -> None:
+        route = respx.get(
+            f"{BASE_URL}/meetings/{MEETING_ID}/call_recordings/{RECORDING_ID}/transcript"
+        ).mock(
+            side_effect=[
+                httpx.Response(200, json=MOCK_TRANSCRIPT_LIST_PAGE_1),
+                httpx.Response(200, json=MOCK_TRANSCRIPT_LIST_PAGE_2),
+            ]
+        )
+        client = _sync_client()
+        segments = list(client.transcripts.get_all(MEETING_ID, RECORDING_ID, limit=2))
+
+        assert route.call_count == 2
+        assert len(segments) == 3
+        assert segments[0].speech == "Let's start with the Q3 roadmap."
+        assert segments[2].speech == "Great, let's hear it."
+        second_url = str(route.calls[1].request.url)
+        assert "cursor=transcript_cursor_page_2" in second_url
+        client.close()
+
 
 # ---------------------------------------------------------------------------
 # Async tests
@@ -115,4 +140,23 @@ class TestTranscriptsResourceAsync:
         url_str = str(request.url)
         assert "limit=5" in url_str
         assert "cursor=next_page" in url_str
+        await client.close()
+
+    @respx.mock
+    async def test_get_all_follows_cursor(self) -> None:
+        route = respx.get(
+            f"{BASE_URL}/meetings/{MEETING_ID}/call_recordings/{RECORDING_ID}/transcript"
+        ).mock(
+            side_effect=[
+                httpx.Response(200, json=MOCK_TRANSCRIPT_LIST_PAGE_1),
+                httpx.Response(200, json=MOCK_TRANSCRIPT_LIST_PAGE_2),
+            ]
+        )
+        client = _async_client()
+        segments = [
+            s async for s in client.transcripts.get_all(MEETING_ID, RECORDING_ID, limit=2)
+        ]
+
+        assert route.call_count == 2
+        assert len(segments) == 3
         await client.close()

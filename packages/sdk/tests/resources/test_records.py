@@ -326,7 +326,7 @@ class TestRecordsResourceSync:
     @respx.mock
     def test_global_search(self) -> None:
         # NOTE: global_search uses a DIFFERENT URL pattern — not scoped to one object
-        route = respx.post(f"{BASE_URL}/records/search").mock(
+        route = respx.post(f"{BASE_URL}/objects/records/search").mock(
             return_value=httpx.Response(200, json=MOCK_GLOBAL_SEARCH_RESULTS)
         )
         client = _sync_client()
@@ -341,20 +341,22 @@ class TestRecordsResourceSync:
         assert result.data[0].record_text == "Jane Doe"
         assert result.data[0].object_slug == "people"
 
-        # Verify request body
+        # Verify request body (request_as is required by the API and defaults
+        # to workspace-wide results)
         request = route.calls[0].request
         body = json.loads(request.content)
         assert body == {
             "query": "Jane",
             "objects": ["people"],
+            "request_as": {"type": "workspace"},
             "limit": 10,
         }
         client.close()
 
     @respx.mock
     def test_global_search_url_pattern(self) -> None:
-        """Verify global_search hits /records/search, not /objects/{object}/records/search."""
-        route = respx.post(f"{BASE_URL}/records/search").mock(
+        """Verify global_search hits /objects/records/search, not /objects/{object}/records/search."""
+        route = respx.post(f"{BASE_URL}/objects/records/search").mock(
             return_value=httpx.Response(200, json=MOCK_GLOBAL_SEARCH_RESULTS)
         )
         client = _sync_client()
@@ -362,7 +364,28 @@ class TestRecordsResourceSync:
 
         assert route.called
         request = route.calls[0].request
-        assert str(request.url).startswith(f"{BASE_URL}/records/search")
+        assert str(request.url).startswith(f"{BASE_URL}/objects/records/search")
+        client.close()
+
+    @respx.mock
+    def test_global_search_request_as_member(self) -> None:
+        """Verify a custom request_as payload is passed through."""
+        route = respx.post(f"{BASE_URL}/objects/records/search").mock(
+            return_value=httpx.Response(200, json=MOCK_GLOBAL_SEARCH_RESULTS)
+        )
+        client = _sync_client()
+        client.records.global_search(
+            query="Jane",
+            objects=["people"],
+            request_as={"type": "workspace-member", "email_address": "alice@example.com"},
+        )
+
+        assert route.called
+        body = json.loads(route.calls[0].request.content)
+        assert body["request_as"] == {
+            "type": "workspace-member",
+            "email_address": "alice@example.com",
+        }
         client.close()
 
     @respx.mock
@@ -654,7 +677,7 @@ class TestRecordsResourceAsync:
 
     @respx.mock
     async def test_global_search(self) -> None:
-        route = respx.post(f"{BASE_URL}/records/search").mock(
+        route = respx.post(f"{BASE_URL}/objects/records/search").mock(
             return_value=httpx.Response(200, json=MOCK_GLOBAL_SEARCH_RESULTS)
         )
         client = _async_client()
@@ -670,7 +693,12 @@ class TestRecordsResourceAsync:
 
         request = route.calls[0].request
         body = json.loads(request.content)
-        assert body == {"query": "Jane", "objects": ["people"], "limit": 10}
+        assert body == {
+            "query": "Jane",
+            "objects": ["people"],
+            "request_as": {"type": "workspace"},
+            "limit": 10,
+        }
         await client.close()
 
     @respx.mock
@@ -770,18 +798,25 @@ class TestRecordsMixin:
         sorts = [Sort(attribute="created_at", direction="desc")]
         result = _RecordsMixin._build_query_body(
             filter={"name": "test"},
-            filter_view_id="view_01",
             sorts=sorts,
             limit=100,
             offset=50,
         )
         assert result == {
             "filter": {"name": "test"},
-            "filter_view_id": "view_01",
             "sorts": [{"attribute": "created_at", "direction": "desc"}],
             "limit": 100,
             "offset": 50,
         }
+
+    def test_build_query_body_rejects_filter_with_filter_view_id(self) -> None:
+        from attio.resources.records import _RecordsMixin
+
+        with pytest.raises(ValueError, match="mutually exclusive"):
+            _RecordsMixin._build_query_body(
+                filter={"name": "test"},
+                filter_view_id="view_01",
+            )
 
     def test_build_query_body_sort_with_field(self) -> None:
         from attio.resources.records import _RecordsMixin
@@ -803,6 +838,7 @@ class TestRecordsMixin:
         assert result == {
             "query": "Jane",
             "objects": ["people", "companies"],
+            "request_as": {"type": "workspace"},
             "limit": 10,
         }
 
@@ -812,7 +848,25 @@ class TestRecordsMixin:
         result = _RecordsMixin._build_search_body(
             query="test", objects=["people"]
         )
-        assert result == {"query": "test", "objects": ["people"]}
+        assert result == {
+            "query": "test",
+            "objects": ["people"],
+            "request_as": {"type": "workspace"},
+        }
+
+    def test_build_search_body_custom_request_as(self) -> None:
+        from attio.resources.records import _RecordsMixin
+
+        result = _RecordsMixin._build_search_body(
+            query="test",
+            objects=["people"],
+            request_as={"type": "workspace-member", "email_address": "a@b.com"},
+        )
+        assert result == {
+            "query": "test",
+            "objects": ["people"],
+            "request_as": {"type": "workspace-member", "email_address": "a@b.com"},
+        }
 
     def test_build_list_params_none(self) -> None:
         from attio.resources.records import _RecordsMixin

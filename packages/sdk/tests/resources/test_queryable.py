@@ -241,18 +241,23 @@ class TestBuildQueryBody:
         sorts = [Sort(attribute="name", direction="asc")]
         result = _QueryableMixin._build_query_body(
             filter={"active": True},
-            filter_view_id="view_99",
             sorts=sorts,
             limit=100,
             offset=25,
         )
         assert result == {
             "filter": {"active": True},
-            "filter_view_id": "view_99",
             "sorts": [{"attribute": "name", "direction": "asc"}],
             "limit": 100,
             "offset": 25,
         }
+
+    def test_filter_and_filter_view_id_mutually_exclusive(self) -> None:
+        with pytest.raises(ValueError, match="mutually exclusive"):
+            _QueryableMixin._build_query_body(
+                filter={"active": True},
+                filter_view_id="view_99",
+            )
 
     def test_multiple_sorts(self) -> None:
         sorts = [
@@ -466,7 +471,6 @@ class TestSyncQueryableHTTP:
         resource.query(
             "things",
             filter={"active": True},
-            filter_view_id="view_01",
             sorts=sorts,
             limit=50,
             offset=10,
@@ -475,11 +479,30 @@ class TestSyncQueryableHTTP:
         body = json.loads(route.calls[0].request.content)
         assert body == {
             "filter": {"active": True},
-            "filter_view_id": "view_01",
             "sorts": [{"attribute": "name", "direction": "asc"}],
             "limit": 50,
             "offset": 10,
         }
+
+    @respx.mock
+    def test_query_with_filter_view_id(self) -> None:
+        route = respx.post(f"{BASE_URL}/widgets/things/items/query").mock(
+            return_value=httpx.Response(200, json=WIDGET_LIST_RESPONSE)
+        )
+        resource = _sync_resource()
+        resource.query("things", filter_view_id="view_01", limit=50)
+
+        body = json.loads(route.calls[0].request.content)
+        assert body == {"filter_view_id": "view_01", "limit": 50}
+
+    def test_query_rejects_filter_with_filter_view_id(self) -> None:
+        resource = _sync_resource()
+        with pytest.raises(ValueError, match="mutually exclusive"):
+            resource.query(
+                "things",
+                filter={"active": True},
+                filter_view_id="view_01",
+            )
 
     @respx.mock
     def test_get(self) -> None:

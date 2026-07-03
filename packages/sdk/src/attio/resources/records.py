@@ -63,9 +63,15 @@ class _RecordsMixin(_QueryableMixin[Record]):
         *,
         query: str,
         objects: list[str],
+        request_as: dict[str, Any] | None = None,
         limit: int | None = None,
     ) -> dict[str, Any]:
-        body: dict[str, Any] = {"query": query, "objects": objects}
+        body: dict[str, Any] = {
+            "query": query,
+            "objects": objects,
+            # request_as is required by the API; default to workspace-wide results.
+            "request_as": request_as if request_as is not None else {"type": "workspace"},
+        }
         if limit is not None:
             body["limit"] = limit
         return body
@@ -197,11 +203,22 @@ class RecordsResource(SyncQueryableResource[Record], _RecordsMixin):
         *,
         query: str,
         objects: list[str],
+        request_as: dict[str, Any] | None = None,
         limit: int | None = None,
     ) -> ListResponse[GlobalSearchResult]:
-        """Search across all object records globally."""
-        body = self._build_search_body(query=query, objects=objects, limit=limit)
-        raw = self._http.request("POST", "/records/search", json=body)
+        """Fuzzy-search records across one or more objects. (beta)
+
+        BETA: results are eventually consistent; recently written records may
+        not appear immediately. At least one object slug/ID is required and
+        ``limit`` is capped at 25 (default 25). ``request_as`` scopes results
+        to what a workspace member can see (e.g. ``{"type":
+        "workspace-member", "email_address": ...}``); defaults to
+        ``{"type": "workspace"}`` (all results).
+        """
+        body = self._build_search_body(
+            query=query, objects=objects, request_as=request_as, limit=limit
+        )
+        raw = self._http.request("POST", "/objects/records/search", json=body)
         return self._parse_search_response(raw)
 
     def query_all(
@@ -209,11 +226,14 @@ class RecordsResource(SyncQueryableResource[Record], _RecordsMixin):
         object: str,
         *,
         filter: dict[str, Any] | None = None,
+        filter_view_id: str | None = None,
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> OffsetIterator[Record]:
         """Auto-paginating version of query(). Returns an iterator over all records."""
-        return self._query_all(object, filter=filter, sorts=sorts, limit=limit)
+        return self._query_all(
+            object, filter=filter, filter_view_id=filter_view_id, sorts=sorts, limit=limit
+        )
 
 
 # --- GENERATED ASYNC CODE BELOW --- #
@@ -328,11 +348,22 @@ class AsyncRecordsResource(AsyncQueryableResource[Record], _RecordsMixin):
         *,
         query: str,
         objects: list[str],
+        request_as: dict[str, Any] | None = None,
         limit: int | None = None,
     ) -> ListResponse[GlobalSearchResult]:
-        """Search across all object records globally."""
-        body = self._build_search_body(query=query, objects=objects, limit=limit)
-        raw = await self._http.request("POST", "/records/search", json=body)
+        """Fuzzy-search records across one or more objects. (beta)
+
+        BETA: results are eventually consistent; recently written records may
+        not appear immediately. At least one object slug/ID is required and
+        ``limit`` is capped at 25 (default 25). ``request_as`` scopes results
+        to what a workspace member can see (e.g. ``{"type":
+        "workspace-member", "email_address": ...}``); defaults to
+        ``{"type": "workspace"}`` (all results).
+        """
+        body = self._build_search_body(
+            query=query, objects=objects, request_as=request_as, limit=limit
+        )
+        raw = await self._http.request("POST", "/objects/records/search", json=body)
         return self._parse_search_response(raw)
 
     def query_all(
@@ -340,8 +371,11 @@ class AsyncRecordsResource(AsyncQueryableResource[Record], _RecordsMixin):
         object: str,
         *,
         filter: dict[str, Any] | None = None,
+        filter_view_id: str | None = None,
         sorts: list[Sort] | None = None,
         limit: int = 500,
     ) -> AsyncOffsetIterator[Record]:
         """Auto-paginating version of query(). Returns an async iterator over all records."""
-        return self._query_all(object, filter=filter, sorts=sorts, limit=limit)
+        return self._query_all(
+            object, filter=filter, filter_view_id=filter_view_id, sorts=sorts, limit=limit
+        )

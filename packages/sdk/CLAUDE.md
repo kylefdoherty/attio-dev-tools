@@ -34,10 +34,11 @@ async with AsyncAttioClient(api_key="your_api_key") as client:
 - `client.views` -- list_for_object, list_for_list, list_all_for_object, list_all_for_list
 - `client.comments` -- create, get, delete
 - `client.threads` -- list, get
-- `client.files` -- list, get, create_folder, upload, download, delete
-- `client.meetings` -- list, get
-- `client.call_recordings` -- list, get
-- `client.transcripts` -- get
+- `client.files` -- list, get, create_folder, connect, upload, download, delete, list_all (beta)
+- `client.meetings` -- list, get, create (alpha find-or-create), list_all (beta)
+- `client.call_recordings` -- list, get, create (alpha, 1 req/s), delete (alpha), list_all (beta)
+- `client.transcripts` -- get, get_all (beta)
+- `client.sql` -- query (beta, Enterprise plan, read-only SELECT, 2 req/s)
 
 ### Convenience wrappers (delegate to records)
 
@@ -58,6 +59,10 @@ async with AsyncAttioClient(api_key="your_api_key") as client:
 - `update` overwrites multiselect fields; `append` adds to them.
 - `upsert` = create or update by matching attribute.
 - Use `query_all()` for auto-paginated iteration (returns `OffsetIterator` / `AsyncOffsetIterator`).
+- Cursor endpoints have `list_all()` / `get_all()` auto-paginators (returns `CursorIterator` / `AsyncCursorIterator`).
+- `query`/`query_all` accept `filter` OR `filter_view_id` (mutually exclusive; `ValueError` if both).
+- `records.global_search` posts to `/objects/records/search` (beta, eventually consistent) with a required `request_as` (defaults to `{"type": "workspace"}`).
+- `files.download` returns the signed URL from the 302 redirect (`DownloadUrl.url`) -- it does not download file contents.
 - `client.http.request()` for any endpoint not yet covered.
 
 ## Error Types
