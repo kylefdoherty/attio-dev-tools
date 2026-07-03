@@ -1,0 +1,48 @@
+{
+  "name": "attio-app-kit",
+  "version": "0.1.0",
+  "description": "Sandbox-safe TypeScript helpers for building Attio App SDK apps (server functions, webhooks, workflow blocks)",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "check": "biome check src/",
+    "check:fix": "biome check --write src/",
+    "format": "biome format --write src/"
+  },
+  "packageManager": "yarn@4.13.0",
+  "keywords": [
+    "attio",
+    "attio-app-sdk",
+    "crm",
+    "webhooks",
+    "rate-limit"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.6",
+    "@types/node": "^25.6.2",
+    "@vitest/coverage-v8": "^4.0.18",
+    "typescript": "^5.3.0",
+    "vitest": "^4.0.18"
+  }
+}

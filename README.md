@@ -23,6 +23,8 @@ Attio is a powerful CRM, but building on its API means dealing with a flexible d
 | **Python SDK** | `pip install attio` | Sync + async Python client with Pydantic models |
 | **Node SDK** | `npm install attio-node` | Zero-dependency TypeScript client with full type coverage |
 | **CLI** | `pip install attio-cli` | Command-line interface for humans and AI agents |
+| **create-attio-app** | `npx create-attio-app` | Scaffold Next.js apps with Attio OAuth pre-wired |
+| **attio-app-kit** | `packages/app-kit` (unpublished) | Sandbox-safe helpers for Attio App SDK server functions -- retry fetch, webhook verification, KV JSON, value builders |
 
 Python packages require Python 3.10+. Node SDK requires Node 18+.
 
